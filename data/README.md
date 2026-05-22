@@ -1,6 +1,6 @@
 # Data
 
-Local datasets for **padestrian**. The GTFS export is gitignored (~270 MB); `groceries.geojson` is small enough to commit. See `manifest.json` for sources and snapshot metadata.
+Datasets that power **Padestrian**’s walking zones: transit stops from GTFS and grocery locations from OSM. The GTFS export is gitignored (~270 MB); `groceries.geojson` is small enough to commit. See `manifest.json` for sources and snapshot metadata.
 
 ## groceries.geojson
 
@@ -26,3 +26,5 @@ Supermarkets and grocery-related places in the Ottawa area, exported from [OpenS
 | `feed_info.txt` | Feed version and validity window |
 
 Download a fresh export from OC Transpo when the feed expires (see `feed_start_date` / `feed_end_date` in `feed_info.txt`).
+
+**In the app:** `stops.txt` supplies coordinates for permanent stops used as isochrone centers (walking zones to transit). Filter by `location_type` and route type as needed to drop stations-in-passing or non-passenger points.

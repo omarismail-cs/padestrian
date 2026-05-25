@@ -18,9 +18,10 @@ node_modules/
 # Large local GTFS export (~270 MB); re-download per data/README.md
 data/GTFSExport/
 
-# Generated walk zones (smoke-isochrone / build-zones)
+# Generated walk zones (smoke-isochrone / build-zones) and scored listings
 data/isochrones/
 data/zones/
+data/listings-scored.geojson
 
 # Generated on `padestrian serve` (contains your Mapbox token)
 web/config.js

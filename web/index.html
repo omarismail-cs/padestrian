@@ -1,45 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Padestrian — map</title>
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css"
-      rel="stylesheet"
-    />
+    <title>Padestrian — Ottawa walkable rentals</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/geist@5.1.1/index.min.css" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet" />
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <header>
-      <h1>Padestrian</h1>
-      <p id="status">Loading…</p>
-    </header>
-    <aside id="panel">
-      <p class="panel-title">Layers</p>
-      <label class="layer-row">
-        <input type="checkbox" id="layer-listings" checked />
-        <span class="swatch swatch-listing" aria-hidden="true"></span>
-        Listings <span class="dim">(demo)</span>
-      </label>
-      <label class="layer-row">
-        <input type="checkbox" id="layer-groceries" checked />
-        <span class="swatch swatch-grocery" aria-hidden="true"></span>
-        Groceries
-      </label>
-      <label class="layer-row">
-        <input type="checkbox" id="layer-smoke" checked />
-        <span class="swatch swatch-walk" aria-hidden="true"></span>
-        Walk zones <span class="dim">(smoke test)</span>
-      </label>
-      <label class="layer-row">
-        <input type="checkbox" id="layer-stops" />
-        <span class="swatch swatch-transit" aria-hidden="true"></span>
-        Transit stops <span class="dim">(~5.8k)</span>
-      </label>
-      <p class="panel-foot"><a href="/basemap.html">Basemap test</a></p>
-    </aside>
-    <div id="map"></div>
+    <main id="app">
+      <div id="map"></div>
+
+      <!-- Collapsed: floating logo button (top-left) -->
+      <button id="sidebar-open-btn" class="sidebar-open-btn" aria-label="Open panel">
+        <img src="/images/logo.png" alt="" class="logo-img" />
+        <span class="sidebar-open-title">Padestrian</span>
+        <span class="walkable-badge" id="header-walkable-badge"></span>
+      </button>
+
+      <!-- Theme toggle (top-right, always visible) -->
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+
+      <!-- Slide-in sidebar -->
+      <aside id="sidebar" class="sidebar" aria-label="Filters and layers">
+        <!-- Sidebar header -->
+        <div class="sidebar-header">
+          <div class="sidebar-header-left">
+            <img src="/images/logo.png" alt="" class="logo-img logo-img--lg" />
+            <div>
+              <div class="sidebar-title">Padestrian</div>
+              <div class="sidebar-subtitle">Ottawa walkable rentals</div>
+            </div>
+          </div>
+          <button id="sidebar-close-btn" class="icon-btn" aria-label="Close panel">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <!-- Stats banner -->
+        <div class="stats-banner">
+          <span class="stats-label">Showing</span>
+          <div class="stats-right">
+            <span class="stats-total" id="stats-total">— listings</span>
+            <span class="stats-sep">·</span>
+            <span class="stats-walkable" id="stats-walkable">— walkable</span>
+          </div>
+        </div>
+
+        <!-- Scrollable body -->
+        <div class="sidebar-body">
+
+          <!-- Filters -->
+          <section class="sidebar-section">
+            <p class="section-label">Filters</p>
+
+            <div class="filter-row">
+              <div class="filter-row-left">
+                <span class="dot dot-eligible"></span>
+                <span class="filter-name">Walkable only</span>
+              </div>
+              <label class="switch" aria-label="Walkable only">
+                <input type="checkbox" id="filter-walkable" />
+                <span class="switch-track"><span class="switch-thumb"></span></span>
+              </label>
+            </div>
+
+            <div class="slider-section">
+              <div class="slider-header">
+                <span class="slider-label">Max rent</span>
+                <span class="slider-value" id="rent-display">Any</span>
+              </div>
+              <input type="range" id="filter-rent" min="1000" max="3500" step="50" value="3500" />
+              <div class="slider-range-labels">
+                <span>$1,000</span>
+                <span>$3,500+</span>
+              </div>
+            </div>
+
+            <div class="bed-section">
+              <span class="slider-label">Bedrooms</span>
+              <div class="bed-buttons">
+                <button class="bed-btn active" data-beds="any">Any</button>
+                <button class="bed-btn" data-beds="0">Studio</button>
+                <button class="bed-btn" data-beds="1">1</button>
+                <button class="bed-btn" data-beds="2">2</button>
+                <button class="bed-btn" data-beds="3">3+</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Legend -->
+          <section class="sidebar-section sidebar-section--bordered">
+            <p class="section-label">Legend</p>
+            <div class="legend-grid">
+              <div class="legend-item"><span class="dot dot-eligible"></span><span>Walkable</span></div>
+              <div class="legend-item"><span class="dot dot-grocery"></span><span>Grocery only</span></div>
+              <div class="legend-item"><span class="dot dot-transit"></span><span>Transit only</span></div>
+              <div class="legend-item"><span class="dot dot-neither"></span><span>Neither</span></div>
+            </div>
+          </section>
+
+          <!-- Layers -->
+          <section class="sidebar-section sidebar-section--bordered">
+            <p class="section-label">Layers</p>
+
+            <label class="layer-toggle-row">
+              <div class="filter-row-left">
+                <span class="dot dot-grocery"></span>
+                <span class="filter-name">Groceries</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="layer-groceries" checked />
+                <span class="switch-track"><span class="switch-thumb"></span></span>
+              </label>
+            </label>
+
+            <label class="layer-toggle-row">
+              <div class="filter-row-left">
+                <span class="dot dot-transit"></span>
+                <span class="filter-name">Transit stops</span>
+                <span class="muted-note">~5.8k</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="layer-stops" />
+                <span class="switch-track"><span class="switch-thumb"></span></span>
+              </label>
+            </label>
+
+            <label class="layer-toggle-row">
+              <div class="filter-row-left">
+                <span class="dot" style="background:var(--c-border)"></span>
+                <span class="filter-name">Walk zones</span>
+                <span class="muted-note">(smoke test)</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="layer-smoke" checked />
+                <span class="switch-track"><span class="switch-thumb"></span></span>
+              </label>
+            </label>
+          </section>
+        </div>
+
+        <!-- Footer -->
+        <div class="sidebar-footer">
+          <span id="sidebar-status">Find your car-free apartment</span>
+        </div>
+      </aside>
+
+      <!-- Sidebar collapse tab (visible when open, desktop) -->
+      <button id="sidebar-collapse-tab" class="sidebar-collapse-tab" aria-label="Collapse panel">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <!-- Mobile backdrop -->
+      <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+    </main>
+
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
     <script src="/config.js"></script>
     <script src="/app.js"></script>

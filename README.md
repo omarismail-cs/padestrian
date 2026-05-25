@@ -14,7 +14,9 @@ cp .env.example .env            # ORS + Mapbox keys
 
 python -m padestrian build-essentials
 python -m padestrian validate-listings   # exports data/listings.geojson
-python -m padestrian serve        # http://127.0.0.1:8765
+python -m padestrian build-zones         # grocery walk zones (~3 min)
+python -m padestrian filter-listings     # score listings → listings-scored.geojson
+python -m padestrian serve               # http://127.0.0.1:8765
 ```
 
 After changing `.env`, restart `serve` and hard-refresh the browser (Ctrl+Shift+R).
@@ -27,6 +29,7 @@ After changing `.env`, restart `serve` and hard-refresh the browser (Ctrl+Shift+
 | `seed-listings` | Regenerate demo `data/listings.json` (180 Ottawa mocks) |
 | `validate-listings` | Check listings JSON → `listings.geojson` for the map |
 | `build-zones` | Batch 10‑min walk zones for all groceries (ORS, cached) |
+| `filter-listings` | Score listings against zones → `listings-scored.geojson` |
 | `smoke-isochrone` | Test 10‑min walk zones for one stop + one grocery |
 | `serve` | Local map (Mapbox GL JS) |
 | `check-mapbox` | Verify `MAPBOX_ACCESS_TOKEN` in `.env` |
@@ -51,7 +54,7 @@ data/           GeoJSON + GTFS (GTFSExport/ gitignored)
 1. Essentials GeoJSON — done  
 2. Demo listings on map — done (`listings.json` / `listings.geojson`)  
 3. Walking zones — `build-zones` (groceries); smoke test for one stop  
-4. Filter listings ∩ walk zones — planned  
+4. Filter listings ∩ walk zones — done (`filter-listings`)  
 
 ```bash
 # ~129 ORS calls, ~3 min with default delay; resumes from cache if interrupted

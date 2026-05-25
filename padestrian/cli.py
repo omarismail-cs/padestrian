@@ -6,6 +6,7 @@ from padestrian.gtfs_stops import export_stops_geojson
 from padestrian.groceries import export_grocery_points_geojson
 from padestrian.isochrones import run_smoke_isochrone
 from padestrian.zones import run_build_zones
+from padestrian.filter_listings import score_listings
 from padestrian.check_mapbox import check_mapbox_token
 from padestrian.listings import (
     ListingValidationError,
@@ -18,6 +19,7 @@ from padestrian.paths import (
     GROCERIES_POINTS_PATH,
     GROCERIES_PATH,
     LISTINGS_GEOJSON_PATH,
+    LISTINGS_SCORED_PATH,
     STOPS_GEOJSON_PATH,
     STOPS_GTFS_PATH,
 )
@@ -133,6 +135,25 @@ def cmd_validate_listings(_args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_filter_listings(args: argparse.Namespace) -> int:
+    """Score listings against walk zones and write listings-scored.geojson."""
+    try:
+        stats = score_listings(minutes=args.minutes)
+    except FileNotFoundError as exc:
+        print(exc, file=sys.stderr)
+        return 1
+
+    print(f"Scored {stats.total} listings at {args.minutes:g} min walk:")
+    print(f"  near grocery  : {stats.near_grocery}")
+    print(f"  near transit  : {stats.near_transit}")
+    print(f"  eligible (both): {stats.eligible}  ({stats.eligible * 100 // stats.total if stats.total else 0}%)")
+    print(f"  grocery zones : {stats.grocery_zone_source}")
+    print(f"  transit zones : {stats.transit_zone_source}")
+    print(f"\n  -> {LISTINGS_SCORED_PATH}")
+    print("\nRestart serve + hard-refresh to see filtered listings on the map.")
+    return 0
+
+
 def cmd_serve(args: argparse.Namespace) -> int:
     """Run local map viewer at http://127.0.0.1:<port>/"""
     run_server(port=args.port, open_browser=not args.no_browser)
@@ -235,6 +256,18 @@ def main(argv: list[str] | None = None) -> int:
         help="Validate listings.json and export listings.geojson",
     )
     validate_listings_parser.set_defaults(func=cmd_validate_listings)
+
+    filter_parser = subparsers.add_parser(
+        "filter-listings",
+        help="Score listings against walk zones → listings-scored.geojson",
+    )
+    filter_parser.add_argument(
+        "--minutes",
+        type=float,
+        default=10.0,
+        help="Walk-time budget to match against zones (default: 10)",
+    )
+    filter_parser.set_defaults(func=cmd_filter_listings)
 
     serve_parser = subparsers.add_parser(
         "serve",

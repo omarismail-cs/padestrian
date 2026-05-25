@@ -14,6 +14,7 @@ ISOCHRONES_DIR = DATA_DIR / "isochrones"
 SMOKE_ISOCHRONE_PATH = ISOCHRONES_DIR / "smoke.geojson"
 LISTINGS_JSON_PATH = DATA_DIR / "listings.json"
 LISTINGS_GEOJSON_PATH = DATA_DIR / "listings.geojson"
+LISTINGS_SCORED_PATH = DATA_DIR / "listings-scored.geojson"
 ZONES_DIR = DATA_DIR / "zones"
 ZONES_CACHE_DIR = ZONES_DIR / "cache"
 

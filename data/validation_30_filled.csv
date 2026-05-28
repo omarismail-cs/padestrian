@@ -1,0 +1,37 @@
+address,lat,lon,manual_transit_10,manual_grocery_10,notes
+"2194 Sunmeadow St, Cumberland, ON K4A 4W1",45.45792,-75.473819,TRUE,FALSE,closest is metro (17 mins)
+"6 Gurdwara Rd, Nepean, ON K2E 8A3",45.335234,-75.703149,TRUE,FALSE,antares / west hunt club
+"666 Brome Cres, Cumberland, ON K4A 1W2",45.482644,-75.488271,TRUE,FALSE,
+"17 Bracewood Way, Nepean, ON K2J 4Y3",45.259146,-75.723332,TRUE,FALSE,
+"1265 Alloway Cres, Old Ottawa, ON K1K 3Y9",45.436617,-75.629033,TRUE,FALSE,
+"37 New Deighton Cres, Nepean, ON K2G 6H8",45.28731,-75.719621,TRUE,TRUE,
+"47 Amberly Pl, Gloucester, ON K1J 7J9",45.447921,-75.613461,TRUE,TRUE,"Korems Foods & Variety Store (idk if we have it but its 12 mins)
+"
+"1498 Kamouraska Cir, Gloucester, ON K1C 3J2",45.460798,-75.527117,TRUE,TRUE,"Marsha’s Your Independent Grocer Orleans"
+"2353 Baseline Rd, Old Ottawa, ON K2C 0E2",45.345453,-75.778065,TRUE,FALSE,"Iris Food Mart SSCF 12 mins, idk if good enough as a supermarket thoo
+"
+"955 Alpine Ave, Old Ottawa, ON K2B 5R9",45.357167,-75.78589,FALSE,True (almost),13 mins to Farm Boy
+"1004 Watson St, Old Ottawa, ON K2B 6C2",45.352112,-75.79281,TRUE,TRUE,"Ottawa Halal Market (3 mins)
+"
+"7 Spearman Lane, Kanata, ON K2L 1Y6",45.289903,-75.887396,TRUE,TRUE,"Farm Boy Kanata (14 mins)
+"
+"11 Bank Note Priv, Old Ottawa, ON K1Z 1C6",45.397502,-75.746775,TRUE,TRUE,"metro (10 mins), real canadian superstore (10 mins)"
+"8 Norfolk Ave, Old Ottawa, ON K1S 4M4",45.398407,-75.707536,TRUE,TRUE,abbas grocery
+"417 Kayak St, Nepean, ON K2J 6P2",45.262088,-75.736924,TRUE,TRUE,"Loblaws Greenbank Road (14 mins)
+"
+"283 Losino Cres, Kanata, ON K2V 0E4",45.279288,-75.883291,TRUE,FALSE,
+"45 Whelan Dr, Nepean, ON K2J 2A3",45.275722,-75.761648,TRUE,FALSE,
+"661 Parade Dr, Goulbourn, ON K2S 0Z2",45.247047,-75.904033,FALSE,FALSE,
+"246 Willow Aster Cir, Cumberland, ON K4A 1C7",45.440115,-75.492638,TRUE,FALSE,
+"1757 Harvest Cres, Gloucester, ON K1C 1V3",45.46694,-75.543037,TRUE,FALSE,
+"894 Balzac Lane, Cumberland, ON K4A 4E4",45.457172,-75.463499,TRUE,FALSE,
+"75 Dun Skipper Dr, Gloucester, ON K1X 0E8",45.307495,-75.594428,TRUE,FALSE,
+"254 Trollius Way, Gloucester, ON K1T 0S2",45.323285,-75.607822,TRUE,FALSE,
+"327 Silent Wood Grove, West Carleton, ON K0A 1L0",45.29576,-76.10703,FALSE,FALSE,
+"15 Bentgrass Gr, Nepean, ON K2J 4Y1",45.258845,-75.724456,TRUE,FALSE,
+"1543 Rosebella Ave, Gloucester, ON K1T 1E7",45.346694,-75.632173,TRUE,TRUE,farm boy 2950 bank
+"530 Hyssop St, Cumberland, ON K4A 1B9",45.447312,-75.487362,TRUE,TRUE,"Sobeys Orleans Cumberland (11 mins)
+"
+"206 Keyrock Dr, Kanata, ON K2T 0B5",45.31984,-75.931415,TRUE,TRUE,Kowloon Market (Kanata)
+"22 Claridge Dr, Nepean, ON K2J 4L8",45.287096,-75.726323,TRUE,TRUE,farm boy woodroffe
+"26 Quarry Ridge Dr, Gloucester, ON K1C 7S2",45.479108,-75.526802,TRUE,FALSE,

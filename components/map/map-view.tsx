@@ -9,17 +9,20 @@ import "mapbox-gl/dist/mapbox-gl.css"
 const CENTER = { longitude: -75.6972, latitude: 45.4215 }
 const ZOOM   = 12.5
 
-// Listing eligibility colours
-const COLOR_ELIGIBLE = "#f97316"  // orange — walkable to both
-const COLOR_GROCERY  = "#84cc16"  // lime   — grocery only
-const COLOR_TRANSIT  = "#8b5cf6"  // violet — transit only
-const COLOR_NEITHER  = "#64748b"  // slate  — neither
-
-// Map layer colours — deliberately distinct from listing eligibility dots
+// Map layer colours — distinct from listing house icons
 const LAYER_GROCERY_COLOR = "#14b8a6"  // teal  — grocery store pins
 const LAYER_TRANSIT_COLOR = "#0ea5e9"  // sky   — transit stop pins
 const LAYER_SMOKE_TRANSIT = "#8b5cf6"  // violet — transit walk zone fill
 const LAYER_SMOKE_GROCERY = "#84cc16"  // lime   — grocery walk zone fill
+
+// Pre-tinted house PNGs (same approach as teal grocery-icon.png)
+const HOUSE_ICONS = [
+  { id: "house-walkable", url: "/images/house-walkable.png" },
+  { id: "house-grocery", url: "/images/house-grocery.png" },
+  { id: "house-transit", url: "/images/house-transit.png" },
+  { id: "house-neither", url: "/images/house-neither.png" },
+  { id: "house-default", url: "/images/house-default.png" },
+] as const
 
 interface Filters {
   walkableOnly: boolean
@@ -59,23 +62,41 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
   const [smokeData, setSmokeData] = useState<GeoJSON.FeatureCollection | null>(null)
   const [hasScores, setHasScores] = useState(false)
   const [groceryIconReady, setGroceryIconReady] = useState(false)
+  const [houseIconReady, setHouseIconReady] = useState(false)
 
-  const loadGroceryIcon = useCallback(() => {
+  const loadMapIcons = useCallback(() => {
     const map = mapRef.current?.getMap()
-    if (!map || map.hasImage("grocery-icon")) {
-      if (map?.hasImage("grocery-icon")) setGroceryIconReady(true)
-      return
-    }
-    map.loadImage("/images/grocery-icon.png", (err, image) => {
-      if (err || !image) {
-        console.warn("Grocery icon failed to load", err)
+    if (!map) return
+
+    const loadIcon = (
+      id: string,
+      url: string,
+      onReady: () => void,
+    ) => {
+      if (map.hasImage(id)) {
+        onReady()
         return
       }
-      if (!map.hasImage("grocery-icon")) {
-        map.addImage("grocery-icon", image, { pixelRatio: 2 })
-      }
-      setGroceryIconReady(true)
-    })
+      map.loadImage(url, (err, image) => {
+        if (err || !image) {
+          console.warn(`${id} failed to load`, err)
+        } else if (!map.hasImage(id)) {
+          map.addImage(id, image, { pixelRatio: 2 })
+        }
+        onReady()
+      })
+    }
+
+    loadIcon("grocery-icon", "/images/grocery-icon.png", () => setGroceryIconReady(true))
+
+    let houseLoaded = 0
+    const onHouseIconReady = () => {
+      houseLoaded += 1
+      if (houseLoaded >= HOUSE_ICONS.length) setHouseIconReady(true)
+    }
+    for (const { id, url } of HOUSE_ICONS) {
+      loadIcon(id, url, onHouseIconReady)
+    }
   }, [])
 
   // Load core data on mount
@@ -86,7 +107,12 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
       .catch(() => fetch("/data/listings.geojson").then(r => r.json()))
       .then((d: GeoJSON.FeatureCollection) => {
         setListings(d)
-        setHasScores(!!d.features[0]?.properties?.eligible)
+        const props = d.features[0]?.properties
+        setHasScores(
+          d.features.length > 0 &&
+          props != null &&
+          ("near_grocery" in props || "near_transit" in props),
+        )
       })
       .catch(() => console.warn("No listings data found"))
 
@@ -144,37 +170,47 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
     onStatsUpdate(total, walkable)
   }, [listings, onStatsUpdate])
 
-  // Listing circle colour: eligibility case-expression if scored, rent gradient if unscored
-  const listingColor = useCallback(() => {
-    if (!hasScores) {
-      return [
-        "interpolate", ["linear"], ["get", "rent_cad"],
-        1200, "#22c55e",
-        1900, "#eab308",
-        2600, "#f97316",
-        3400, "#dc2626",
-      ] as mapboxgl.DataDrivenPropertyValueSpecification<string>
-    }
+  const listingIconImage = useCallback((): mapboxgl.DataDrivenPropertyValueSpecification<string> => {
+    if (!hasScores) return "house-default"
     return [
       "case",
-      ["==", ["get", "eligible"],     true], COLOR_ELIGIBLE,
-      ["==", ["get", "near_grocery"], true], COLOR_GROCERY,
-      ["==", ["get", "near_transit"], true], COLOR_TRANSIT,
-      COLOR_NEITHER,
-    ] as mapboxgl.DataDrivenPropertyValueSpecification<string>
+      ["==", ["get", "eligible"], true], "house-walkable",
+      ["==", ["get", "near_grocery"], true], "house-grocery",
+      ["==", ["get", "near_transit"], true], "house-transit",
+      "house-neither",
+    ]
   }, [hasScores])
 
   const handleMouseMove = useCallback((event: MapLayerMouseEvent) => {
-    const feature = event.features?.[0]
+    const feature =
+      event.features?.find((f) => f.layer?.id === "listings-symbol") ??
+      event.features?.find((f) => f.properties?.rent_cad != null) ??
+      event.features?.[0]
     if (!feature) {
       setCursor("auto")
       setPopupInfo(null)
       return
     }
+
+    let longitude = event.lngLat.lng
+    let latitude = event.lngLat.lat
+    const geom = feature.geometry
+    if (geom?.type === "Point" && Array.isArray(geom.coordinates)) {
+      const [lng, lat] = geom.coordinates
+      if (Number.isFinite(lng) && Number.isFinite(lat)) {
+        longitude = lng
+        latitude = lat
+      }
+    }
+    if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) {
+      setPopupInfo(null)
+      return
+    }
+
     setCursor("pointer")
     setPopupInfo({
-      longitude: event.lngLat.lng,
-      latitude:  event.lngLat.lat,
+      longitude,
+      latitude,
       properties: feature.properties || {},
       layerId: feature.layer?.id || "",
     })
@@ -217,11 +253,11 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
             <span className="font-semibold text-foreground leading-tight">
               {String(p.title || p.address || "Listing")}
             </span>
-            {hasScores && (
+            {hasScores ? (
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${badgeClass}`}>
                 {badgeLabel}
               </span>
-            )}
+            ) : null}
           </div>
           <p className="text-muted-foreground text-sm">${rent}/mo · {beds}</p>
           {p.neighborhood && <p className="text-muted-foreground text-xs">{String(p.neighborhood)}</p>}
@@ -282,27 +318,37 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
       mapStyle={theme === "dark"
         ? "mapbox://styles/mapbox/dark-v11"
         : "mapbox://styles/mapbox/light-v11"}
-      interactiveLayerIds={["listings-circle", "groceries-symbol", "stops-circle", "smoke-centers", "smoke-zones-fill"]}
+      interactiveLayerIds={[
+        "listings-symbol",
+        "groceries-symbol",
+        "stops-circle",
+        "smoke-centers",
+        "smoke-zones-fill",
+      ]}
       cursor={cursor}
-      onLoad={loadGroceryIcon}
+      onLoad={loadMapIcons}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       <NavigationControl position="bottom-right" />
 
-      {/* ── Listings ─────────────────────────────────────────────── */}
-      {listings && (
+      {/* ── Listings (pre-colored house icons, same pattern as groceries) ── */}
+      {listings && houseIconReady && (
         <Source id="listings" type="geojson" data={listings}>
           <Layer
-            id="listings-circle"
-            type="circle"
+            id="listings-symbol"
+            type="symbol"
             filter={listingFilter() as mapboxgl.FilterSpecification}
-            paint={{
-              "circle-radius": 8,
-              "circle-color": listingColor(),
-              "circle-stroke-width": 2,
-              "circle-stroke-color": "rgba(0,0,0,0.2)",
-              "circle-opacity": 0.92,
+            layout={{
+              "icon-image": listingIconImage(),
+              "icon-size": [
+                "interpolate", ["linear"], ["zoom"],
+                10, 0.55,
+                14, 0.85,
+                18, 1.1,
+              ],
+              "icon-allow-overlap": true,
+              "icon-ignore-placement": true,
             }}
           />
         </Source>
@@ -395,7 +441,9 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
       )}
 
       {/* ── Popup ─────────────────────────────────────────────────── */}
-      {popupInfo && (
+      {popupInfo &&
+        Number.isFinite(popupInfo.longitude) &&
+        Number.isFinite(popupInfo.latitude) && (
         <Popup
           longitude={popupInfo.longitude}
           latitude={popupInfo.latitude}

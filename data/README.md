@@ -4,11 +4,33 @@ Datasets that power **Padestrian**’s walking zones: transit stops from GTFS an
 
 ## groceries.geojson
 
-Supermarkets and grocery-related places in the Ottawa area, exported from [OpenStreetMap](https://www.openstreetmap.org) via Overpass Turbo.
+**Full-size grocery stores** in the Ottawa area (weekly shop), from [OpenStreetMap](https://www.openstreetmap.org).
 
-- **Format:** GeoJSON `FeatureCollection` (129 features: mostly building polygons, some points)
+Included: `shop=supermarket` (Metro, Loblaws, Farm Boy, Sobeys, Superstore, Adonis, …) and **Costco warehouses** (`shop=wholesale`, not gas/pharmacy on the same lot).
+
+Excluded by filter: Bulk Barn, spice/ethnic specialty markets, obvious mis-tags (see `padestrian/grocery_catalog.py`).
+
 - **License:** [ODbL](https://www.openstreetmap.org/copyright)
-- **Refresh:** Re-run your Overpass query for the same bounding box / tags when you need updated POIs
+
+### Refresh (recommended)
+
+```bash
+python -m padestrian fetch-groceries
+python -m padestrian build-essentials
+python -m padestrian build-zones          # ORS walk polygons for any new stores
+python -m padestrian filter-listings
+```
+
+### Refresh yourself (Overpass Turbo)
+
+1. Open [overpass-turbo.eu](https://overpass-turbo.eu/) and paste `data/overpass-groceries.ql`.
+2. **Run** → **Export** → **GeoJSON**.
+3. Save as `data/groceries.geojson`.
+4. Run `build-essentials` and `build-zones` as above.
+
+`fetch-groceries` applies the same Costco + denylist rules automatically.
+
+**Note:** If a Sobeys / Superstore / Adonis is missing, it is usually **not mapped on OSM yet** (not a bug in the query). Add or fix the building on [openstreetmap.org](https://www.openstreetmap.org), then fetch again.
 
 ## GTFSExport/
 
@@ -48,11 +70,24 @@ Demo rental catalog for Ottawa (~180 mock listings). **Not live scrapes** — se
 | `listings.geojson` | Map layer (generated) |
 
 ```bash
-python -m padestrian seed-listings          # regenerate JSON
-python -m padestrian validate-listings    # validate + export GeoJSON
+# Best: City of Ottawa municipal address points (download CSV from open data)
+python -m padestrian import-municipal-addresses --csv "~/Downloads/Municipal_Address_....csv"
+python -m padestrian seed-listings --source municipal
+python -m padestrian validate-listings
+python -m padestrian filter-listings
 ```
 
-Commit both files so `serve` always has apartments on the map without extra steps.
+Pins use the same pattern as transit stops and groceries: **coordinates come from the source dataset**, not forward geocoding.
+
+| Source | Dataset |
+|--------|---------|
+| **municipal** (recommended) | City address points CSV → `X`/`Y` (Web Mercator) + `FULL_ADDRESS_EN` |
+| osm | Overpass building + `addr:*` tags |
+| geocode | Mapbox forward geocode (legacy) |
+
+Alternative OSM path: `fetch-osm-residential` then `seed-listings --source osm`.
+
+`municipal-addresses.geojson` and the raw CSV are gitignored (large). Commit `listings.json` / `listings.geojson` for demos.
 
 ## Walk zones (`data/zones/`)
 

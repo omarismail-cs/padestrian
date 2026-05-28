@@ -1,67 +1,103 @@
 # Padestrian
 
-A smarter apartment-hunting tool for people who commute on foot—real walking routes to transit and groceries, not crow-fly “Walk Scores.”
+Padestrian is an Ottawa rental demo map.
+It scores each listing by whether you can walk to:
+- a full-size grocery store
+- transit
+
+Default scoring uses a 10 minute walking budget.
 
 ## Quick start
 
+### 1) Python setup
+
 ```bash
 python -m venv .venv
-.venv\Scripts\activate          # Windows
+.venv\Scripts\activate
 pip install -e .
-
-cp .env.example .env            # ORS + Mapbox keys
-# OC Transpo GTFS → data/GTFSExport/ (see data/README.md)
-
-python -m padestrian build-essentials
-python -m padestrian validate-listings   # exports data/listings.geojson
-python -m padestrian build-zones         # grocery walk zones (~3 min)
-python -m padestrian filter-listings     # score listings → listings-scored.geojson
-python -m padestrian serve               # http://127.0.0.1:8765
 ```
 
-After changing `.env`, restart `serve` and hard-refresh the browser (Ctrl+Shift+R).
+### 2) Frontend setup
 
-## Commands
+```bash
+npm install
+```
+
+### 3) Env setup
+
+Copy `.env.example` to `.env` and set API keys:
+- `ORS_API_KEY`
+- `MAPBOX_ACCESS_TOKEN`
+
+Also add `.env.local` for Next.js:
+- `NEXT_PUBLIC_MAPBOX_TOKEN=<your mapbox token>`
+
+### 4) Build data and score listings
+
+```bash
+python -m padestrian fetch-groceries
+python -m padestrian build-essentials
+python -m padestrian validate-listings
+python -m padestrian build-zones
+python -m padestrian filter-listings
+```
+
+### 5) Start the site
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:3000` and hard refresh with `Ctrl+Shift+R` after data updates.
+
+## Common workflows
+
+### Refresh grocery data (includes Costco rules)
+
+```bash
+python -m padestrian fetch-groceries
+python -m padestrian build-essentials
+python -m padestrian build-zones
+python -m padestrian filter-listings
+```
+
+### Re-score without re-fetching groceries
+
+```bash
+python -m padestrian build-zones
+python -m padestrian filter-listings
+```
+
+### Run manual validation report
+
+```bash
+python -m padestrian validate-scoring
+```
+
+## CLI commands
 
 | Command | Purpose |
 |---------|---------|
-| `build-essentials` | GTFS → `stops.geojson`, groceries → `groceries-points.geojson` |
-| `seed-listings` | Regenerate demo `data/listings.json` (180 Ottawa mocks) |
-| `validate-listings` | Check listings JSON → `listings.geojson` for the map |
-| `build-zones` | Batch 10‑min walk zones for all groceries (ORS, cached) |
-| `filter-listings` | Score listings against zones → `listings-scored.geojson` |
-| `smoke-isochrone` | Test 10‑min walk zones for one stop + one grocery |
-| `serve` | Local map (Mapbox GL JS) |
-| `check-mapbox` | Verify `MAPBOX_ACCESS_TOKEN` in `.env` |
+| `build-essentials` | Export GTFS stops and grocery points |
+| `fetch-groceries` | Refresh `data/groceries.geojson` from OSM with project filters |
+| `build-zones` | Build walk-zone polygons for groceries (and optional transit) |
+| `filter-listings` | Score listings into `data/listings-scored.geojson` |
+| `validate-scoring` | Compare scored listings to manual CSV labels |
+| `validate-listings` | Validate `listings.json` and export `listings.geojson` |
+| `seed-listings` | Generate demo listings |
+| `import-municipal-addresses` | Import City of Ottawa address points |
+| `fetch-osm-residential` | Cache OSM residential addresses |
+| `smoke-isochrone` | Quick ORS test using one stop and one grocery |
+| `check-mapbox` | Verify the Mapbox token from `.env` |
 
-## Map
+## Project layout
 
-- **[Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/)** v3, style `streets-v12`
-- On `serve`, writes `web/config.js` from `.env`; the page sets `mapboxgl.accessToken` from that
-- **Basemap test:** http://127.0.0.1:8765/basemap.html
-- **Token check:** http://127.0.0.1:8765/config.js (suffix should match terminal)
-
-## Layout
-
-```
-padestrian/     Python CLI
-web/            Map UI
-data/           GeoJSON + GTFS (GTFSExport/ gitignored)
+```text
+padestrian/    Python CLI and scoring code
+components/    React map UI
+app/           Next.js app entry
+data/          GeoJSON, zones, and GTFS input
+public/data/   Link to data/ for frontend loading
 ```
 
-## Roadmap
-
-1. Essentials GeoJSON — done  
-2. Demo listings on map — done (`listings.json` / `listings.geojson`)  
-3. Walking zones — `build-zones` (groceries); smoke test for one stop  
-4. Filter listings ∩ walk zones — done (`filter-listings`)  
-
-```bash
-# ~129 ORS calls, ~3 min with default delay; resumes from cache if interrupted
-python -m padestrian build-zones
-
-# Try first 3 groceries only
-python -m padestrian build-zones --grocery-limit 3
-```
-
-Data: [data/README.md](data/README.md)
+For dataset details and Overpass instructions, see [data/README.md](data/README.md).

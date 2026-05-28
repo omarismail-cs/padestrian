@@ -4,11 +4,17 @@ from __future__ import annotations
 
 import json
 import random
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import httpx
+
+from padestrian.geocode import geocode_address
 from padestrian.geojson_io import write_feature_collection
+from padestrian.municipal_addresses import load_municipal_points
+from padestrian.osm_addresses import load_residential_points
 from padestrian.gtfs_stops import OTTAWA_BBOX, _in_ottawa_bbox as _in_bbox
 from padestrian.paths import LISTINGS_GEOJSON_PATH, LISTINGS_JSON_PATH
 
@@ -152,78 +158,325 @@ def export_listings_geojson(
     }
 
 
-# Demo seed — plausible Ottawa neighborhoods (lon, lat) with jitter.
-_DEMO_NEIGHBORHOODS: list[tuple[str, float, float]] = [
-    ("ByWard Market", -75.692, 45.428),
-    ("Centretown", -75.698, 45.421),
-    ("Glebe", -75.689, 45.398),
-    ("Sandy Hill", -75.675, 45.424),
-    ("Lowertown", -75.685, 45.435),
-    ("Hintonburg", -75.725, 45.403),
-    ("Westboro", -75.752, 45.392),
-    ("Little Italy", -75.712, 45.409),
-    ("Vanier", -75.665, 45.432),
-    ("Alta Vista", -75.662, 45.385),
-    ("Billings Bridge", -75.655, 45.375),
-    ("Orleans", -75.510, 45.470),
-    ("Kanata", -75.900, 45.308),
-    ("Barrhaven", -75.735, 45.278),
-    ("Nepean", -75.760, 45.348),
-    ("Stittsville", -75.920, 45.258),
-    ("Rockcliffe", -75.655, 45.448),
-    ("New Edinburgh", -75.680, 45.445),
+# Demo seed — neighborhood center (lon, lat) + streets that actually exist in that area.
+_DEMO_NEIGHBORHOODS: list[tuple[str, float, float, list[str]]] = [
+    (
+        "ByWard Market",
+        -75.692,
+        45.428,
+        ["Murray St", "York St", "Sussex Dr", "George St", "William St", "Rideau St"],
+    ),
+    (
+        "Centretown",
+        -75.698,
+        45.421,
+        ["Cooper St", "Lisgar St", "Gilmour St", "O'Connor St", "Metcalfe St", "Kent St", "Laurier Ave W"],
+    ),
+    (
+        "Glebe",
+        -75.689,
+        45.398,
+        ["Bank St", "Powell Ave", "Fourth Ave", "Fifth Ave", "Lyon St S", "O'Connor St"],
+    ),
+    (
+        "Sandy Hill",
+        -75.675,
+        45.424,
+        ["King Edward Ave", "Stewart St", "Russell Ave", "Templeton St", "Nelson St"],
+    ),
+    (
+        "Lowertown",
+        -75.685,
+        45.435,
+        ["King Edward Ave", "Beausoleil Dr", "Cobourg St", "Guigues Ave", "Wurtemburg St"],
+    ),
+    (
+        "Hintonburg",
+        -75.725,
+        45.403,
+        ["Wellington St W", "Armstrong St", "Pinhey St", "Spadina Ave", "Parkdale Ave"],
+    ),
+    (
+        "Westboro",
+        -75.752,
+        45.392,
+        ["Richmond Rd", "Byron Ave", "Dovercourt Ave", "Golden Ave", "Tweedsmuir Ave"],
+    ),
+    (
+        "Little Italy",
+        -75.712,
+        45.409,
+        ["Preston St", "Rochester St", "Beech St", "Booth St", "Bell St N"],
+    ),
+    (
+        "Vanier",
+        -75.665,
+        45.432,
+        ["Montreal Rd", "Vanier Pkwy", "Marier Ave", "Cummings Ave", "Père Blanc Ave"],
+    ),
+    (
+        "Alta Vista",
+        -75.662,
+        45.385,
+        ["Alta Vista Dr", "Riverside Dr", "Smyth Rd", "Coronation Ave", "Dauphin St"],
+    ),
+    (
+        "Billings Bridge",
+        -75.655,
+        45.375,
+        ["Bank St", "Heron Rd", "Riverside Dr", "Bronson Ave", "Walkley Rd"],
+    ),
+    (
+        "Orleans",
+        -75.510,
+        45.470,
+        ["St Joseph Blvd", "Jeanne d'Arc Blvd", "Orleans Blvd", "Tenth Line Rd", "Innes Rd"],
+    ),
+    (
+        "Kanata",
+        -75.900,
+        45.308,
+        ["Castlefrank Rd", "Terry Fox Dr", "Eagleson Rd", "Huntmar Dr", "Goulbourn St"],
+    ),
+    (
+        "Barrhaven",
+        -75.735,
+        45.278,
+        ["Greenbank Rd", "Strandherd Dr", "Woodroffe Ave", "Jockvale Rd", "Prince of Wales Dr"],
+    ),
+    (
+        "Nepean",
+        -75.760,
+        45.348,
+        ["Merivale Rd", "Clyde Ave", "Colonnade Rd", "Viewmount Dr", "Centrepointe Dr"],
+    ),
+    (
+        "Stittsville",
+        -75.920,
+        45.258,
+        ["Stittsville Main St", "Hazeldean Rd", "Carp Rd", "Abbott St", "Granada Cres"],
+    ),
+    (
+        "Rockcliffe",
+        -75.655,
+        45.448,
+        ["Acacia Ave", "Springfield Rd", "Buena Vista Rd", "Lansdowne Rd", "McKay Lake Rd"],
+    ),
+    (
+        "New Edinburgh",
+        -75.680,
+        45.445,
+        ["Beechwood Ave", "Stanley Ave", "Crichton St", "MacKay St", "Dufferin Rd"],
+    ),
 ]
 
-_STREETS = [
-    "Bank St",
-    "Somerset St W",
-    "Gladstone Ave",
-    "Preston St",
-    "Rideau St",
-    "Wellington St W",
-    "Richmond Rd",
-    "Carling Ave",
-    "Montreal Rd",
-    "St Laurent Blvd",
-    "Baseline Rd",
-    "Hunt Club Rd",
-    "Catherine St",
-    "Laurier Ave E",
-    "Cooper St",
-]
+
+def _nearest_neighborhood(lon: float, lat: float) -> str:
+    best = _DEMO_NEIGHBORHOODS[0][0]
+    best_d = float("inf")
+    for hood, hood_lon, hood_lat, _ in _DEMO_NEIGHBORHOODS:
+        d = (lon - hood_lon) ** 2 + (lat - hood_lat) ** 2
+        if d < best_d:
+            best_d = d
+            best = hood
+    return best
 
 
-def seed_demo_listings(count: int = 180, *, seed: int = 42) -> dict[str, Any]:
-    """Build a reproducible demo catalog for Ottawa."""
+def _demo_rent_and_title(rng: random.Random, bedrooms: int) -> tuple[int, str]:
+    if bedrooms == 0:
+        return rng.randint(1150, 1750), "Studio apartment"
+    if bedrooms == 1:
+        return rng.randint(1450, 2200), "1 bedroom"
+    if bedrooms == 2:
+        return rng.randint(1750, 2850), "2 bedroom"
+    return rng.randint(2200, 3400), "3 bedroom"
+
+
+def seed_demo_listings(
+    count: int = 180,
+    *,
+    seed: int = 42,
+    source: str = "osm",
+) -> dict[str, Any]:
+    """
+    Build a reproducible demo catalog for Ottawa.
+
+    source:
+      municipal — City of Ottawa address points CSV (authoritative lat/lon)
+      osm — OpenStreetMap building coordinates + addr tags
+      geocode — invented addresses forwarded through Mapbox
+      jitter — random offsets around neighborhood centers (legacy)
+    """
+    if source == "municipal":
+        return _seed_from_municipal(count, seed=seed)
+    if source == "osm":
+        return _seed_from_osm(count, seed=seed)
+    if source == "geocode":
+        return _seed_from_geocode(count, seed=seed)
+    if source == "jitter":
+        return _seed_from_jitter(count, seed=seed)
+    raise ValueError(f"Unknown seed source {source!r}; use municipal, osm, geocode, or jitter")
+
+
+def _seed_from_municipal(count: int, *, seed: int) -> dict[str, Any]:
+    rng = random.Random(seed)
+    pool = load_municipal_points()
+    if len(pool) < count:
+        raise RuntimeError(
+            f"Only {len(pool)} municipal addresses available; need {count}. "
+            "Run: python -m padestrian import-municipal-addresses"
+        )
+
+    picks = rng.sample(pool, count)
+    listings: list[dict[str, Any]] = []
+    for i, feat in enumerate(picks):
+        lon, lat = feat["geometry"]["coordinates"]
+        props = feat.get("properties") or {}
+        address = props.get("address") or ""
+        hood = (props.get("municipality") or "").strip() or _nearest_neighborhood(lon, lat)
+        if hood:
+            hood = hood.title()
+        bedrooms = rng.choices([0, 1, 2, 3], weights=[12, 38, 35, 15])[0]
+        bathrooms = 1.0 if bedrooms <= 1 else (1.5 if bedrooms == 2 else 2.0)
+        base_rent, title = _demo_rent_and_title(rng, bedrooms)
+        listings.append(
+            {
+                "id": f"ott-{i + 1:04d}",
+                "title": f"{title} — {hood}",
+                "address": address,
+                "lat": round(lat, 6),
+                "lon": round(lon, 6),
+                "rent_cad": base_rent,
+                "bedrooms": bedrooms,
+                "bathrooms": bathrooms,
+                "neighborhood": hood,
+                "source": "padestrian-demo-municipal",
+                "url": f"https://example.com/listings/ott-{i + 1:04d}",
+            }
+        )
+
+    return {
+        "city": "Ottawa, ON",
+        "source": "padestrian demo seed (City of Ottawa municipal address points)",
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "listings": listings,
+    }
+
+
+def _seed_from_osm(count: int, *, seed: int) -> dict[str, Any]:
+    rng = random.Random(seed)
+    pool = load_residential_points()
+    if len(pool) < count:
+        raise RuntimeError(
+            f"Only {len(pool)} OSM residential addresses available; need {count}. "
+            "Re-run fetch-osm-residential or lower --count."
+        )
+
+    picks = rng.sample(pool, count)
+    listings: list[dict[str, Any]] = []
+    for i, feat in enumerate(picks):
+        lon, lat = feat["geometry"]["coordinates"]
+        props = feat.get("properties") or {}
+        address = props.get("address") or ""
+        hood = _nearest_neighborhood(lon, lat)
+        bedrooms = rng.choices([0, 1, 2, 3], weights=[12, 38, 35, 15])[0]
+        bathrooms = 1.0 if bedrooms <= 1 else (1.5 if bedrooms == 2 else 2.0)
+        base_rent, title = _demo_rent_and_title(rng, bedrooms)
+        listings.append(
+            {
+                "id": f"ott-{i + 1:04d}",
+                "title": f"{title} — {hood}",
+                "address": address,
+                "lat": round(lat, 6),
+                "lon": round(lon, 6),
+                "rent_cad": base_rent,
+                "bedrooms": bedrooms,
+                "bathrooms": bathrooms,
+                "neighborhood": hood,
+                "source": "padestrian-demo-osm",
+                "url": f"https://example.com/listings/ott-{i + 1:04d}",
+            }
+        )
+
+    return {
+        "city": "Ottawa, ON",
+        "source": "padestrian demo seed (OSM building coordinates + addr tags)",
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "listings": listings,
+    }
+
+
+def _seed_from_geocode(count: int, *, seed: int) -> dict[str, Any]:
     rng = random.Random(seed)
     listings: list[dict[str, Any]] = []
+    attempts = 0
+    max_attempts = count * 8
+    client = httpx.Client(timeout=20.0)
 
+    try:
+        while len(listings) < count and attempts < max_attempts:
+            attempts += 1
+            hood, base_lon, base_lat, streets = rng.choice(_DEMO_NEIGHBORHOODS)
+            bedrooms = rng.choices([0, 1, 2, 3], weights=[12, 38, 35, 15])[0]
+            bathrooms = 1.0 if bedrooms <= 1 else (1.5 if bedrooms == 2 else 2.0)
+            base_rent, title = _demo_rent_and_title(rng, bedrooms)
+            street = rng.choice(streets)
+            number = rng.randint(12, 999)
+            query = f"{number} {street}, {hood}, Ottawa, ON"
+            hit = geocode_address(query, proximity=(base_lon, base_lat), client=client)
+            if hit is None:
+                time.sleep(0.05)
+                continue
+            lon, lat, address = hit.lon, hit.lat, hit.label
+            time.sleep(0.05)
+            i = len(listings)
+            listings.append(
+                {
+                    "id": f"ott-{i + 1:04d}",
+                    "title": f"{title} — {hood}",
+                    "address": address,
+                    "lat": round(lat, 6),
+                    "lon": round(lon, 6),
+                    "rent_cad": base_rent,
+                    "bedrooms": bedrooms,
+                    "bathrooms": bathrooms,
+                    "neighborhood": hood,
+                    "source": "padestrian-demo",
+                    "url": f"https://example.com/listings/ott-{i + 1:04d}",
+                }
+            )
+    finally:
+        client.close()
+
+    if len(listings) < count:
+        raise RuntimeError(
+            f"Only geocoded {len(listings)}/{count} listings after {attempts} attempts. "
+            "Check MAPBOX_ACCESS_TOKEN or use --source osm."
+        )
+
+    return {
+        "city": "Ottawa, ON",
+        "source": "padestrian demo seed (Mapbox-geocoded addresses)",
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "listings": listings,
+    }
+
+
+def _seed_from_jitter(count: int, *, seed: int) -> dict[str, Any]:
+    rng = random.Random(seed)
+    listings: list[dict[str, Any]] = []
     for i in range(count):
-        hood, base_lon, base_lat = rng.choice(_DEMO_NEIGHBORHOODS)
+        hood, base_lon, base_lat, streets = rng.choice(_DEMO_NEIGHBORHOODS)
+        bedrooms = rng.choices([0, 1, 2, 3], weights=[12, 38, 35, 15])[0]
+        bathrooms = 1.0 if bedrooms <= 1 else (1.5 if bedrooms == 2 else 2.0)
+        base_rent, title = _demo_rent_and_title(rng, bedrooms)
+        street = rng.choice(streets)
+        number = rng.randint(12, 999)
+        address = f"{number} {street}, {hood}, Ottawa, ON"
         lon = base_lon + rng.uniform(-0.018, 0.018)
         lat = base_lat + rng.uniform(-0.012, 0.012)
         lon = max(OTTAWA_BBOX[0], min(OTTAWA_BBOX[2], lon))
         lat = max(OTTAWA_BBOX[1], min(OTTAWA_BBOX[3], lat))
-
-        bedrooms = rng.choices([0, 1, 2, 3], weights=[12, 38, 35, 15])[0]
-        bathrooms = 1.0 if bedrooms <= 1 else (1.5 if bedrooms == 2 else 2.0)
-        if bedrooms == 0:
-            base_rent = rng.randint(1150, 1750)
-            title = "Studio apartment"
-        elif bedrooms == 1:
-            base_rent = rng.randint(1450, 2200)
-            title = "1 bedroom"
-        elif bedrooms == 2:
-            base_rent = rng.randint(1750, 2850)
-            title = "2 bedroom"
-        else:
-            base_rent = rng.randint(2200, 3400)
-            title = "3 bedroom"
-
-        street = rng.choice(_STREETS)
-        number = rng.randint(12, 999)
-        address = f"{number} {street}, Ottawa, ON"
-
         listings.append(
             {
                 "id": f"ott-{i + 1:04d}",
@@ -242,14 +495,19 @@ def seed_demo_listings(count: int = 180, *, seed: int = 42) -> dict[str, Any]:
 
     return {
         "city": "Ottawa, ON",
-        "source": "padestrian demo seed (not live listings)",
+        "source": "padestrian demo seed (random jitter, not geocoded)",
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "listings": listings,
     }
 
 
-def write_seed_catalog(path: Path = LISTINGS_JSON_PATH, count: int = 180) -> Path:
-    catalog = seed_demo_listings(count)
+def write_seed_catalog(
+    path: Path = LISTINGS_JSON_PATH,
+    count: int = 180,
+    *,
+    source: str = "osm",
+) -> Path:
+    catalog = seed_demo_listings(count, source=source)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         json.dump(catalog, f, ensure_ascii=False, indent=2)

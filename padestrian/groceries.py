@@ -5,6 +5,7 @@ from typing import Any
 from shapely.geometry import mapping, shape
 
 from padestrian.geojson_io import write_feature_collection
+from padestrian.grocery_catalog import feature_tags, should_include_grocery
 from padestrian.paths import GROCERIES_PATH, GROCERIES_POINTS_PATH
 
 
@@ -36,6 +37,7 @@ def load_grocery_points(
         "from_polygon": 0,
         "from_point": 0,
         "skipped_unknown_geometry": 0,
+        "skipped_excluded": 0,
         "features_written": 0,
     }
 
@@ -48,6 +50,9 @@ def load_grocery_points(
 
         geom_type = geometry.get("type")
         props = dict(feature.get("properties") or {})
+        if not should_include_grocery(feature_tags(props)):
+            stats["skipped_excluded"] += 1
+            continue
 
         if geom_type == "Point":
             lon, lat = _point_coordinates(geometry)

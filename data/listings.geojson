@@ -6,20 +6,20 @@
       "id": "ott-0001",
       "properties": {
         "id": "ott-0001",
-        "title": "1 bedroom — Sandy Hill",
-        "address": "770 Baseline Rd, Ottawa, ON",
-        "rent_cad": 1554,
-        "bedrooms": 1,
-        "neighborhood": "Sandy Hill",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Cumberland",
+        "address": "2194 Sunmeadow St, Cumberland, ON K4A 4W1",
+        "rent_cad": 1870,
+        "bedrooms": 2,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0001"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.6921,
-          45.418601
+          -75.473819,
+          45.45792
         ]
       }
     },
@@ -28,20 +28,20 @@
       "id": "ott-0002",
       "properties": {
         "id": "ott-0002",
-        "title": "Studio apartment — New Edinburgh",
-        "address": "529 Preston St, Ottawa, ON",
-        "rent_cad": 1373,
-        "bedrooms": 0,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Nepean",
+        "address": "6 Gurdwara Rd, Nepean, ON K2E 8A3",
+        "rent_cad": 1482,
+        "bedrooms": 1,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0002"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.69487,
-          45.443126
+          -75.703149,
+          45.335234
         ]
       }
     },
@@ -50,20 +50,20 @@
       "id": "ott-0003",
       "properties": {
         "id": "ott-0003",
-        "title": "2 bedroom — ByWard Market",
-        "address": "471 Preston St, Ottawa, ON",
-        "rent_cad": 2609,
-        "bedrooms": 2,
-        "neighborhood": "ByWard Market",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "3 bedroom — Cumberland",
+        "address": "666 Brome Cres, Cumberland, ON K4A 1W2",
+        "rent_cad": 2345,
+        "bedrooms": 3,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0003"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.689795,
-          45.433184
+          -75.488271,
+          45.482644
         ]
       }
     },
@@ -72,20 +72,20 @@
       "id": "ott-0004",
       "properties": {
         "id": "ott-0004",
-        "title": "2 bedroom — Vanier",
-        "address": "296 Wellington St W, Ottawa, ON",
-        "rent_cad": 2615,
+        "title": "2 bedroom — Nepean",
+        "address": "17 Bracewood Way, Nepean, ON K2J 4Y3",
+        "rent_cad": 2320,
         "bedrooms": 2,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0004"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.653861,
-          45.420156
+          -75.723332,
+          45.259146
         ]
       }
     },
@@ -94,20 +94,20 @@
       "id": "ott-0005",
       "properties": {
         "id": "ott-0005",
-        "title": "Studio apartment — Lowertown",
-        "address": "379 Somerset St W, Ottawa, ON",
-        "rent_cad": 1539,
-        "bedrooms": 0,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "1265 Alloway Cres, Old Ottawa, ON K1K 3Y9",
+        "rent_cad": 2188,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0005"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.695249,
-          45.441324
+          -75.629033,
+          45.436617
         ]
       }
     },
@@ -116,20 +116,20 @@
       "id": "ott-0006",
       "properties": {
         "id": "ott-0006",
-        "title": "2 bedroom — Orleans",
-        "address": "956 Somerset St W, Ottawa, ON",
-        "rent_cad": 2848,
+        "title": "2 bedroom — Nepean",
+        "address": "37 New Deighton Cres, Nepean, ON K2G 6H8",
+        "rent_cad": 2718,
         "bedrooms": 2,
-        "neighborhood": "Orleans",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0006"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.506266,
-          45.477371
+          -75.719621,
+          45.28731
         ]
       }
     },
@@ -138,20 +138,20 @@
       "id": "ott-0007",
       "properties": {
         "id": "ott-0007",
-        "title": "2 bedroom — Kanata",
-        "address": "208 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 2490,
-        "bedrooms": 2,
-        "neighborhood": "Kanata",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Gloucester",
+        "address": "47 Amberly Pl, Gloucester, ON K1J 7J9",
+        "rent_cad": 1934,
+        "bedrooms": 1,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0007"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.915163,
-          45.303036
+          -75.613461,
+          45.447921
         ]
       }
     },
@@ -160,20 +160,20 @@
       "id": "ott-0008",
       "properties": {
         "id": "ott-0008",
-        "title": "1 bedroom — Glebe",
-        "address": "250 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 1531,
-        "bedrooms": 1,
-        "neighborhood": "Glebe",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Gloucester",
+        "address": "1498 Kamouraska Cir, Gloucester, ON K1C 3J2",
+        "rent_cad": 2139,
+        "bedrooms": 2,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0008"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.70535,
-          45.39147
+          -75.527117,
+          45.460798
         ]
       }
     },
@@ -182,20 +182,20 @@
       "id": "ott-0009",
       "properties": {
         "id": "ott-0009",
-        "title": "2 bedroom — Sandy Hill",
-        "address": "375 Wellington St W, Ottawa, ON",
-        "rent_cad": 2083,
-        "bedrooms": 2,
-        "neighborhood": "Sandy Hill",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "Studio apartment — Old Ottawa",
+        "address": "2353 Baseline Rd, Old Ottawa, ON K2C 0E2",
+        "rent_cad": 1591,
+        "bedrooms": 0,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0009"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.679315,
-          45.422882
+          -75.778065,
+          45.345453
         ]
       }
     },
@@ -204,20 +204,20 @@
       "id": "ott-0010",
       "properties": {
         "id": "ott-0010",
-        "title": "2 bedroom — Westboro",
-        "address": "662 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 1896,
-        "bedrooms": 2,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "955 Alpine Ave, Old Ottawa, ON K2B 5R9",
+        "rent_cad": 1870,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0010"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.745874,
-          45.396844
+          -75.78589,
+          45.357167
         ]
       }
     },
@@ -226,20 +226,20 @@
       "id": "ott-0011",
       "properties": {
         "id": "ott-0011",
-        "title": "1 bedroom — Hintonburg",
-        "address": "667 Cooper St, Ottawa, ON",
-        "rent_cad": 1726,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "1004 Watson St, Old Ottawa, ON K2B 6C2",
+        "rent_cad": 2196,
         "bedrooms": 1,
-        "neighborhood": "Hintonburg",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0011"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.723771,
-          45.396875
+          -75.79281,
+          45.352112
         ]
       }
     },
@@ -248,20 +248,20 @@
       "id": "ott-0012",
       "properties": {
         "id": "ott-0012",
-        "title": "2 bedroom — New Edinburgh",
-        "address": "853 Preston St, Ottawa, ON",
-        "rent_cad": 1864,
-        "bedrooms": 2,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "Studio apartment — Kanata",
+        "address": "7 Spearman Lane, Kanata, ON K2L 1Y6",
+        "rent_cad": 1250,
+        "bedrooms": 0,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0012"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.690094,
-          45.440783
+          -75.887396,
+          45.289903
         ]
       }
     },
@@ -270,20 +270,20 @@
       "id": "ott-0013",
       "properties": {
         "id": "ott-0013",
-        "title": "Studio apartment — Centretown",
-        "address": "747 Cooper St, Ottawa, ON",
-        "rent_cad": 1730,
+        "title": "Studio apartment — Old Ottawa",
+        "address": "11 Bank Note Priv, Old Ottawa, ON K1Z 1C6",
+        "rent_cad": 1497,
         "bedrooms": 0,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0013"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.687018,
-          45.418628
+          -75.746775,
+          45.397502
         ]
       }
     },
@@ -292,20 +292,20 @@
       "id": "ott-0014",
       "properties": {
         "id": "ott-0014",
-        "title": "3 bedroom — Billings Bridge",
-        "address": "283 Gladstone Ave, Ottawa, ON",
-        "rent_cad": 3139,
-        "bedrooms": 3,
-        "neighborhood": "Billings Bridge",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "8 Norfolk Ave, Old Ottawa, ON K1S 4M4",
+        "rent_cad": 1973,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0014"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.665345,
-          45.374982
+          -75.707536,
+          45.398407
         ]
       }
     },
@@ -314,20 +314,20 @@
       "id": "ott-0015",
       "properties": {
         "id": "ott-0015",
-        "title": "1 bedroom — Lowertown",
-        "address": "931 Richmond Rd, Ottawa, ON",
-        "rent_cad": 2048,
+        "title": "1 bedroom — Nepean",
+        "address": "417 Kayak St, Nepean, ON K2J 6P2",
+        "rent_cad": 1644,
         "bedrooms": 1,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0015"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.694121,
-          45.436473
+          -75.736924,
+          45.262088
         ]
       }
     },
@@ -336,20 +336,20 @@
       "id": "ott-0016",
       "properties": {
         "id": "ott-0016",
-        "title": "1 bedroom — Kanata",
-        "address": "785 Somerset St W, Ottawa, ON",
-        "rent_cad": 1955,
-        "bedrooms": 1,
+        "title": "2 bedroom — Kanata",
+        "address": "283 Losino Cres, Kanata, ON K2V 0E4",
+        "rent_cad": 2037,
+        "bedrooms": 2,
         "neighborhood": "Kanata",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0016"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.904968,
-          45.319936
+          -75.883291,
+          45.279288
         ]
       }
     },
@@ -358,20 +358,20 @@
       "id": "ott-0017",
       "properties": {
         "id": "ott-0017",
-        "title": "1 bedroom — Centretown",
-        "address": "622 Richmond Rd, Ottawa, ON",
-        "rent_cad": 2146,
+        "title": "1 bedroom — Nepean",
+        "address": "45 Whelan Dr, Nepean, ON K2J 2A3",
+        "rent_cad": 1735,
         "bedrooms": 1,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0017"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.685,
-          45.412668
+          -75.761648,
+          45.275722
         ]
       }
     },
@@ -380,20 +380,20 @@
       "id": "ott-0018",
       "properties": {
         "id": "ott-0018",
-        "title": "1 bedroom — Glebe",
-        "address": "893 Montreal Rd, Ottawa, ON",
-        "rent_cad": 1707,
+        "title": "1 bedroom — Goulbourn",
+        "address": "661 Parade Dr, Goulbourn, ON K2S 0Z2",
+        "rent_cad": 1527,
         "bedrooms": 1,
-        "neighborhood": "Glebe",
-        "source": "padestrian-demo",
+        "neighborhood": "Goulbourn",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0018"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.693148,
-          45.400301
+          -75.904033,
+          45.247047
         ]
       }
     },
@@ -402,20 +402,20 @@
       "id": "ott-0019",
       "properties": {
         "id": "ott-0019",
-        "title": "3 bedroom — ByWard Market",
-        "address": "668 Catherine St, Ottawa, ON",
-        "rent_cad": 2746,
-        "bedrooms": 3,
-        "neighborhood": "ByWard Market",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Cumberland",
+        "address": "246 Willow Aster Cir, Cumberland, ON K4A 1C7",
+        "rent_cad": 2013,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0019"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.68551,
-          45.418749
+          -75.492638,
+          45.440115
         ]
       }
     },
@@ -424,20 +424,20 @@
       "id": "ott-0020",
       "properties": {
         "id": "ott-0020",
-        "title": "1 bedroom — Billings Bridge",
-        "address": "748 Cooper St, Ottawa, ON",
-        "rent_cad": 2189,
-        "bedrooms": 1,
-        "neighborhood": "Billings Bridge",
-        "source": "padestrian-demo",
+        "title": "Studio apartment — Gloucester",
+        "address": "1757 Harvest Cres, Gloucester, ON K1C 1V3",
+        "rent_cad": 1703,
+        "bedrooms": 0,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0020"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.668984,
-          45.373434
+          -75.543037,
+          45.46694
         ]
       }
     },
@@ -446,20 +446,20 @@
       "id": "ott-0021",
       "properties": {
         "id": "ott-0021",
-        "title": "2 bedroom — Vanier",
-        "address": "652 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 1967,
+        "title": "2 bedroom — Cumberland",
+        "address": "894 Balzac Lane, Cumberland, ON K4A 4E4",
+        "rent_cad": 1941,
         "bedrooms": 2,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0021"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.648012,
-          45.438287
+          -75.463499,
+          45.457172
         ]
       }
     },
@@ -468,20 +468,20 @@
       "id": "ott-0022",
       "properties": {
         "id": "ott-0022",
-        "title": "1 bedroom — Alta Vista",
-        "address": "177 Catherine St, Ottawa, ON",
-        "rent_cad": 1832,
-        "bedrooms": 1,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Gloucester",
+        "address": "75 Dun Skipper Dr, Gloucester, ON K1X 0E8",
+        "rent_cad": 2684,
+        "bedrooms": 3,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0022"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.6497,
-          45.385184
+          -75.594428,
+          45.307495
         ]
       }
     },
@@ -490,20 +490,20 @@
       "id": "ott-0023",
       "properties": {
         "id": "ott-0023",
-        "title": "3 bedroom — New Edinburgh",
-        "address": "31 Carling Ave, Ottawa, ON",
-        "rent_cad": 2863,
-        "bedrooms": 3,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Gloucester",
+        "address": "254 Trollius Way, Gloucester, ON K1T 0S2",
+        "rent_cad": 1947,
+        "bedrooms": 1,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0023"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.663674,
-          45.455138
+          -75.607822,
+          45.323285
         ]
       }
     },
@@ -512,20 +512,20 @@
       "id": "ott-0024",
       "properties": {
         "id": "ott-0024",
-        "title": "2 bedroom — Sandy Hill",
-        "address": "71 Preston St, Ottawa, ON",
-        "rent_cad": 2379,
-        "bedrooms": 2,
-        "neighborhood": "Sandy Hill",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — West Carleton",
+        "address": "327 Silent Wood Grove, West Carleton, ON K0A 1L0",
+        "rent_cad": 1860,
+        "bedrooms": 1,
+        "neighborhood": "West Carleton",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0024"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.659552,
-          45.433089
+          -76.10703,
+          45.29576
         ]
       }
     },
@@ -534,20 +534,20 @@
       "id": "ott-0025",
       "properties": {
         "id": "ott-0025",
-        "title": "Studio apartment — Little Italy",
-        "address": "82 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 1647,
-        "bedrooms": 0,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Nepean",
+        "address": "15 Bentgrass Gr, Nepean, ON K2J 4Y1",
+        "rent_cad": 2537,
+        "bedrooms": 3,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0025"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.698392,
-          45.419727
+          -75.724456,
+          45.258845
         ]
       }
     },
@@ -556,20 +556,20 @@
       "id": "ott-0026",
       "properties": {
         "id": "ott-0026",
-        "title": "1 bedroom — New Edinburgh",
-        "address": "283 Gladstone Ave, Ottawa, ON",
-        "rent_cad": 2012,
+        "title": "1 bedroom — Gloucester",
+        "address": "1543 Rosebella Ave, Gloucester, ON K1T 1E7",
+        "rent_cad": 1849,
         "bedrooms": 1,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0026"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.67043,
-          45.436081
+          -75.632173,
+          45.346694
         ]
       }
     },
@@ -578,20 +578,20 @@
       "id": "ott-0027",
       "properties": {
         "id": "ott-0027",
-        "title": "1 bedroom — Rockcliffe",
-        "address": "759 Catherine St, Ottawa, ON",
-        "rent_cad": 2002,
+        "title": "1 bedroom — Cumberland",
+        "address": "530 Hyssop St, Cumberland, ON K4A 1B9",
+        "rent_cad": 1915,
         "bedrooms": 1,
-        "neighborhood": "Rockcliffe",
-        "source": "padestrian-demo",
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0027"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.641592,
-          45.446155
+          -75.487362,
+          45.447312
         ]
       }
     },
@@ -600,20 +600,20 @@
       "id": "ott-0028",
       "properties": {
         "id": "ott-0028",
-        "title": "2 bedroom — Westboro",
-        "address": "933 Carling Ave, Ottawa, ON",
-        "rent_cad": 2514,
-        "bedrooms": 2,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Kanata",
+        "address": "206 Keyrock Dr, Kanata, ON K2T 0B5",
+        "rent_cad": 2163,
+        "bedrooms": 1,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0028"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.744334,
-          45.389576
+          -75.931415,
+          45.31984
         ]
       }
     },
@@ -622,20 +622,20 @@
       "id": "ott-0029",
       "properties": {
         "id": "ott-0029",
-        "title": "Studio apartment — Rockcliffe",
-        "address": "579 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 1171,
-        "bedrooms": 0,
-        "neighborhood": "Rockcliffe",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Nepean",
+        "address": "22 Claridge Dr, Nepean, ON K2J 4L8",
+        "rent_cad": 3338,
+        "bedrooms": 3,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0029"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.656746,
-          45.44195
+          -75.726323,
+          45.287096
         ]
       }
     },
@@ -644,20 +644,20 @@
       "id": "ott-0030",
       "properties": {
         "id": "ott-0030",
-        "title": "2 bedroom — Little Italy",
-        "address": "81 Preston St, Ottawa, ON",
-        "rent_cad": 1870,
+        "title": "2 bedroom — Gloucester",
+        "address": "26 Quarry Ridge Dr, Gloucester, ON K1C 7S2",
+        "rent_cad": 2746,
         "bedrooms": 2,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0030"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.708816,
-          45.397173
+          -75.526802,
+          45.479108
         ]
       }
     },
@@ -666,20 +666,20 @@
       "id": "ott-0031",
       "properties": {
         "id": "ott-0031",
-        "title": "1 bedroom — Centretown",
-        "address": "231 Carling Ave, Ottawa, ON",
-        "rent_cad": 2135,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "90 C Templeton St, Old Ottawa, ON K1N 6X3",
+        "rent_cad": 1753,
         "bedrooms": 1,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0031"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.685053,
-          45.410701
+          -75.675663,
+          45.421682
         ]
       }
     },
@@ -688,20 +688,20 @@
       "id": "ott-0032",
       "properties": {
         "id": "ott-0032",
-        "title": "2 bedroom — New Edinburgh",
-        "address": "815 Preston St, Ottawa, ON",
-        "rent_cad": 2718,
-        "bedrooms": 2,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "62 Third Ave, Old Ottawa, ON K1S 2J8",
+        "rent_cad": 1509,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0032"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.693237,
-          45.455452
+          -75.685586,
+          45.403898
         ]
       }
     },
@@ -710,20 +710,20 @@
       "id": "ott-0033",
       "properties": {
         "id": "ott-0033",
-        "title": "Studio apartment — Stittsville",
-        "address": "445 Wellington St W, Ottawa, ON",
-        "rent_cad": 1591,
-        "bedrooms": 0,
-        "neighborhood": "Stittsville",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "2167 Erinbrook Cres, Old Ottawa, ON K1B 4J7",
+        "rent_cad": 1874,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0033"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.90893,
-          45.25057
+          -75.616537,
+          45.401159
         ]
       }
     },
@@ -732,20 +732,20 @@
       "id": "ott-0034",
       "properties": {
         "id": "ott-0034",
-        "title": "2 bedroom — Barrhaven",
-        "address": "424 Bank St, Ottawa, ON",
-        "rent_cad": 1951,
+        "title": "2 bedroom — West Carleton",
+        "address": "2717 Kinburn Side Rd, West Carleton, ON K0A 2H0",
+        "rent_cad": 1867,
         "bedrooms": 2,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
+        "neighborhood": "West Carleton",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0034"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.736187,
-          45.283498
+          -76.167381,
+          45.405769
         ]
       }
     },
@@ -754,20 +754,20 @@
       "id": "ott-0035",
       "properties": {
         "id": "ott-0035",
-        "title": "1 bedroom — Billings Bridge",
-        "address": "155 Carling Ave, Ottawa, ON",
-        "rent_cad": 1999,
-        "bedrooms": 1,
-        "neighborhood": "Billings Bridge",
-        "source": "padestrian-demo",
+        "title": "Studio apartment — Old Ottawa",
+        "address": "575 Island Park Cres, Old Ottawa, ON K1Y 3P2",
+        "rent_cad": 1638,
+        "bedrooms": 0,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0035"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.644179,
-          45.365622
+          -75.737103,
+          45.390779
         ]
       }
     },
@@ -776,20 +776,20 @@
       "id": "ott-0036",
       "properties": {
         "id": "ott-0036",
-        "title": "3 bedroom — Barrhaven",
-        "address": "839 Carling Ave, Ottawa, ON",
-        "rent_cad": 2354,
-        "bedrooms": 3,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "1941 Haig Dr, Old Ottawa, ON K1G 2J9",
+        "rent_cad": 2837,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0036"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.746394,
-          45.277103
+          -75.635434,
+          45.398143
         ]
       }
     },
@@ -798,20 +798,20 @@
       "id": "ott-0037",
       "properties": {
         "id": "ott-0037",
-        "title": "2 bedroom — New Edinburgh",
-        "address": "960 Somerset St W, Ottawa, ON",
-        "rent_cad": 1780,
-        "bedrooms": 2,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "213 Anna Ave, Old Ottawa, ON K1Z 7V3",
+        "rent_cad": 1970,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0037"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.694475,
-          45.448651
+          -75.728927,
+          45.382635
         ]
       }
     },
@@ -820,20 +820,20 @@
       "id": "ott-0038",
       "properties": {
         "id": "ott-0038",
-        "title": "1 bedroom — Little Italy",
-        "address": "72 Cooper St, Ottawa, ON",
-        "rent_cad": 1860,
-        "bedrooms": 1,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
+        "title": "Studio apartment — West Carleton",
+        "address": "392 Bayview Dr, West Carleton, ON K0A 3M0",
+        "rent_cad": 1340,
+        "bedrooms": 0,
+        "neighborhood": "West Carleton",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0038"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.724013,
-          45.408655
+          -76.078541,
+          45.50156
         ]
       }
     },
@@ -842,20 +842,20 @@
       "id": "ott-0039",
       "properties": {
         "id": "ott-0039",
-        "title": "1 bedroom — Hintonburg",
-        "address": "445 Rideau St, Ottawa, ON",
-        "rent_cad": 1915,
-        "bedrooms": 1,
-        "neighborhood": "Hintonburg",
-        "source": "padestrian-demo",
+        "title": "Studio apartment — Vanier",
+        "address": "262 Ethel St, Vanier, ON K1L 5W9",
+        "rent_cad": 1219,
+        "bedrooms": 0,
+        "neighborhood": "Vanier",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0039"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.729357,
-          45.414647
+          -75.661879,
+          45.43824
         ]
       }
     },
@@ -864,20 +864,20 @@
       "id": "ott-0040",
       "properties": {
         "id": "ott-0040",
-        "title": "1 bedroom — New Edinburgh",
-        "address": "605 Bank St, Ottawa, ON",
-        "rent_cad": 1672,
-        "bedrooms": 1,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Kanata",
+        "address": "21 Haslemere Ave, Kanata, ON K2W 1E3",
+        "rent_cad": 2231,
+        "bedrooms": 2,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0040"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.674173,
-          45.44468
+          -75.940381,
+          45.352311
         ]
       }
     },
@@ -886,20 +886,20 @@
       "id": "ott-0041",
       "properties": {
         "id": "ott-0041",
-        "title": "Studio apartment — New Edinburgh",
-        "address": "953 Montreal Rd, Ottawa, ON",
-        "rent_cad": 1638,
-        "bedrooms": 0,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Kanata",
+        "address": "116 Saddlesmith Cir, Kanata, ON K2M 2Y5",
+        "rent_cad": 2033,
+        "bedrooms": 1,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0041"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.695806,
-          45.440527
+          -75.849856,
+          45.281218
         ]
       }
     },
@@ -908,20 +908,20 @@
       "id": "ott-0042",
       "properties": {
         "id": "ott-0042",
-        "title": "Studio apartment — Rockcliffe",
-        "address": "621 Somerset St W, Ottawa, ON",
-        "rent_cad": 1340,
-        "bedrooms": 0,
-        "neighborhood": "Rockcliffe",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Old Ottawa",
+        "address": "109 Celtic Crt, Old Ottawa, ON K1T 2A1",
+        "rent_cad": 2058,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0042"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.667332,
-          45.459059
+          -75.644546,
+          45.362666
         ]
       }
     },
@@ -930,20 +930,20 @@
       "id": "ott-0043",
       "properties": {
         "id": "ott-0043",
-        "title": "Studio apartment — Glebe",
-        "address": "604 Preston St, Ottawa, ON",
-        "rent_cad": 1733,
+        "title": "Studio apartment — Nepean",
+        "address": "147 Windhurst Dr, Nepean, ON K2G 6J4",
+        "rent_cad": 1233,
         "bedrooms": 0,
-        "neighborhood": "Glebe",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0043"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.682692,
-          45.391645
+          -75.715971,
+          45.279695
         ]
       }
     },
@@ -952,20 +952,20 @@
       "id": "ott-0044",
       "properties": {
         "id": "ott-0044",
-        "title": "2 bedroom — Centretown",
-        "address": "969 Wellington St W, Ottawa, ON",
-        "rent_cad": 2820,
-        "bedrooms": 2,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "64 Avenue Rd, Old Ottawa, ON K1S 0N9",
+        "rent_cad": 2047,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0044"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.693702,
-          45.419061
+          -75.675167,
+          45.39902
         ]
       }
     },
@@ -974,20 +974,20 @@
       "id": "ott-0045",
       "properties": {
         "id": "ott-0045",
-        "title": "1 bedroom — Vanier",
-        "address": "699 Gladstone Ave, Ottawa, ON",
-        "rent_cad": 1855,
-        "bedrooms": 1,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Goulbourn",
+        "address": "74 Rawah Priv, Goulbourn, ON K2S 3E2",
+        "rent_cad": 2397,
+        "bedrooms": 2,
+        "neighborhood": "Goulbourn",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0045"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.675647,
-          45.437189
+          -75.893464,
+          45.270407
         ]
       }
     },
@@ -996,20 +996,20 @@
       "id": "ott-0046",
       "properties": {
         "id": "ott-0046",
-        "title": "3 bedroom — Alta Vista",
-        "address": "648 Carling Ave, Ottawa, ON",
-        "rent_cad": 2219,
+        "title": "3 bedroom — Osgoode",
+        "address": "5724 Andrasi Cres, Osgoode, ON K0A 2W0",
+        "rent_cad": 2618,
         "bedrooms": 3,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
+        "neighborhood": "Osgoode",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0046"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.66354,
-          45.395296
+          -75.599187,
+          45.151635
         ]
       }
     },
@@ -1018,20 +1018,20 @@
       "id": "ott-0047",
       "properties": {
         "id": "ott-0047",
-        "title": "1 bedroom — Sandy Hill",
-        "address": "82 Cooper St, Ottawa, ON",
-        "rent_cad": 1807,
-        "bedrooms": 1,
-        "neighborhood": "Sandy Hill",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Cumberland",
+        "address": "1764 Heatherstone Cres, Cumberland, ON K4A 4P3",
+        "rent_cad": 2393,
+        "bedrooms": 2,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0047"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.690363,
-          45.417116
+          -75.466889,
+          45.483039
         ]
       }
     },
@@ -1040,20 +1040,20 @@
       "id": "ott-0048",
       "properties": {
         "id": "ott-0048",
-        "title": "2 bedroom — Little Italy",
-        "address": "838 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 2369,
-        "bedrooms": 2,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Nepean",
+        "address": "17 Commanche Dr, Nepean, ON K2E 6E8",
+        "rent_cad": 1855,
+        "bedrooms": 1,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0048"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.716697,
-          45.400786
+          -75.728714,
+          45.359755
         ]
       }
     },
@@ -1062,20 +1062,20 @@
       "id": "ott-0049",
       "properties": {
         "id": "ott-0049",
-        "title": "1 bedroom — Rockcliffe",
-        "address": "973 Somerset St W, Ottawa, ON",
-        "rent_cad": 2129,
+        "title": "1 bedroom — Nepean",
+        "address": "18 Cedarhill Dr, Nepean, ON K2R 1B6",
+        "rent_cad": 2110,
         "bedrooms": 1,
-        "neighborhood": "Rockcliffe",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0049"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.672718,
-          45.45561
+          -75.795559,
+          45.288732
         ]
       }
     },
@@ -1084,20 +1084,20 @@
       "id": "ott-0050",
       "properties": {
         "id": "ott-0050",
-        "title": "2 bedroom — Lowertown",
-        "address": "300 Rideau St, Ottawa, ON",
-        "rent_cad": 2068,
-        "bedrooms": 2,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Goulbourn",
+        "address": "27 Hesse Cres, Goulbourn, ON K2S 1E4",
+        "rent_cad": 1773,
+        "bedrooms": 1,
+        "neighborhood": "Goulbourn",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0050"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.693479,
-          45.444353
+          -75.922678,
+          45.265656
         ]
       }
     },
@@ -1106,20 +1106,20 @@
       "id": "ott-0051",
       "properties": {
         "id": "ott-0051",
-        "title": "2 bedroom — Westboro",
-        "address": "512 Montreal Rd, Ottawa, ON",
-        "rent_cad": 2290,
-        "bedrooms": 2,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "3 bedroom — Old Ottawa",
+        "address": "279 Bruyère St, Old Ottawa, ON K1N 5E5",
+        "rent_cad": 2348,
+        "bedrooms": 3,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0051"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.744166,
-          45.384886
+          -75.689349,
+          45.435125
         ]
       }
     },
@@ -1128,20 +1128,20 @@
       "id": "ott-0052",
       "properties": {
         "id": "ott-0052",
-        "title": "Studio apartment — Vanier",
-        "address": "295 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 1583,
+        "title": "Studio apartment — Kanata",
+        "address": "7 Cheltonia Way, Kanata, ON K2T 1G1",
+        "rent_cad": 1726,
         "bedrooms": 0,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0052"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.650408,
-          45.440306
+          -75.927506,
+          45.312249
         ]
       }
     },
@@ -1150,20 +1150,20 @@
       "id": "ott-0053",
       "properties": {
         "id": "ott-0053",
-        "title": "2 bedroom — Centretown",
-        "address": "771 Gladstone Ave, Ottawa, ON",
-        "rent_cad": 2286,
-        "bedrooms": 2,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "3 bedroom — Goulbourn",
+        "address": "29 Cherry Dr, Goulbourn, ON K2S 1J1",
+        "rent_cad": 2350,
+        "bedrooms": 3,
+        "neighborhood": "Goulbourn",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0053"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.715872,
-          45.427507
+          -75.911863,
+          45.251642
         ]
       }
     },
@@ -1172,20 +1172,20 @@
       "id": "ott-0054",
       "properties": {
         "id": "ott-0054",
-        "title": "Studio apartment — Nepean",
-        "address": "719 Cooper St, Ottawa, ON",
-        "rent_cad": 1227,
-        "bedrooms": 0,
+        "title": "2 bedroom — Nepean",
+        "address": "168 Golflinks Dr, Nepean, ON K2J 5M5",
+        "rent_cad": 2786,
+        "bedrooms": 2,
         "neighborhood": "Nepean",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0054"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.75814,
-          45.346264
+          -75.718514,
+          45.253189
         ]
       }
     },
@@ -1194,20 +1194,20 @@
       "id": "ott-0055",
       "properties": {
         "id": "ott-0055",
-        "title": "2 bedroom — Lowertown",
-        "address": "142 Richmond Rd, Ottawa, ON",
-        "rent_cad": 2053,
-        "bedrooms": 2,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Gloucester",
+        "address": "459 Cache Bay Cres, Gloucester, ON K1T 4H2",
+        "rent_cad": 1807,
+        "bedrooms": 1,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0055"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.683359,
-          45.44303
+          -75.595371,
+          45.321445
         ]
       }
     },
@@ -1216,20 +1216,20 @@
       "id": "ott-0056",
       "properties": {
         "id": "ott-0056",
-        "title": "2 bedroom — Centretown",
-        "address": "378 Cooper St, Ottawa, ON",
-        "rent_cad": 1831,
-        "bedrooms": 2,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "3 bedroom — Nepean",
+        "address": "183 Laramie Cres, Nepean, ON K2J 5Y3",
+        "rent_cad": 2700,
+        "bedrooms": 3,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0056"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.704903,
-          45.430576
+          -75.725986,
+          45.241008
         ]
       }
     },
@@ -1238,20 +1238,20 @@
       "id": "ott-0057",
       "properties": {
         "id": "ott-0057",
-        "title": "1 bedroom — Westboro",
-        "address": "907 Cooper St, Ottawa, ON",
-        "rent_cad": 2023,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "132 Kimberwick Cres, Old Ottawa, ON K1V 1K7",
+        "rent_cad": 1611,
         "bedrooms": 1,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0057"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.745446,
-          45.396006
+          -75.692254,
+          45.339509
         ]
       }
     },
@@ -1260,20 +1260,20 @@
       "id": "ott-0058",
       "properties": {
         "id": "ott-0058",
-        "title": "3 bedroom — Barrhaven",
-        "address": "178 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 2684,
-        "bedrooms": 3,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Goulbourn",
+        "address": "118 Lokoya St, Goulbourn, ON K2S 0J3",
+        "rent_cad": 2006,
+        "bedrooms": 1,
+        "neighborhood": "Goulbourn",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0058"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.717942,
-          45.283987
+          -75.864719,
+          45.274944
         ]
       }
     },
@@ -1282,20 +1282,20 @@
       "id": "ott-0059",
       "properties": {
         "id": "ott-0059",
-        "title": "2 bedroom — Hintonburg",
-        "address": "965 Catherine St, Ottawa, ON",
-        "rent_cad": 2430,
+        "title": "2 bedroom — Nepean",
+        "address": "31 Raftus Sq, Nepean, ON K2J 2K9",
+        "rent_cad": 2833,
         "bedrooms": 2,
-        "neighborhood": "Hintonburg",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0059"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.711269,
-          45.391595
+          -75.77408,
+          45.27688
         ]
       }
     },
@@ -1304,20 +1304,20 @@
       "id": "ott-0060",
       "properties": {
         "id": "ott-0060",
-        "title": "2 bedroom — Barrhaven",
-        "address": "818 Gladstone Ave, Ottawa, ON",
-        "rent_cad": 2296,
-        "bedrooms": 2,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "Studio apartment — Gloucester",
+        "address": "766 Nakina Way, Gloucester, ON K1V 2J1",
+        "rent_cad": 1717,
+        "bedrooms": 0,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0060"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.72412,
-          45.286738
+          -75.676157,
+          45.282246
         ]
       }
     },
@@ -1326,20 +1326,20 @@
       "id": "ott-0061",
       "properties": {
         "id": "ott-0061",
-        "title": "1 bedroom — Sandy Hill",
-        "address": "952 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 1654,
+        "title": "1 bedroom — Nepean",
+        "address": "83 Pickwick Dr, Nepean, ON K2J 3C9",
+        "rent_cad": 2129,
         "bedrooms": 1,
-        "neighborhood": "Sandy Hill",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0061"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.679228,
-          45.412929
+          -75.760663,
+          45.269875
         ]
       }
     },
@@ -1348,20 +1348,20 @@
       "id": "ott-0062",
       "properties": {
         "id": "ott-0062",
-        "title": "3 bedroom — Nepean",
-        "address": "687 Bank St, Ottawa, ON",
-        "rent_cad": 2656,
-        "bedrooms": 3,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "Studio apartment — Kanata",
+        "address": "28 O'Hara Dr, Kanata, ON K2W 1A2",
+        "rent_cad": 1287,
+        "bedrooms": 0,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0062"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.765412,
-          45.355693
+          -75.959296,
+          45.386093
         ]
       }
     },
@@ -1370,20 +1370,20 @@
       "id": "ott-0063",
       "properties": {
         "id": "ott-0063",
-        "title": "Studio apartment — Westboro",
-        "address": "668 Wellington St W, Ottawa, ON",
-        "rent_cad": 1435,
-        "bedrooms": 0,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Nepean",
+        "address": "20 Summerwind Cres, Nepean, ON K2G 6G6",
+        "rent_cad": 1559,
+        "bedrooms": 1,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0063"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.755655,
-          45.386686
+          -75.720145,
+          45.280283
         ]
       }
     },
@@ -1392,20 +1392,20 @@
       "id": "ott-0064",
       "properties": {
         "id": "ott-0064",
-        "title": "2 bedroom — Rockcliffe",
-        "address": "910 Somerset St W, Ottawa, ON",
-        "rent_cad": 1806,
+        "title": "2 bedroom — West Carleton",
+        "address": "358 Crossway Terr, West Carleton, ON K2S 2Z3",
+        "rent_cad": 2068,
         "bedrooms": 2,
-        "neighborhood": "Rockcliffe",
-        "source": "padestrian-demo",
+        "neighborhood": "West Carleton",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0064"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.658612,
-          45.459548
+          -75.934812,
+          45.286517
         ]
       }
     },
@@ -1414,20 +1414,20 @@
       "id": "ott-0065",
       "properties": {
         "id": "ott-0065",
-        "title": "1 bedroom — Vanier",
-        "address": "456 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 1561,
+        "title": "1 bedroom — Gloucester",
+        "address": "697 Guardian Grove, Gloucester, ON K1X 0B3",
+        "rent_cad": 2069,
         "bedrooms": 1,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0065"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.676572,
-          45.443101
+          -75.680486,
+          45.275258
         ]
       }
     },
@@ -1436,20 +1436,20 @@
       "id": "ott-0066",
       "properties": {
         "id": "ott-0066",
-        "title": "2 bedroom — Orleans",
-        "address": "406 Somerset St W, Ottawa, ON",
-        "rent_cad": 2797,
-        "bedrooms": 2,
-        "neighborhood": "Orleans",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "2 Oak St, Old Ottawa, ON K1R 6S9",
+        "rent_cad": 1801,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0066"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.501772,
-          45.465528
+          -75.713398,
+          45.40676
         ]
       }
     },
@@ -1458,20 +1458,20 @@
       "id": "ott-0067",
       "properties": {
         "id": "ott-0067",
-        "title": "Studio apartment — Westboro",
-        "address": "748 Baseline Rd, Ottawa, ON",
-        "rent_cad": 1701,
-        "bedrooms": 0,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Old Ottawa",
+        "address": "26 Byron Ave, Old Ottawa, ON K1Y 3H9",
+        "rent_cad": 2099,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0067"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.76083,
-          45.397011
+          -75.732317,
+          45.397322
         ]
       }
     },
@@ -1480,20 +1480,20 @@
       "id": "ott-0068",
       "properties": {
         "id": "ott-0068",
-        "title": "2 bedroom — Westboro",
-        "address": "333 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 2426,
-        "bedrooms": 2,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "3 bedroom — West Carleton",
+        "address": "3432 Baskins Beach Rd, West Carleton, ON K0A 1T0",
+        "rent_cad": 3235,
+        "bedrooms": 3,
+        "neighborhood": "West Carleton",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0068"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.756888,
-          45.381679
+          -76.003244,
+          45.479988
         ]
       }
     },
@@ -1502,20 +1502,20 @@
       "id": "ott-0069",
       "properties": {
         "id": "ott-0069",
-        "title": "1 bedroom — Sandy Hill",
-        "address": "424 Wellington St W, Ottawa, ON",
-        "rent_cad": 1868,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "1008 St-Laurent Blvd, Old Ottawa, ON K1K 3B4",
+        "rent_cad": 1502,
         "bedrooms": 1,
-        "neighborhood": "Sandy Hill",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0069"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.667089,
-          45.419208
+          -75.640131,
+          45.428361
         ]
       }
     },
@@ -1524,20 +1524,20 @@
       "id": "ott-0070",
       "properties": {
         "id": "ott-0070",
-        "title": "2 bedroom — Alta Vista",
-        "address": "778 Baseline Rd, Ottawa, ON",
-        "rent_cad": 2526,
-        "bedrooms": 2,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "Studio apartment — Old Ottawa",
+        "address": "271 Bruyère St, Old Ottawa, ON K1N 5E5",
+        "rent_cad": 1583,
+        "bedrooms": 0,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0070"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.660041,
-          45.377604
+          -75.689575,
+          45.435034
         ]
       }
     },
@@ -1546,20 +1546,20 @@
       "id": "ott-0071",
       "properties": {
         "id": "ott-0071",
-        "title": "2 bedroom — Hintonburg",
-        "address": "305 Rideau St, Ottawa, ON",
-        "rent_cad": 1750,
+        "title": "2 bedroom — Cumberland",
+        "address": "592 Steller St, Cumberland, ON K4A 1N2",
+        "rent_cad": 1840,
         "bedrooms": 2,
-        "neighborhood": "Hintonburg",
-        "source": "padestrian-demo",
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0071"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.720841,
-          45.398223
+          -75.486203,
+          45.471084
         ]
       }
     },
@@ -1568,20 +1568,20 @@
       "id": "ott-0072",
       "properties": {
         "id": "ott-0072",
-        "title": "2 bedroom — Westboro",
-        "address": "464 Carling Ave, Ottawa, ON",
-        "rent_cad": 2702,
-        "bedrooms": 2,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "Studio apartment — Old Ottawa",
+        "address": "176 Finn Crt, Old Ottawa, ON K1V 2C8",
+        "rent_cad": 1283,
+        "bedrooms": 0,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0072"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.754524,
-          45.39392
+          -75.65539,
+          45.375847
         ]
       }
     },
@@ -1590,20 +1590,20 @@
       "id": "ott-0073",
       "properties": {
         "id": "ott-0073",
-        "title": "3 bedroom — Westboro",
-        "address": "98 Baseline Rd, Ottawa, ON",
-        "rent_cad": 2547,
-        "bedrooms": 3,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "2 bedroom — Gloucester",
+        "address": "6520 Tooney Dr, Gloucester, ON K1C 7H1",
+        "rent_cad": 2286,
+        "bedrooms": 2,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0073"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.751598,
-          45.39905
+          -75.511819,
+          45.45535
         ]
       }
     },
@@ -1612,20 +1612,20 @@
       "id": "ott-0074",
       "properties": {
         "id": "ott-0074",
-        "title": "1 bedroom — Alta Vista",
-        "address": "329 Baseline Rd, Ottawa, ON",
-        "rent_cad": 1690,
+        "title": "1 bedroom — Cumberland",
+        "address": "1553 Marcoux Dr, Cumberland, ON K1E 2K5",
+        "rent_cad": 1902,
         "bedrooms": 1,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0074"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.661444,
-          45.388191
+          -75.502623,
+          45.467351
         ]
       }
     },
@@ -1634,20 +1634,20 @@
       "id": "ott-0075",
       "properties": {
         "id": "ott-0075",
-        "title": "Studio apartment — Little Italy",
-        "address": "882 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 1636,
-        "bedrooms": 0,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "2747 Baseline Rd, Old Ottawa, ON K2H 7B5",
+        "rent_cad": 2625,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0075"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.700964,
-          45.400536
+          -75.792288,
+          45.339702
         ]
       }
     },
@@ -1656,20 +1656,20 @@
       "id": "ott-0076",
       "properties": {
         "id": "ott-0076",
-        "title": "2 bedroom — Glebe",
-        "address": "421 Carling Ave, Ottawa, ON",
-        "rent_cad": 2536,
+        "title": "2 bedroom — Kanata",
+        "address": "32 Dartmoor Dr, Kanata, ON K2M 1S5",
+        "rent_cad": 1979,
         "bedrooms": 2,
-        "neighborhood": "Glebe",
-        "source": "padestrian-demo",
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0076"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.690605,
-          45.407267
+          -75.865716,
+          45.299007
         ]
       }
     },
@@ -1678,20 +1678,20 @@
       "id": "ott-0077",
       "properties": {
         "id": "ott-0077",
-        "title": "3 bedroom — Little Italy",
-        "address": "447 Catherine St, Ottawa, ON",
-        "rent_cad": 2418,
-        "bedrooms": 3,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "Studio apartment — Gloucester",
+        "address": "184 Flat Sedge Cres, Gloucester, ON K1T 0G9",
+        "rent_cad": 1302,
+        "bedrooms": 0,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0077"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.724687,
-          45.413503
+          -75.599361,
+          45.323557
         ]
       }
     },
@@ -1700,20 +1700,20 @@
       "id": "ott-0078",
       "properties": {
         "id": "ott-0078",
-        "title": "2 bedroom — Little Italy",
-        "address": "267 Montreal Rd, Ottawa, ON",
-        "rent_cad": 1852,
+        "title": "2 bedroom — Nepean",
+        "address": "44 Wycliffe St, Nepean, ON K2G 5L9",
+        "rent_cad": 2506,
         "bedrooms": 2,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0078"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.723668,
-          45.419991
+          -75.767734,
+          45.336584
         ]
       }
     },
@@ -1722,20 +1722,20 @@
       "id": "ott-0079",
       "properties": {
         "id": "ott-0079",
-        "title": "2 bedroom — Sandy Hill",
-        "address": "924 Catherine St, Ottawa, ON",
-        "rent_cad": 2399,
+        "title": "2 bedroom — Gloucester",
+        "address": "3128 Analdea Dr, Gloucester, ON K1T 3X1",
+        "rent_cad": 2053,
         "bedrooms": 2,
-        "neighborhood": "Sandy Hill",
-        "source": "padestrian-demo",
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0079"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.676567,
-          45.431234
+          -75.589879,
+          45.325654
         ]
       }
     },
@@ -1744,20 +1744,20 @@
       "id": "ott-0080",
       "properties": {
         "id": "ott-0080",
-        "title": "2 bedroom — Nepean",
-        "address": "174 Cooper St, Ottawa, ON",
-        "rent_cad": 2663,
-        "bedrooms": 2,
+        "title": "1 bedroom — Nepean",
+        "address": "266 Deercroft Ave, Nepean, ON K2J 5J9",
+        "rent_cad": 1492,
+        "bedrooms": 1,
         "neighborhood": "Nepean",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0080"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.755945,
-          45.353263
+          -75.742843,
+          45.27392
         ]
       }
     },
@@ -1766,20 +1766,20 @@
       "id": "ott-0081",
       "properties": {
         "id": "ott-0081",
-        "title": "2 bedroom — Stittsville",
-        "address": "808 Catherine St, Ottawa, ON",
-        "rent_cad": 2317,
-        "bedrooms": 2,
-        "neighborhood": "Stittsville",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Vanier",
+        "address": "314 Gardner St, Vanier, ON K1L 7V7",
+        "rent_cad": 1490,
+        "bedrooms": 1,
+        "neighborhood": "Vanier",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0081"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.921797,
-          45.264043
+          -75.665486,
+          45.432891
         ]
       }
     },
@@ -1788,20 +1788,20 @@
       "id": "ott-0082",
       "properties": {
         "id": "ott-0082",
-        "title": "1 bedroom — Rockcliffe",
-        "address": "252 Rideau St, Ottawa, ON",
-        "rent_cad": 2180,
-        "bedrooms": 1,
-        "neighborhood": "Rockcliffe",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Old Ottawa",
+        "address": "405 Eden Ave, Old Ottawa, ON K1Z 5J1",
+        "rent_cad": 2630,
+        "bedrooms": 3,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0082"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.655555,
-          45.441742
+          -75.751921,
+          45.392395
         ]
       }
     },
@@ -1810,20 +1810,20 @@
       "id": "ott-0083",
       "properties": {
         "id": "ott-0083",
-        "title": "Studio apartment — Vanier",
-        "address": "404 Preston St, Ottawa, ON",
-        "rent_cad": 1304,
-        "bedrooms": 0,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "434 Queen St, Old Ottawa, ON K1R 7V7",
+        "rent_cad": 1960,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0083"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.670909,
-          45.441433
+          -75.708028,
+          45.417181
         ]
       }
     },
@@ -1832,20 +1832,20 @@
       "id": "ott-0084",
       "properties": {
         "id": "ott-0084",
-        "title": "1 bedroom — Lowertown",
-        "address": "437 Carling Ave, Ottawa, ON",
-        "rent_cad": 2005,
+        "title": "1 bedroom — Gloucester",
+        "address": "625 Rathburn Lane, Gloucester, ON K1T 0V7",
+        "rent_cad": 2023,
         "bedrooms": 1,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0084"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.677569,
-          45.424541
+          -75.590022,
+          45.323231
         ]
       }
     },
@@ -1854,20 +1854,20 @@
       "id": "ott-0085",
       "properties": {
         "id": "ott-0085",
-        "title": "3 bedroom — Centretown",
-        "address": "32 Hunt Club Rd, Ottawa, ON",
-        "rent_cad": 3396,
+        "title": "3 bedroom — Cumberland",
+        "address": "2139 Winsome Terr, Cumberland, ON K4A 5N1",
+        "rent_cad": 3032,
         "bedrooms": 3,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0085"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.708554,
-          45.419083
+          -75.459189,
+          45.474617
         ]
       }
     },
@@ -1876,20 +1876,20 @@
       "id": "ott-0086",
       "properties": {
         "id": "ott-0086",
-        "title": "1 bedroom — Kanata",
-        "address": "925 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 1849,
-        "bedrooms": 1,
-        "neighborhood": "Kanata",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Old Ottawa",
+        "address": "1090 Kristin Way, Old Ottawa, ON K1K 4B6",
+        "rent_cad": 2516,
+        "bedrooms": 3,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0086"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.900829,
-          45.318626
+          -75.642929,
+          45.443532
         ]
       }
     },
@@ -1898,20 +1898,20 @@
       "id": "ott-0087",
       "properties": {
         "id": "ott-0087",
-        "title": "2 bedroom — Barrhaven",
-        "address": "236 Carling Ave, Ottawa, ON",
-        "rent_cad": 2201,
-        "bedrooms": 2,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "3 bedroom — Cumberland",
+        "address": "102 Maskinongé Cres, Cumberland, ON K4A 1G3",
+        "rent_cad": 2684,
+        "bedrooms": 3,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0087"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.733624,
-          45.283631
+          -75.487843,
+          45.443694
         ]
       }
     },
@@ -1920,20 +1920,20 @@
       "id": "ott-0088",
       "properties": {
         "id": "ott-0088",
-        "title": "1 bedroom — Vanier",
-        "address": "426 Catherine St, Ottawa, ON",
-        "rent_cad": 2145,
-        "bedrooms": 1,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Nepean",
+        "address": "18 Cherrywood Dr, Nepean, ON K2H 6G7",
+        "rent_cad": 2562,
+        "bedrooms": 3,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0088"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.66731,
-          45.420697
+          -75.81594,
+          45.319192
         ]
       }
     },
@@ -1942,20 +1942,20 @@
       "id": "ott-0089",
       "properties": {
         "id": "ott-0089",
-        "title": "3 bedroom — Hintonburg",
-        "address": "940 Bank St, Ottawa, ON",
-        "rent_cad": 3293,
+        "title": "3 bedroom — Vanier",
+        "address": "88 Ste-Cécile St, Vanier, ON K1L 5L5",
+        "rent_cad": 2250,
         "bedrooms": 3,
-        "neighborhood": "Hintonburg",
-        "source": "padestrian-demo",
+        "neighborhood": "Vanier",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0089"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.712742,
-          45.413069
+          -75.667821,
+          45.441215
         ]
       }
     },
@@ -1964,20 +1964,20 @@
       "id": "ott-0090",
       "properties": {
         "id": "ott-0090",
-        "title": "Studio apartment — Kanata",
-        "address": "899 Gladstone Ave, Ottawa, ON",
-        "rent_cad": 1588,
-        "bedrooms": 0,
-        "neighborhood": "Kanata",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Old Ottawa",
+        "address": "41 Douglas Ave, Old Ottawa, ON K1M 1G3",
+        "rent_cad": 1790,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0090"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.896692,
-          45.311912
+          -75.675551,
+          45.441452
         ]
       }
     },
@@ -1986,20 +1986,20 @@
       "id": "ott-0091",
       "properties": {
         "id": "ott-0091",
-        "title": "1 bedroom — Nepean",
-        "address": "357 Wellington St W, Ottawa, ON",
-        "rent_cad": 1915,
-        "bedrooms": 1,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Rideau",
+        "address": "7157 Rideau Valley Dr S., Rideau, ON K0A 2E0",
+        "rent_cad": 2593,
+        "bedrooms": 2,
+        "neighborhood": "Rideau",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0091"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.771458,
-          45.342244
+          -75.63065,
+          45.123034
         ]
       }
     },
@@ -2008,20 +2008,20 @@
       "id": "ott-0092",
       "properties": {
         "id": "ott-0092",
-        "title": "1 bedroom — Kanata",
-        "address": "31 Carling Ave, Ottawa, ON",
-        "rent_cad": 1533,
-        "bedrooms": 1,
-        "neighborhood": "Kanata",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Cumberland",
+        "address": "855 Tewin Cir, Cumberland, ON K4A 1K1",
+        "rent_cad": 2258,
+        "bedrooms": 2,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0092"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.907983,
-          45.318829
+          -75.466275,
+          45.500013
         ]
       }
     },
@@ -2030,20 +2030,20 @@
       "id": "ott-0093",
       "properties": {
         "id": "ott-0093",
-        "title": "1 bedroom — New Edinburgh",
-        "address": "992 Catherine St, Ottawa, ON",
-        "rent_cad": 1520,
+        "title": "1 bedroom — Gloucester",
+        "address": "19 Mowat St, Gloucester, ON K1J 6R1",
+        "rent_cad": 2168,
         "bedrooms": 1,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0093"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.696125,
-          45.455846
+          -75.609848,
+          45.442769
         ]
       }
     },
@@ -2052,20 +2052,20 @@
       "id": "ott-0094",
       "properties": {
         "id": "ott-0094",
-        "title": "1 bedroom — Centretown",
-        "address": "168 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 1470,
-        "bedrooms": 1,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
+        "title": "Studio apartment — Nepean",
+        "address": "838 Kennacraig Priv, Nepean, ON K2J 5T6",
+        "rent_cad": 1189,
+        "bedrooms": 0,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0094"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.688848,
-          45.431791
+          -75.732124,
+          45.247564
         ]
       }
     },
@@ -2074,20 +2074,20 @@
       "id": "ott-0095",
       "properties": {
         "id": "ott-0095",
-        "title": "2 bedroom — Little Italy",
-        "address": "728 Carling Ave, Ottawa, ON",
-        "rent_cad": 2196,
-        "bedrooms": 2,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "3 bedroom — Nepean",
+        "address": "23 Glendenning Dr, Nepean, ON K2H 7Z1",
+        "rent_cad": 2655,
+        "bedrooms": 3,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0095"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.725456,
-          45.413067
+          -75.788979,
+          45.321709
         ]
       }
     },
@@ -2096,20 +2096,20 @@
       "id": "ott-0096",
       "properties": {
         "id": "ott-0096",
-        "title": "2 bedroom — Vanier",
-        "address": "850 Catherine St, Ottawa, ON",
-        "rent_cad": 1984,
-        "bedrooms": 2,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "514 Piccadilly Ave, Old Ottawa, ON K1Y 0H8",
+        "rent_cad": 1921,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0096"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.655392,
-          45.424027
+          -75.738143,
+          45.392341
         ]
       }
     },
@@ -2118,20 +2118,20 @@
       "id": "ott-0097",
       "properties": {
         "id": "ott-0097",
-        "title": "Studio apartment — Hintonburg",
-        "address": "705 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 1469,
-        "bedrooms": 0,
-        "neighborhood": "Hintonburg",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Kanata",
+        "address": "34 Morton Dr, Kanata, ON K2L 1X1",
+        "rent_cad": 1683,
+        "bedrooms": 1,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0097"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.70827,
-          45.393594
+          -75.886399,
+          45.287999
         ]
       }
     },
@@ -2140,20 +2140,20 @@
       "id": "ott-0098",
       "properties": {
         "id": "ott-0098",
-        "title": "Studio apartment — Kanata",
-        "address": "725 Somerset St W, Ottawa, ON",
-        "rent_cad": 1398,
-        "bedrooms": 0,
-        "neighborhood": "Kanata",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Old Ottawa",
+        "address": "153 Tall Oak Priv, Old Ottawa, ON K1G 6T3",
+        "rent_cad": 2125,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0098"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.90372,
-          45.31316
+          -75.655126,
+          45.400277
         ]
       }
     },
@@ -2162,20 +2162,20 @@
       "id": "ott-0099",
       "properties": {
         "id": "ott-0099",
-        "title": "1 bedroom — Alta Vista",
-        "address": "54 Catherine St, Ottawa, ON",
-        "rent_cad": 2029,
+        "title": "1 bedroom — Osgoode",
+        "address": "2545 9th Line Rd, Osgoode, ON K0A 2P0",
+        "rent_cad": 1786,
         "bedrooms": 1,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
+        "neighborhood": "Osgoode",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0099"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.649389,
-          45.38741
+          -75.451933,
+          45.24936
         ]
       }
     },
@@ -2184,20 +2184,20 @@
       "id": "ott-0100",
       "properties": {
         "id": "ott-0100",
-        "title": "Studio apartment — Orleans",
-        "address": "881 Bank St, Ottawa, ON",
-        "rent_cad": 1499,
-        "bedrooms": 0,
-        "neighborhood": "Orleans",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Cumberland",
+        "address": "17 Saintonge Lane, Cumberland, ON K4A 5K2",
+        "rent_cad": 1521,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0100"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.508821,
-          45.473877
+          -75.46365,
+          45.501241
         ]
       }
     },
@@ -2206,20 +2206,20 @@
       "id": "ott-0101",
       "properties": {
         "id": "ott-0101",
-        "title": "3 bedroom — Barrhaven",
-        "address": "168 Hunt Club Rd, Ottawa, ON",
-        "rent_cad": 3141,
+        "title": "3 bedroom — Goulbourn",
+        "address": "706 Campolina Way, Goulbourn, ON K2S 0Y3",
+        "rent_cad": 2771,
         "bedrooms": 3,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
+        "neighborhood": "Goulbourn",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0101"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.723396,
-          45.268533
+          -75.908341,
+          45.243606
         ]
       }
     },
@@ -2228,20 +2228,20 @@
       "id": "ott-0102",
       "properties": {
         "id": "ott-0102",
-        "title": "2 bedroom — Barrhaven",
-        "address": "458 Carling Ave, Ottawa, ON",
-        "rent_cad": 2740,
-        "bedrooms": 2,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Gloucester",
+        "address": "72 Crownhill St, Gloucester, ON K1J 7K8",
+        "rent_cad": 1971,
+        "bedrooms": 1,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0102"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.746659,
-          45.278522
+          -75.606254,
+          45.438434
         ]
       }
     },
@@ -2250,20 +2250,20 @@
       "id": "ott-0103",
       "properties": {
         "id": "ott-0103",
-        "title": "3 bedroom — Vanier",
-        "address": "473 Cooper St, Ottawa, ON",
-        "rent_cad": 2771,
-        "bedrooms": 3,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Kanata",
+        "address": "29 Steeple Chase Dr, Kanata, ON K2M 2J7",
+        "rent_cad": 1999,
+        "bedrooms": 1,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0103"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.671397,
-          45.425892
+          -75.86075,
+          45.296482
         ]
       }
     },
@@ -2272,20 +2272,20 @@
       "id": "ott-0104",
       "properties": {
         "id": "ott-0104",
-        "title": "2 bedroom — Little Italy",
-        "address": "518 Bank St, Ottawa, ON",
-        "rent_cad": 2438,
-        "bedrooms": 2,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Nepean",
+        "address": "17 Astoria Cres, Nepean, ON K2G 6E6",
+        "rent_cad": 1478,
+        "bedrooms": 1,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0104"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.702983,
-          45.410676
+          -75.713598,
+          45.284176
         ]
       }
     },
@@ -2294,20 +2294,20 @@
       "id": "ott-0105",
       "properties": {
         "id": "ott-0105",
-        "title": "2 bedroom — Billings Bridge",
-        "address": "913 Rideau St, Ottawa, ON",
-        "rent_cad": 2447,
-        "bedrooms": 2,
-        "neighborhood": "Billings Bridge",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "Studio apartment — Cumberland",
+        "address": "162 Gardenpost Terr, Cumberland, ON K4A 5G8",
+        "rent_cad": 1417,
+        "bedrooms": 0,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0105"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.666454,
-          45.368091
+          -75.492533,
+          45.442092
         ]
       }
     },
@@ -2316,20 +2316,20 @@
       "id": "ott-0106",
       "properties": {
         "id": "ott-0106",
-        "title": "1 bedroom — Vanier",
-        "address": "428 Hunt Club Rd, Ottawa, ON",
-        "rent_cad": 1697,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "1492 Claymor Ave, Old Ottawa, ON K2C 1S9",
+        "rent_cad": 1721,
         "bedrooms": 1,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0106"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.662992,
-          45.432399
+          -75.706858,
+          45.364833
         ]
       }
     },
@@ -2338,20 +2338,20 @@
       "id": "ott-0107",
       "properties": {
         "id": "ott-0107",
-        "title": "1 bedroom — Stittsville",
-        "address": "470 Carling Ave, Ottawa, ON",
-        "rent_cad": 2178,
-        "bedrooms": 1,
-        "neighborhood": "Stittsville",
-        "source": "padestrian-demo",
+        "title": "Studio apartment — Cumberland",
+        "address": "484 Marjolaine St, Cumberland, ON K4A 1X7",
+        "rent_cad": 1594,
+        "bedrooms": 0,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0107"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.918014,
-          45.251768
+          -75.497359,
+          45.480686
         ]
       }
     },
@@ -2360,20 +2360,20 @@
       "id": "ott-0108",
       "properties": {
         "id": "ott-0108",
-        "title": "2 bedroom — ByWard Market",
-        "address": "607 Baseline Rd, Ottawa, ON",
-        "rent_cad": 2377,
-        "bedrooms": 2,
-        "neighborhood": "ByWard Market",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "577 Westminster Ave, Old Ottawa, ON K2A 2V2",
+        "rent_cad": 1771,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0108"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.70665,
-          45.421318
+          -75.762663,
+          45.382444
         ]
       }
     },
@@ -2382,20 +2382,20 @@
       "id": "ott-0109",
       "properties": {
         "id": "ott-0109",
-        "title": "1 bedroom — Orleans",
-        "address": "372 Wellington St W, Ottawa, ON",
-        "rent_cad": 2013,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "1528 Baseline Rd, Old Ottawa, ON K2C 0B3",
+        "rent_cad": 1973,
         "bedrooms": 1,
-        "neighborhood": "Orleans",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0109"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.510963,
-          45.470742
+          -75.743234,
+          45.359577
         ]
       }
     },
@@ -2404,20 +2404,20 @@
       "id": "ott-0110",
       "properties": {
         "id": "ott-0110",
-        "title": "1 bedroom — Nepean",
-        "address": "134 Wellington St W, Ottawa, ON",
-        "rent_cad": 1647,
-        "bedrooms": 1,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo",
+        "title": "Studio apartment — Gloucester",
+        "address": "1689 Country Walk Dr, Gloucester, ON K1C 8E1",
+        "rent_cad": 1740,
+        "bedrooms": 0,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0110"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.768247,
-          45.342034
+          -75.536412,
+          45.458163
         ]
       }
     },
@@ -2426,20 +2426,20 @@
       "id": "ott-0111",
       "properties": {
         "id": "ott-0111",
-        "title": "1 bedroom — New Edinburgh",
-        "address": "753 Rideau St, Ottawa, ON",
-        "rent_cad": 1945,
+        "title": "1 bedroom — Kanata",
+        "address": "493 Coldwater Cres, Kanata, ON K2M 0J4",
+        "rent_cad": 1495,
         "bedrooms": 1,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0111"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.663768,
-          45.449564
+          -75.851821,
+          45.273125
         ]
       }
     },
@@ -2448,20 +2448,20 @@
       "id": "ott-0112",
       "properties": {
         "id": "ott-0112",
-        "title": "2 bedroom — Rockcliffe",
-        "address": "381 Preston St, Ottawa, ON",
-        "rent_cad": 2356,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "2981 Carling Ave, Old Ottawa, ON K2B 7K1",
+        "rent_cad": 1753,
         "bedrooms": 2,
-        "neighborhood": "Rockcliffe",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0112"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.651516,
-          45.459532
+          -75.804182,
+          45.355783
         ]
       }
     },
@@ -2470,20 +2470,20 @@
       "id": "ott-0113",
       "properties": {
         "id": "ott-0113",
-        "title": "1 bedroom — Hintonburg",
-        "address": "578 Bank St, Ottawa, ON",
-        "rent_cad": 1496,
-        "bedrooms": 1,
-        "neighborhood": "Hintonburg",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Kanata",
+        "address": "141 Invention Blvd, Kanata, ON K2W 0L9",
+        "rent_cad": 2153,
+        "bedrooms": 2,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0113"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.732118,
-          45.407992
+          -75.936332,
+          45.36444
         ]
       }
     },
@@ -2492,20 +2492,20 @@
       "id": "ott-0114",
       "properties": {
         "id": "ott-0114",
-        "title": "3 bedroom — Alta Vista",
-        "address": "905 Somerset St W, Ottawa, ON",
-        "rent_cad": 3205,
-        "bedrooms": 3,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Cumberland",
+        "address": "845 June Grass St, Cumberland, ON K4A 1H4",
+        "rent_cad": 1521,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0114"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.654893,
-          45.376031
+          -75.487527,
+          45.446751
         ]
       }
     },
@@ -2514,20 +2514,20 @@
       "id": "ott-0115",
       "properties": {
         "id": "ott-0115",
-        "title": "1 bedroom — ByWard Market",
-        "address": "270 Bank St, Ottawa, ON",
-        "rent_cad": 1638,
-        "bedrooms": 1,
-        "neighborhood": "ByWard Market",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Kanata",
+        "address": "5 Harrington Crt, Kanata, ON K2K 2S7",
+        "rent_cad": 2876,
+        "bedrooms": 3,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0115"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.689334,
-          45.427266
+          -75.92223,
+          45.324687
         ]
       }
     },
@@ -2536,20 +2536,20 @@
       "id": "ott-0116",
       "properties": {
         "id": "ott-0116",
-        "title": "1 bedroom — Stittsville",
-        "address": "714 Baseline Rd, Ottawa, ON",
-        "rent_cad": 2040,
-        "bedrooms": 1,
-        "neighborhood": "Stittsville",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "202 Annapolis Cir, Old Ottawa, ON K1V 1Z1",
+        "rent_cad": 2005,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0116"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.933893,
-          45.247568
+          -75.666214,
+          45.35032
         ]
       }
     },
@@ -2558,20 +2558,20 @@
       "id": "ott-0117",
       "properties": {
         "id": "ott-0117",
-        "title": "3 bedroom — Centretown",
-        "address": "133 Preston St, Ottawa, ON",
-        "rent_cad": 2374,
-        "bedrooms": 3,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "478 Cole Ave, Old Ottawa, ON K2A 2A9",
+        "rent_cad": 2365,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0117"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.710538,
-          45.428467
+          -75.75659,
+          45.388042
         ]
       }
     },
@@ -2580,20 +2580,20 @@
       "id": "ott-0118",
       "properties": {
         "id": "ott-0118",
-        "title": "2 bedroom — New Edinburgh",
-        "address": "547 Catherine St, Ottawa, ON",
-        "rent_cad": 2212,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "243 Holmwood Ave, Old Ottawa, ON K1S 2P8",
+        "rent_cad": 2586,
         "bedrooms": 2,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0118"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.67048,
-          45.447552
+          -75.692536,
+          45.397579
         ]
       }
     },
@@ -2602,20 +2602,20 @@
       "id": "ott-0119",
       "properties": {
         "id": "ott-0119",
-        "title": "3 bedroom — Kanata",
-        "address": "594 Rideau St, Ottawa, ON",
-        "rent_cad": 3078,
-        "bedrooms": 3,
-        "neighborhood": "Kanata",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Gloucester",
+        "address": "194 Stedman St, Gloucester, ON K1T 0B6",
+        "rent_cad": 2163,
+        "bedrooms": 1,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0119"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.901781,
-          45.306625
+          -75.630665,
+          45.339599
         ]
       }
     },
@@ -2624,20 +2624,20 @@
       "id": "ott-0120",
       "properties": {
         "id": "ott-0120",
-        "title": "3 bedroom — Centretown",
-        "address": "228 Baseline Rd, Ottawa, ON",
-        "rent_cad": 2625,
-        "bedrooms": 3,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Kanata",
+        "address": "24 Morton Dr, Kanata, ON K2L 1X1",
+        "rent_cad": 1580,
+        "bedrooms": 1,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0120"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.694053,
-          45.426762
+          -75.885881,
+          45.288309
         ]
       }
     },
@@ -2646,20 +2646,20 @@
       "id": "ott-0121",
       "properties": {
         "id": "ott-0121",
-        "title": "1 bedroom — Vanier",
-        "address": "14 Gladstone Ave, Ottawa, ON",
-        "rent_cad": 1526,
+        "title": "1 bedroom — West Carleton",
+        "address": "1661 Kilmaurs Side Rd, West Carleton, ON K0A 3M0",
+        "rent_cad": 2130,
         "bedrooms": 1,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
+        "neighborhood": "West Carleton",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0121"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.659225,
-          45.423769
+          -76.136422,
+          45.46267
         ]
       }
     },
@@ -2668,20 +2668,20 @@
       "id": "ott-0122",
       "properties": {
         "id": "ott-0122",
-        "title": "1 bedroom — Barrhaven",
-        "address": "735 Rideau St, Ottawa, ON",
-        "rent_cad": 1687,
-        "bedrooms": 1,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Old Ottawa",
+        "address": "2338 Ryan Dr, Old Ottawa, ON K2C 1K7",
+        "rent_cad": 2556,
+        "bedrooms": 3,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0122"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.736782,
-          45.280251
+          -75.778493,
+          45.347829
         ]
       }
     },
@@ -2690,20 +2690,20 @@
       "id": "ott-0123",
       "properties": {
         "id": "ott-0123",
-        "title": "2 bedroom — Alta Vista",
-        "address": "822 Catherine St, Ottawa, ON",
-        "rent_cad": 2291,
+        "title": "2 bedroom — Osgoode",
+        "address": "6722 Cedar Acres Dr, Osgoode, ON K4P 1G3",
+        "rent_cad": 2366,
         "bedrooms": 2,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
+        "neighborhood": "Osgoode",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0123"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.654692,
-          45.383897
+          -75.581585,
+          45.250419
         ]
       }
     },
@@ -2712,20 +2712,20 @@
       "id": "ott-0124",
       "properties": {
         "id": "ott-0124",
-        "title": "2 bedroom — Westboro",
-        "address": "157 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 2294,
-        "bedrooms": 2,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "2231 Walkley Rd, Old Ottawa, ON K1G 3G8",
+        "rent_cad": 1450,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0124"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.754695,
-          45.393069
+          -75.620311,
+          45.38859
         ]
       }
     },
@@ -2734,20 +2734,20 @@
       "id": "ott-0125",
       "properties": {
         "id": "ott-0125",
-        "title": "2 bedroom — Glebe",
-        "address": "139 Carling Ave, Ottawa, ON",
-        "rent_cad": 2341,
-        "bedrooms": 2,
-        "neighborhood": "Glebe",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — West Carleton",
+        "address": "299 Donald B. Munro Dr, West Carleton, ON K0A 1L0",
+        "rent_cad": 1665,
+        "bedrooms": 1,
+        "neighborhood": "West Carleton",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0125"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.704853,
-          45.405023
+          -76.025889,
+          45.344614
         ]
       }
     },
@@ -2756,20 +2756,20 @@
       "id": "ott-0126",
       "properties": {
         "id": "ott-0126",
-        "title": "3 bedroom — Nepean",
-        "address": "517 Montreal Rd, Ottawa, ON",
-        "rent_cad": 3224,
-        "bedrooms": 3,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Cumberland",
+        "address": "633 Idyllic Terr, Cumberland, ON K4A 5P3",
+        "rent_cad": 2043,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0126"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.753208,
-          45.352794
+          -75.474101,
+          45.441424
         ]
       }
     },
@@ -2778,20 +2778,20 @@
       "id": "ott-0127",
       "properties": {
         "id": "ott-0127",
-        "title": "1 bedroom — Nepean",
-        "address": "268 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 1780,
-        "bedrooms": 1,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "131 Prince Albert St, Old Ottawa, ON K1K 1Z9",
+        "rent_cad": 2409,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0127"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.775104,
-          45.336957
+          -75.658427,
+          45.424206
         ]
       }
     },
@@ -2800,20 +2800,20 @@
       "id": "ott-0128",
       "properties": {
         "id": "ott-0128",
-        "title": "2 bedroom — ByWard Market",
-        "address": "700 Catherine St, Ottawa, ON",
-        "rent_cad": 1792,
-        "bedrooms": 2,
-        "neighborhood": "ByWard Market",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Nepean",
+        "address": "306 Raheen Crt, Nepean, ON K2J 7C1",
+        "rent_cad": 1902,
+        "bedrooms": 1,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0128"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.706712,
-          45.439086
+          -75.738065,
+          45.234617
         ]
       }
     },
@@ -2822,20 +2822,20 @@
       "id": "ott-0129",
       "properties": {
         "id": "ott-0129",
-        "title": "1 bedroom — Vanier",
-        "address": "464 Baseline Rd, Ottawa, ON",
-        "rent_cad": 1981,
-        "bedrooms": 1,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "405 PH1 Laurier Ave E., Old Ottawa, ON K1N 6R4",
+        "rent_cad": 2796,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0129"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.662255,
-          45.438315
+          -75.675835,
+          45.428648
         ]
       }
     },
@@ -2844,20 +2844,20 @@
       "id": "ott-0130",
       "properties": {
         "id": "ott-0130",
-        "title": "2 bedroom — Vanier",
-        "address": "493 Somerset St W, Ottawa, ON",
-        "rent_cad": 2757,
-        "bedrooms": 2,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Gloucester",
+        "address": "200 Bulrush Cres, Gloucester, ON K1T 0E5",
+        "rent_cad": 1623,
+        "bedrooms": 1,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0130"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.676466,
-          45.434048
+          -75.60605,
+          45.320072
         ]
       }
     },
@@ -2866,20 +2866,20 @@
       "id": "ott-0131",
       "properties": {
         "id": "ott-0131",
-        "title": "Studio apartment — Orleans",
-        "address": "433 Wellington St W, Ottawa, ON",
-        "rent_cad": 1314,
-        "bedrooms": 0,
-        "neighborhood": "Orleans",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Nepean",
+        "address": "526 Bundoran Pl, Nepean, ON K2J 7C9",
+        "rent_cad": 2331,
+        "bedrooms": 2,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0131"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.513299,
-          45.465705
+          -75.736463,
+          45.232261
         ]
       }
     },
@@ -2888,20 +2888,20 @@
       "id": "ott-0132",
       "properties": {
         "id": "ott-0132",
-        "title": "2 bedroom — Stittsville",
-        "address": "102 Carling Ave, Ottawa, ON",
-        "rent_cad": 1825,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "1150 Minnetonka Rd, Old Ottawa, ON K2C 2T9",
+        "rent_cad": 2436,
         "bedrooms": 2,
-        "neighborhood": "Stittsville",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0132"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.927624,
-          45.268685
+          -75.768085,
+          45.357726
         ]
       }
     },
@@ -2910,20 +2910,20 @@
       "id": "ott-0133",
       "properties": {
         "id": "ott-0133",
-        "title": "2 bedroom — Billings Bridge",
-        "address": "13 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 2803,
-        "bedrooms": 2,
-        "neighborhood": "Billings Bridge",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "Studio apartment — Old Ottawa",
+        "address": "375 Spartan Ave, Old Ottawa, ON K1K 1J6",
+        "rent_cad": 1390,
+        "bedrooms": 0,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0133"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.663914,
-          45.365782
+          -75.652029,
+          45.429852
         ]
       }
     },
@@ -2932,20 +2932,20 @@
       "id": "ott-0134",
       "properties": {
         "id": "ott-0134",
-        "title": "2 bedroom — New Edinburgh",
-        "address": "464 Baseline Rd, Ottawa, ON",
-        "rent_cad": 2770,
+        "title": "2 bedroom — Gloucester",
+        "address": "2837 Mozart Crt, Gloucester, ON K1T 2P6",
+        "rent_cad": 2210,
         "bedrooms": 2,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0134"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.681369,
-          45.434301
+          -75.644231,
+          45.348189
         ]
       }
     },
@@ -2954,20 +2954,20 @@
       "id": "ott-0135",
       "properties": {
         "id": "ott-0135",
-        "title": "3 bedroom — Centretown",
-        "address": "727 Cooper St, Ottawa, ON",
-        "rent_cad": 3097,
-        "bedrooms": 3,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "565 Tweedsmuir Ave, Old Ottawa, ON K1Z 5P4",
+        "rent_cad": 2051,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0135"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.708672,
-          45.422181
+          -75.746421,
+          45.387756
         ]
       }
     },
@@ -2976,20 +2976,20 @@
       "id": "ott-0136",
       "properties": {
         "id": "ott-0136",
-        "title": "2 bedroom — Stittsville",
-        "address": "174 Hunt Club Rd, Ottawa, ON",
-        "rent_cad": 2240,
-        "bedrooms": 2,
-        "neighborhood": "Stittsville",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "Studio apartment — Old Ottawa",
+        "address": "266 Macoun Cir, Old Ottawa, ON K1T 0H9",
+        "rent_cad": 1400,
+        "bedrooms": 0,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0136"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.933629,
-          45.269356
+          -75.642079,
+          45.366731
         ]
       }
     },
@@ -2998,20 +2998,20 @@
       "id": "ott-0137",
       "properties": {
         "id": "ott-0137",
-        "title": "Studio apartment — Alta Vista",
-        "address": "981 Carling Ave, Ottawa, ON",
-        "rent_cad": 1266,
-        "bedrooms": 0,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Cumberland",
+        "address": "755 Champlain St, Cumberland, ON K1C 5M3",
+        "rent_cad": 2349,
+        "bedrooms": 3,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0137"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.66017,
-          45.386254
+          -75.522477,
+          45.488647
         ]
       }
     },
@@ -3020,20 +3020,20 @@
       "id": "ott-0138",
       "properties": {
         "id": "ott-0138",
-        "title": "3 bedroom — Sandy Hill",
-        "address": "734 Montreal Rd, Ottawa, ON",
-        "rent_cad": 2797,
-        "bedrooms": 3,
-        "neighborhood": "Sandy Hill",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Cumberland",
+        "address": "2552 Old Montreal Rd, Cumberland, ON K4C 1A4",
+        "rent_cad": 2094,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0138"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.669682,
-          45.415695
+          -75.407608,
+          45.516932
         ]
       }
     },
@@ -3042,20 +3042,20 @@
       "id": "ott-0139",
       "properties": {
         "id": "ott-0139",
-        "title": "1 bedroom — Vanier",
-        "address": "160 Montreal Rd, Ottawa, ON",
-        "rent_cad": 1917,
-        "bedrooms": 1,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Nepean",
+        "address": "55 Rideaucrest Dr, Nepean, ON K2G 6A3",
+        "rent_cad": 2536,
+        "bedrooms": 2,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0139"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.668042,
-          45.43158
+          -75.719626,
+          45.286072
         ]
       }
     },
@@ -3064,20 +3064,20 @@
       "id": "ott-0140",
       "properties": {
         "id": "ott-0140",
-        "title": "2 bedroom — Kanata",
-        "address": "83 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 2029,
-        "bedrooms": 2,
-        "neighborhood": "Kanata",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "565 Bay St, Old Ottawa, ON K1R 6B8",
+        "rent_cad": 1699,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0140"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.911138,
-          45.310385
+          -75.697208,
+          45.407554
         ]
       }
     },
@@ -3086,20 +3086,20 @@
       "id": "ott-0141",
       "properties": {
         "id": "ott-0141",
-        "title": "1 bedroom — Vanier",
-        "address": "852 Rideau St, Ottawa, ON",
-        "rent_cad": 1969,
+        "title": "1 bedroom — Cumberland",
+        "address": "1929 Orchardview Ave, Cumberland, ON K4A 3H1",
+        "rent_cad": 2154,
         "bedrooms": 1,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0141"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.655184,
-          45.440506
+          -75.479303,
+          45.469907
         ]
       }
     },
@@ -3108,20 +3108,20 @@
       "id": "ott-0142",
       "properties": {
         "id": "ott-0142",
-        "title": "2 bedroom — ByWard Market",
-        "address": "164 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 2752,
-        "bedrooms": 2,
-        "neighborhood": "ByWard Market",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "Studio apartment — Old Ottawa",
+        "address": "1020 Harkness Ave, Old Ottawa, ON K1V 6P2",
+        "rent_cad": 1259,
+        "bedrooms": 0,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0142"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.699818,
-          45.423165
+          -75.674517,
+          45.366718
         ]
       }
     },
@@ -3130,20 +3130,20 @@
       "id": "ott-0143",
       "properties": {
         "id": "ott-0143",
-        "title": "2 bedroom — Nepean",
-        "address": "967 Carling Ave, Ottawa, ON",
-        "rent_cad": 2522,
+        "title": "2 bedroom — Cumberland",
+        "address": "101 Atmosphere St, Cumberland, ON K0A 3H0",
+        "rent_cad": 2198,
         "bedrooms": 2,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo",
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0143"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.758611,
-          45.344283
+          -75.353485,
+          45.360671
         ]
       }
     },
@@ -3152,20 +3152,20 @@
       "id": "ott-0144",
       "properties": {
         "id": "ott-0144",
-        "title": "1 bedroom — Billings Bridge",
-        "address": "888 Preston St, Ottawa, ON",
-        "rent_cad": 1842,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "1735 Grasmere Cres, Old Ottawa, ON K1V 7V1",
+        "rent_cad": 2162,
         "bedrooms": 1,
-        "neighborhood": "Billings Bridge",
-        "source": "padestrian-demo",
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0144"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.641694,
-          45.386539
+          -75.662918,
+          45.374183
         ]
       }
     },
@@ -3174,20 +3174,20 @@
       "id": "ott-0145",
       "properties": {
         "id": "ott-0145",
-        "title": "2 bedroom — Barrhaven",
-        "address": "691 Richmond Rd, Ottawa, ON",
-        "rent_cad": 2530,
+        "title": "2 bedroom — Nepean",
+        "address": "40 Tybalt Cres, Nepean, ON K2H 8J5",
+        "rent_cad": 1852,
         "bedrooms": 2,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0145"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.751429,
-          45.283873
+          -75.832802,
+          45.317507
         ]
       }
     },
@@ -3196,20 +3196,20 @@
       "id": "ott-0146",
       "properties": {
         "id": "ott-0146",
-        "title": "2 bedroom — Lowertown",
-        "address": "114 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 2429,
+        "title": "2 bedroom — Nepean",
+        "address": "53 Tarquin Cres, Nepean, ON K2H 8J7",
+        "rent_cad": 1998,
         "bedrooms": 2,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0146"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.685168,
-          45.423888
+          -75.831541,
+          45.318536
         ]
       }
     },
@@ -3218,20 +3218,20 @@
       "id": "ott-0147",
       "properties": {
         "id": "ott-0147",
-        "title": "Studio apartment — Nepean",
-        "address": "903 Richmond Rd, Ottawa, ON",
-        "rent_cad": 1297,
-        "bedrooms": 0,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Cumberland",
+        "address": "738 Keinouche Pl, Cumberland, ON K4A 5K3",
+        "rent_cad": 1925,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0147"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.77441,
-          45.357851
+          -75.463969,
+          45.499911
         ]
       }
     },
@@ -3240,20 +3240,20 @@
       "id": "ott-0148",
       "properties": {
         "id": "ott-0148",
-        "title": "1 bedroom — Lowertown",
-        "address": "419 Hunt Club Rd, Ottawa, ON",
-        "rent_cad": 2088,
-        "bedrooms": 1,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "244 Westhaven Cres, Old Ottawa, ON K1Z 7G3",
+        "rent_cad": 2399,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0148"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.700306,
-          45.441757
+          -75.744736,
+          45.388035
         ]
       }
     },
@@ -3262,20 +3262,20 @@
       "id": "ott-0149",
       "properties": {
         "id": "ott-0149",
-        "title": "3 bedroom — Glebe",
-        "address": "653 Wellington St W, Ottawa, ON",
-        "rent_cad": 2978,
+        "title": "3 bedroom — Kanata",
+        "address": "40 Sherring Cres, Kanata, ON K2K 2T2",
+        "rent_cad": 3106,
         "bedrooms": 3,
-        "neighborhood": "Glebe",
-        "source": "padestrian-demo",
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0149"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.676336,
-          45.406456
+          -75.917439,
+          45.31938
         ]
       }
     },
@@ -3284,20 +3284,20 @@
       "id": "ott-0150",
       "properties": {
         "id": "ott-0150",
-        "title": "Studio apartment — Stittsville",
-        "address": "776 Preston St, Ottawa, ON",
-        "rent_cad": 1444,
-        "bedrooms": 0,
-        "neighborhood": "Stittsville",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Goulbourn",
+        "address": "3654 McBean St, Goulbourn, ON K0A 2Z0",
+        "rent_cad": 2783,
+        "bedrooms": 2,
+        "neighborhood": "Goulbourn",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0150"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.906594,
-          45.246862
+          -75.829766,
+          45.186474
         ]
       }
     },
@@ -3306,20 +3306,20 @@
       "id": "ott-0151",
       "properties": {
         "id": "ott-0151",
-        "title": "2 bedroom — Glebe",
-        "address": "182 Carling Ave, Ottawa, ON",
-        "rent_cad": 1955,
-        "bedrooms": 2,
-        "neighborhood": "Glebe",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Gloucester",
+        "address": "4418 Rainforest Dr, Gloucester, ON K1V 1L5",
+        "rent_cad": 2011,
+        "bedrooms": 1,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0151"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.691377,
-          45.388363
+          -75.692087,
+          45.279693
         ]
       }
     },
@@ -3328,20 +3328,20 @@
       "id": "ott-0152",
       "properties": {
         "id": "ott-0152",
-        "title": "2 bedroom — Alta Vista",
-        "address": "395 Wellington St W, Ottawa, ON",
-        "rent_cad": 2350,
-        "bedrooms": 2,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Gloucester",
+        "address": "785 Kenny Gordon Ave, Gloucester, ON K4M 0X9",
+        "rent_cad": 1612,
+        "bedrooms": 1,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0152"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.647477,
-          45.374104
+          -75.689676,
+          45.254277
         ]
       }
     },
@@ -3350,20 +3350,20 @@
       "id": "ott-0153",
       "properties": {
         "id": "ott-0153",
-        "title": "2 bedroom — Barrhaven",
-        "address": "191 Gladstone Ave, Ottawa, ON",
-        "rent_cad": 2118,
+        "title": "2 bedroom — Kanata",
+        "address": "39 Thunderbolt St, Kanata, ON K2V 0L9",
+        "rent_cad": 2722,
         "bedrooms": 2,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0153"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.747759,
-          45.278748
+          -75.89555,
+          45.281557
         ]
       }
     },
@@ -3372,20 +3372,20 @@
       "id": "ott-0154",
       "properties": {
         "id": "ott-0154",
-        "title": "2 bedroom — Glebe",
-        "address": "609 Cooper St, Ottawa, ON",
-        "rent_cad": 2769,
-        "bedrooms": 2,
-        "neighborhood": "Glebe",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Cumberland",
+        "address": "432 Lawler Cres, Cumberland, ON K4A 3Y3",
+        "rent_cad": 1703,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0154"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.685058,
-          45.395181
+          -75.502612,
+          45.489232
         ]
       }
     },
@@ -3394,20 +3394,20 @@
       "id": "ott-0155",
       "properties": {
         "id": "ott-0155",
-        "title": "1 bedroom — Lowertown",
-        "address": "932 Bank St, Ottawa, ON",
-        "rent_cad": 2132,
-        "bedrooms": 1,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — West Carleton",
+        "address": "3125 Breezy Heights Rd, West Carleton, ON K0A 2H0",
+        "rent_cad": 2317,
+        "bedrooms": 2,
+        "neighborhood": "West Carleton",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0155"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.694641,
-          45.43831
+          -76.192261,
+          45.338865
         ]
       }
     },
@@ -3416,20 +3416,20 @@
       "id": "ott-0156",
       "properties": {
         "id": "ott-0156",
-        "title": "1 bedroom — Nepean",
-        "address": "613 Wellington St W, Ottawa, ON",
-        "rent_cad": 1902,
-        "bedrooms": 1,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Cumberland",
+        "address": "130 Bartonia Cir, Cumberland, ON K4A 1E4",
+        "rent_cad": 2817,
+        "bedrooms": 2,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0156"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.745556,
-          45.352263
+          -75.488462,
+          45.44153
         ]
       }
     },
@@ -3438,20 +3438,20 @@
       "id": "ott-0157",
       "properties": {
         "id": "ott-0157",
-        "title": "1 bedroom — Alta Vista",
-        "address": "405 Preston St, Ottawa, ON",
-        "rent_cad": 1759,
+        "title": "1 bedroom — Kanata",
+        "address": "332 Brettonwood Ridge, Kanata, ON K2T 0H8",
+        "rent_cad": 1694,
         "bedrooms": 1,
-        "neighborhood": "Alta Vista",
-        "source": "padestrian-demo",
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0157"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.656998,
-          45.383183
+          -75.933772,
+          45.302705
         ]
       }
     },
@@ -3460,20 +3460,20 @@
       "id": "ott-0158",
       "properties": {
         "id": "ott-0158",
-        "title": "1 bedroom — Stittsville",
-        "address": "314 Hunt Club Rd, Ottawa, ON",
-        "rent_cad": 1752,
+        "title": "1 bedroom — Kanata",
+        "address": "150 Osprey Cres, Kanata, ON K2M 2Z7",
+        "rent_cad": 1529,
         "bedrooms": 1,
-        "neighborhood": "Stittsville",
-        "source": "padestrian-demo",
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0158"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.93416,
-          45.255153
+          -75.850644,
+          45.295827
         ]
       }
     },
@@ -3482,20 +3482,20 @@
       "id": "ott-0159",
       "properties": {
         "id": "ott-0159",
-        "title": "1 bedroom — ByWard Market",
-        "address": "714 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 2029,
-        "bedrooms": 1,
-        "neighborhood": "ByWard Market",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "890 Woodroffe Ave, Old Ottawa, ON K2B 7L9",
+        "rent_cad": 2230,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0159"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.674794,
-          45.431798
+          -75.771575,
+          45.366169
         ]
       }
     },
@@ -3504,20 +3504,20 @@
       "id": "ott-0160",
       "properties": {
         "id": "ott-0160",
-        "title": "2 bedroom — Centretown",
-        "address": "830 Catherine St, Ottawa, ON",
-        "rent_cad": 2336,
-        "bedrooms": 2,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Kanata",
+        "address": "49 Hansen Ave, Kanata, ON K2K 2C8",
+        "rent_cad": 1777,
+        "bedrooms": 1,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0160"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.683218,
-          45.426884
+          -75.920374,
+          45.329954
         ]
       }
     },
@@ -3526,20 +3526,20 @@
       "id": "ott-0161",
       "properties": {
         "id": "ott-0161",
-        "title": "2 bedroom — Little Italy",
-        "address": "785 Baseline Rd, Ottawa, ON",
-        "rent_cad": 2263,
-        "bedrooms": 2,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "3 bedroom — Nepean",
+        "address": "450 Ashbourne Cres, Nepean, ON K2J 0P5",
+        "rent_cad": 2365,
+        "bedrooms": 3,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0161"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.708146,
-          45.405456
+          -75.727857,
+          45.254442
         ]
       }
     },
@@ -3548,20 +3548,20 @@
       "id": "ott-0162",
       "properties": {
         "id": "ott-0162",
-        "title": "2 bedroom — Lowertown",
-        "address": "463 Catherine St, Ottawa, ON",
-        "rent_cad": 2382,
-        "bedrooms": 2,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Gloucester",
+        "address": "214 Larimar Cir, Gloucester, ON K1X 0B7",
+        "rent_cad": 1686,
+        "bedrooms": 1,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0162"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.680383,
-          45.444682
+          -75.675698,
+          45.276291
         ]
       }
     },
@@ -3570,20 +3570,20 @@
       "id": "ott-0163",
       "properties": {
         "id": "ott-0163",
-        "title": "Studio apartment — Centretown",
-        "address": "777 Wellington St W, Ottawa, ON",
-        "rent_cad": 1452,
-        "bedrooms": 0,
-        "neighborhood": "Centretown",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Cumberland",
+        "address": "144 Sweetvalley Dr, Cumberland, ON K4A 1A4",
+        "rent_cad": 1606,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0163"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.695135,
-          45.426577
+          -75.48102,
+          45.443756
         ]
       }
     },
@@ -3592,20 +3592,20 @@
       "id": "ott-0164",
       "properties": {
         "id": "ott-0164",
-        "title": "2 bedroom — Barrhaven",
-        "address": "525 Montreal Rd, Ottawa, ON",
-        "rent_cad": 2499,
+        "title": "2 bedroom — Nepean",
+        "address": "401 Beatrice Dr, Nepean, ON K2J 4Y7",
+        "rent_cad": 1881,
         "bedrooms": 2,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0164"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.746677,
-          45.269172
+          -75.727866,
+          45.279298
         ]
       }
     },
@@ -3614,20 +3614,20 @@
       "id": "ott-0165",
       "properties": {
         "id": "ott-0165",
-        "title": "2 bedroom — Vanier",
-        "address": "314 Catherine St, Ottawa, ON",
-        "rent_cad": 2736,
-        "bedrooms": 2,
-        "neighborhood": "Vanier",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Cumberland",
+        "address": "22 Shiner Lane, Cumberland, ON K4A 1L1",
+        "rent_cad": 1788,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0165"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.653103,
-          45.426167
+          -75.493021,
+          45.445113
         ]
       }
     },
@@ -3636,20 +3636,20 @@
       "id": "ott-0166",
       "properties": {
         "id": "ott-0166",
-        "title": "Studio apartment — Billings Bridge",
-        "address": "704 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 1381,
-        "bedrooms": 0,
-        "neighborhood": "Billings Bridge",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Gloucester",
+        "address": "1935 Rideau Rd, Gloucester, ON K1X 1E1",
+        "rent_cad": 2601,
+        "bedrooms": 2,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0166"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.644048,
-          45.37424
+          -75.63231,
+          45.276578
         ]
       }
     },
@@ -3658,20 +3658,20 @@
       "id": "ott-0167",
       "properties": {
         "id": "ott-0167",
-        "title": "1 bedroom — Kanata",
-        "address": "282 Bank St, Ottawa, ON",
-        "rent_cad": 1854,
-        "bedrooms": 1,
-        "neighborhood": "Kanata",
-        "source": "padestrian-demo",
+        "title": "Studio apartment — Gloucester",
+        "address": "1641 Comstock Rd, Gloucester, ON K1B 4X2",
+        "rent_cad": 1580,
+        "bedrooms": 0,
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0167"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.883178,
-          45.31531
+          -75.620369,
+          45.418118
         ]
       }
     },
@@ -3680,20 +3680,20 @@
       "id": "ott-0168",
       "properties": {
         "id": "ott-0168",
-        "title": "2 bedroom — New Edinburgh",
-        "address": "402 St Laurent Blvd, Ottawa, ON",
-        "rent_cad": 2286,
-        "bedrooms": 2,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "1 bedroom — Old Ottawa",
+        "address": "255 Huntersfield Dr, Old Ottawa, ON K1T 3M5",
+        "rent_cad": 2048,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0168"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.693551,
-          45.441846
+          -75.629537,
+          45.361015
         ]
       }
     },
@@ -3702,20 +3702,20 @@
       "id": "ott-0169",
       "properties": {
         "id": "ott-0169",
-        "title": "Studio apartment — Orleans",
-        "address": "949 Wellington St W, Ottawa, ON",
-        "rent_cad": 1724,
-        "bedrooms": 0,
-        "neighborhood": "Orleans",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Old Ottawa",
+        "address": "2025 Othello Ave, Old Ottawa, ON K1G 3R4",
+        "rent_cad": 2240,
+        "bedrooms": 3,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0169"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.5241,
-          45.463612
+          -75.623027,
+          45.396732
         ]
       }
     },
@@ -3724,20 +3724,20 @@
       "id": "ott-0170",
       "properties": {
         "id": "ott-0170",
-        "title": "1 bedroom — Little Italy",
-        "address": "676 Rideau St, Ottawa, ON",
-        "rent_cad": 2167,
-        "bedrooms": 1,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Cumberland",
+        "address": "306 Pintail Terr, Cumberland, ON K1E 2A1",
+        "rent_cad": 3379,
+        "bedrooms": 3,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0170"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.706685,
-          45.41225
+          -75.507742,
+          45.484601
         ]
       }
     },
@@ -3746,20 +3746,20 @@
       "id": "ott-0171",
       "properties": {
         "id": "ott-0171",
-        "title": "Studio apartment — Barrhaven",
-        "address": "111 Somerset St W, Ottawa, ON",
-        "rent_cad": 1654,
-        "bedrooms": 0,
-        "neighborhood": "Barrhaven",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Cumberland",
+        "address": "965 Markwick Cres, Cumberland, ON K4A 4J2",
+        "rent_cad": 1456,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0171"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.7488,
-          45.267088
+          -75.463985,
+          45.467517
         ]
       }
     },
@@ -3768,20 +3768,20 @@
       "id": "ott-0172",
       "properties": {
         "id": "ott-0172",
-        "title": "1 bedroom — Little Italy",
-        "address": "725 Hunt Club Rd, Ottawa, ON",
-        "rent_cad": 2136,
-        "bedrooms": 1,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "3 bedroom — Old Ottawa",
+        "address": "141 Powell Ave, Old Ottawa, ON K1S 2A2",
+        "rent_cad": 2811,
+        "bedrooms": 3,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0172"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.698059,
-          45.400256
+          -75.695611,
+          45.404696
         ]
       }
     },
@@ -3790,20 +3790,20 @@
       "id": "ott-0173",
       "properties": {
         "id": "ott-0173",
-        "title": "1 bedroom — New Edinburgh",
-        "address": "113 Baseline Rd, Ottawa, ON",
-        "rent_cad": 1874,
-        "bedrooms": 1,
-        "neighborhood": "New Edinburgh",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Kanata",
+        "address": "379 Cope Dr, Kanata, ON K2V 0P7",
+        "rent_cad": 2608,
+        "bedrooms": 2,
+        "neighborhood": "Kanata",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0173"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.682911,
-          45.450814
+          -75.876414,
+          45.274139
         ]
       }
     },
@@ -3812,20 +3812,20 @@
       "id": "ott-0174",
       "properties": {
         "id": "ott-0174",
-        "title": "1 bedroom — Stittsville",
-        "address": "234 Wellington St W, Ottawa, ON",
-        "rent_cad": 2156,
-        "bedrooms": 1,
-        "neighborhood": "Stittsville",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Nepean",
+        "address": "324 Dalehurst Dr, Nepean, ON K2G 4E4",
+        "rent_cad": 2201,
+        "bedrooms": 2,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0174"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.915837,
-          45.268537
+          -75.748094,
+          45.333963
         ]
       }
     },
@@ -3834,20 +3834,20 @@
       "id": "ott-0175",
       "properties": {
         "id": "ott-0175",
-        "title": "1 bedroom — Nepean",
-        "address": "569 Wellington St W, Ottawa, ON",
-        "rent_cad": 2152,
+        "title": "1 bedroom — Gloucester",
+        "address": "129 Hawkeswood Dr, Gloucester, ON K4M 0C1",
+        "rent_cad": 1729,
         "bedrooms": 1,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo",
+        "neighborhood": "Gloucester",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0175"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.761991,
-          45.341667
+          -75.690691,
+          45.267683
         ]
       }
     },
@@ -3856,20 +3856,20 @@
       "id": "ott-0176",
       "properties": {
         "id": "ott-0176",
-        "title": "3 bedroom — Orleans",
-        "address": "690 Somerset St W, Ottawa, ON",
-        "rent_cad": 3131,
-        "bedrooms": 3,
-        "neighborhood": "Orleans",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "1 bedroom — Cumberland",
+        "address": "205 Esturgeon St, Cumberland, ON K4A 1G4",
+        "rent_cad": 1479,
+        "bedrooms": 1,
+        "neighborhood": "Cumberland",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0176"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.52582,
-          45.464621
+          -75.48904,
+          45.443781
         ]
       }
     },
@@ -3878,20 +3878,20 @@
       "id": "ott-0177",
       "properties": {
         "id": "ott-0177",
-        "title": "Studio apartment — Westboro",
-        "address": "140 Preston St, Ottawa, ON",
-        "rent_cad": 1491,
-        "bedrooms": 0,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
+        "title": "1 bedroom — Rideau",
+        "address": "6073 McCordick Rd, Rideau, ON K0A 2Z0",
+        "rent_cad": 2134,
+        "bedrooms": 1,
+        "neighborhood": "Rideau",
+        "source": "padestrian-demo-municipal",
         "bathrooms": 1.0,
         "url": "https://example.com/listings/ott-0177"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.746899,
-          45.394332
+          -75.76677,
+          45.152028
         ]
       }
     },
@@ -3900,20 +3900,20 @@
       "id": "ott-0178",
       "properties": {
         "id": "ott-0178",
-        "title": "1 bedroom — Westboro",
-        "address": "902 Laurier Ave E, Ottawa, ON",
-        "rent_cad": 1671,
-        "bedrooms": 1,
-        "neighborhood": "Westboro",
-        "source": "padestrian-demo",
-        "bathrooms": 1.0,
+        "title": "2 bedroom — Nepean",
+        "address": "25 Barnstable Dr, Nepean, ON K2J 1Z5",
+        "rent_cad": 2578,
+        "bedrooms": 2,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0178"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.76753,
-          45.398364
+          -75.754837,
+          45.287323
         ]
       }
     },
@@ -3922,20 +3922,20 @@
       "id": "ott-0179",
       "properties": {
         "id": "ott-0179",
-        "title": "3 bedroom — Little Italy",
-        "address": "891 Rideau St, Ottawa, ON",
-        "rent_cad": 2205,
-        "bedrooms": 3,
-        "neighborhood": "Little Italy",
-        "source": "padestrian-demo",
-        "bathrooms": 2.0,
+        "title": "2 bedroom — Old Ottawa",
+        "address": "158 Spadina Ave, Old Ottawa, ON K1Y 2C3",
+        "rent_cad": 2707,
+        "bedrooms": 2,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 1.5,
         "url": "https://example.com/listings/ott-0179"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.718172,
-          45.400541
+          -75.71915,
+          45.400973
         ]
       }
     },
@@ -3944,25 +3944,69 @@
       "id": "ott-0180",
       "properties": {
         "id": "ott-0180",
-        "title": "2 bedroom — Lowertown",
-        "address": "899 Baseline Rd, Ottawa, ON",
-        "rent_cad": 1975,
-        "bedrooms": 2,
-        "neighborhood": "Lowertown",
-        "source": "padestrian-demo",
-        "bathrooms": 1.5,
+        "title": "3 bedroom — Old Ottawa",
+        "address": "305 Duncairn Ave, Old Ottawa, ON K1Z 7H1",
+        "rent_cad": 3293,
+        "bedrooms": 3,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-municipal",
+        "bathrooms": 2.0,
         "url": "https://example.com/listings/ott-0180"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.667449,
-          45.435965
+          -75.748323,
+          45.385608
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ott-fun-01",
+      "properties": {
+        "id": "ott-fun-01",
+        "title": "2 bedroom — Nepean",
+        "address": "22 Plumas Gt, Nepean, ON K2J 5C9",
+        "rent_cad": 2100,
+        "bedrooms": 2,
+        "neighborhood": "Nepean",
+        "source": "padestrian-demo-fun",
+        "bathrooms": 1.5,
+        "url": "https://example.com/listings/ott-fun-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.735693,
+          45.279527
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ott-fun-02",
+      "properties": {
+        "id": "ott-fun-02",
+        "title": "1 bedroom — Old Ottawa",
+        "address": "8 Glenhaven Priv, Old Ottawa, ON K1V 2B9",
+        "rent_cad": 1850,
+        "bedrooms": 1,
+        "neighborhood": "Old Ottawa",
+        "source": "padestrian-demo-fun",
+        "bathrooms": 1.0,
+        "url": "https://example.com/listings/ott-fun-02"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.665598,
+          45.370146
         ]
       }
     }
   ],
   "city": "Ottawa, ON",
-  "source": "padestrian demo seed (not live listings)",
-  "listingCount": 180
+  "source": "padestrian demo seed (City of Ottawa municipal address points)",
+  "listingCount": 182
 }

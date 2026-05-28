@@ -3,6 +3,9 @@
 .env.local
 .env.*.local
 
+# Local interview / personal notes (not for repo)
+INTERVIEW_NOTES.local.md
+
 # Python
 .venv/
 venv/
@@ -24,6 +27,9 @@ data/GTFSExport/
 data/isochrones/
 data/zones/
 data/listings-scored.geojson
+data/osm-residential.geojson
+data/municipal-addresses.geojson
+data/municipal-addresses.csv
 
 # Junction at public/data → data/ (do not commit copies of generated GeoJSON)
 public/data/

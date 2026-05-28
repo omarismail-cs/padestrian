@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronLeft, Moon, Sun, X } from "lucide-react"
+import { ChevronLeft, Moon, Sun } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
@@ -106,13 +106,7 @@ export function FilterPanel({
               <p className="text-xs text-muted-foreground">Ottawa walkable rentals</p>
             </div>
           </div>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="p-1.5 rounded-lg hover:bg-secondary transition-colors"
-            aria-label="Close panel"
-          >
-            <X className="w-5 h-5 text-muted-foreground" />
-          </button>
+          <div className="w-8" aria-hidden />
         </div>
 
         {/* Stats banner */}
@@ -201,27 +195,43 @@ export function FilterPanel({
               <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
                 Legend
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-2">
                 {[
                   { color: "bg-orange-500", label: "Walkable" },
                   { color: "bg-lime-500", label: "Grocery only" },
                   { color: "bg-violet-500", label: "Transit only" },
                   { color: "bg-slate-500", label: "Neither" },
                 ].map((item) => (
-                  <div key={item.label} className="flex items-center gap-2">
-                    <div className={cn("w-2.5 h-2.5 rounded-full", item.color)} />
-                    <span className="text-xs text-muted-foreground">{item.label}</span>
+                  <div key={item.label} className="flex items-center gap-2 min-w-0">
+                    <div className={cn("w-2.5 h-2.5 rounded-full shrink-0", item.color)} />
+                    <span className="text-xs text-muted-foreground truncate">{item.label}</span>
                   </div>
                 ))}
+              </div>
+              <div className="mt-2">
+                <div className="flex items-center gap-2 py-1.5">
+                  <span className="inline-flex h-4 w-4 items-center justify-center rounded-sm bg-orange-500/15 shrink-0">
+                    <img
+                      src="/images/house-walkable.png"
+                      alt=""
+                      width={12}
+                      height={12}
+                      className="block h-3 w-3 object-contain"
+                    />
+                  </span>
+                  <span className="text-xs leading-none text-muted-foreground">
+                    Rental listings (colored by walkability)
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Layers section */}
-            <div className="pt-4 border-t border-border">
-              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-4">
+            <div className="mt-2 pt-3 border-t border-border">
+              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
                 Layers
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1">
                 <label className="flex items-center justify-between py-2 cursor-pointer group">
                   <div className="flex items-center gap-2">
                     <img src="/images/grocery-icon.png" alt="" width={18} height={18} className="shrink-0" />

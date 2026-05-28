@@ -129,7 +129,7 @@ export function FilterPanel({
       {/* Theme toggle - always visible top right */}
       <button
         onClick={onThemeToggle}
-        className="absolute top-4 right-4 z-20 p-2.5 rounded-xl bg-card/95 backdrop-blur-xl border border-border shadow-lg hover:bg-card transition-colors"
+        className="absolute top-4 right-4 z-20 flex size-10 shrink-0 items-center justify-center rounded-xl bg-card/95 backdrop-blur-xl border border-border shadow-lg hover:bg-card transition-colors"
         aria-label="Toggle theme"
       >
         {theme === "dark" ? (
@@ -142,7 +142,7 @@ export function FilterPanel({
       {/* Expanded sidebar */}
       <aside
         className={cn(
-          "absolute top-0 left-0 z-30 h-full w-80 bg-card/95 backdrop-blur-xl border-r border-border shadow-2xl transition-transform duration-300 ease-out",
+          "absolute top-0 left-0 z-30 flex h-full w-80 flex-col bg-card/95 backdrop-blur-xl border-r border-border shadow-2xl transition-transform duration-300 ease-out",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -177,8 +177,8 @@ export function FilterPanel({
         </div>
 
         {/* Scrollable content */}
-        <div className="overflow-y-auto h-[calc(100%-180px)] pb-4">
-          <div className="p-5 space-y-5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+          <div className="p-5 space-y-5 pb-4">
             {/* Filters section */}
             <div>
               <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground dark:text-zinc-300 mb-4">
@@ -389,8 +389,8 @@ export function FilterPanel({
         </div>
 
         {/* Footer */}
-        <div className="absolute bottom-0 left-0 right-0 px-5 py-3 bg-secondary/30 border-t border-border">
-          <p className="text-xs text-muted-foreground text-center">
+        <div className="shrink-0 border-t border-border bg-secondary/30 px-5 py-3">
+          <p className="text-center text-xs text-muted-foreground dark:text-zinc-400">
             Find your car-free apartment
           </p>
         </div>

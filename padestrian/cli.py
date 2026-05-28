@@ -6,7 +6,6 @@ from pathlib import Path
 import shutil
 
 import httpx
-from playwright.sync_api import sync_playwright
 
 from padestrian import __version__
 from padestrian.gtfs_stops import export_stops_geojson
@@ -25,6 +24,7 @@ from padestrian.listings import (
 from padestrian.fetch_groceries import export_groceries_geojson
 from padestrian.municipal_addresses import import_municipal_geojson
 from padestrian.osm_addresses import OSM_RESIDENTIAL_PATH, export_osm_residential_geojson
+from padestrian.prune_kijiji import run_prune_kijiji
 from padestrian.scraper import (
     extract_kijiji_id,
     normalize_listing,
@@ -286,6 +286,8 @@ def cmd_scrape_listings(args: argparse.Namespace) -> int:
 
     scraped_new: list[dict[str, object]] = []
     if candidates and args.max > 0:
+        from playwright.sync_api import sync_playwright
+
         with sync_playwright() as pw:
             browser = pw.chromium.launch(headless=True)
             context = browser.new_context()
@@ -330,6 +332,19 @@ def cmd_scrape_listings(args: argparse.Namespace) -> int:
     print(f"Scraped + normalized new listings: {len(scraped_new)}")
     print(f"Wrote listings: {len(merged)}  -> {LISTINGS_JSON_PATH}")
     print(f"Kijiji snapshot: {KIJIJI_LISTINGS_PATH}")
+    return 0
+
+
+def cmd_prune_kijiji(args: argparse.Namespace) -> int:
+    """Remove expired Kijiji ads from data/listings.json."""
+    try:
+        run_prune_kijiji(
+            dry_run=args.dry_run,
+            delay=max(0.0, args.delay),
+        )
+    except ListingValidationError as exc:
+        print(exc, file=sys.stderr)
+        return 1
     return 0
 
 
@@ -544,6 +559,23 @@ def main(argv: list[str] | None = None) -> int:
         help="Append to existing listings instead of replacing them",
     )
     scrape_parser.set_defaults(func=cmd_scrape_listings)
+
+    prune_parser = subparsers.add_parser(
+        "prune-kijiji",
+        help="Remove expired Kijiji listings from data/listings.json",
+    )
+    prune_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print what would be removed without writing files",
+    )
+    prune_parser.add_argument(
+        "--delay",
+        type=float,
+        default=0.8,
+        help="Seconds between HTTP checks (default: 0.8)",
+    )
+    prune_parser.set_defaults(func=cmd_prune_kijiji)
 
     use_parser = subparsers.add_parser(
         "use-listings",

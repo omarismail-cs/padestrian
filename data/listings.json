@@ -1,7 +1,7 @@
 {
   "city": "Ottawa, ON",
   "source": "padestrian demo seed (City of Ottawa municipal address points)",
-  "generated_at": "2026-05-28T03:55:40Z",
+  "generated_at": "2026-05-28T20:05:57Z",
   "listings": [
     {
       "id": "ott-0001",
@@ -2551,6 +2551,204 @@
       "bedrooms": 0,
       "source": "kijiji",
       "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/modern-1-bedroom-rental-in-centertown/1669182401"
+    },
+    {
+      "id": "kijiji-1735339700",
+      "title": "Mata Living: 2 Months Free on Select Units | New Studios",
+      "address": "300 Tremblay Road, Ottawa, Ontario K1G 0A4, Canada",
+      "lat": 45.418413,
+      "lon": -75.647293,
+      "rent_cad": 1500,
+      "bedrooms": 0,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/mata-living:-2-months-free-on-select-units-new-studios/1735339700"
+    },
+    {
+      "id": "kijiji-1651329986",
+      "title": "2 Bedroom 2 Bath in the Heart of Centretown, Ottawa",
+      "address": "383 Albert Street, Ottawa, Ontario K1R 5B2, Canada",
+      "lat": 45.41798,
+      "lon": -75.705415,
+      "rent_cad": 2600,
+      "bedrooms": 2,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-2-bath-in-the-heart-of-centretown-ottawa/1651329986"
+    },
+    {
+      "id": "kijiji-1735339704",
+      "title": "Mata Living: Spacious 1-Bedrooms | 2 Months Free on Select Units",
+      "address": "300 Tremblay Road, Ottawa, Ontario K1G 0A4, Canada",
+      "lat": 45.418413,
+      "lon": -75.647293,
+      "rent_cad": 2070,
+      "bedrooms": 0,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/mata-living:-spacious-1-bedrooms-2-months-free-on-select-units/1735339704"
+    },
+    {
+      "id": "kijiji-1738326009",
+      "title": "2 bedroom old Ottawa south apartment for rent",
+      "address": "69 Riverdale Avenue, Ottawa, Ontario K1S 1R1, Canada",
+      "lat": 45.401312,
+      "lon": -75.675694,
+      "rent_cad": 2200,
+      "bedrooms": 2,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-old-ottawa-south-apartment-for-rent/1738326009"
+    },
+    {
+      "id": "kijiji-1738321685",
+      "title": "3 bedroom apartment",
+      "address": "634 MacLaren Street, Ottawa, Ontario K1R 5L2, Canada",
+      "lat": 45.411314,
+      "lon": -75.703598,
+      "rent_cad": 2285,
+      "bedrooms": 3,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/3-bedroom-apartment/1738321685"
+    },
+    {
+      "id": "kijiji-1736113867",
+      "title": "1 Bedroom Rentals in Ottawa's East-End",
+      "address": "840 Montréal Road, Ottawa, Ontario K1K 4W3, Canada",
+      "lat": 45.44529,
+      "lon": -75.632283,
+      "rent_cad": 1695,
+      "bedrooms": 1,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1-bedroom-rentals-in-ottawas-east-end/1736113867"
+    },
+    {
+      "id": "kijiji-1736113865",
+      "title": "Beautiful 2 Bedroom Apartment",
+      "address": "840 Montréal Road, Ottawa, Ontario K1K 4W3, Canada",
+      "lat": 45.44529,
+      "lon": -75.632283,
+      "rent_cad": 1975,
+      "bedrooms": 2,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/beautiful-2-bedroom-apartment/1736113865"
+    },
+    {
+      "id": "kijiji-1728565294",
+      "title": "Studio Apartment in Centretown | 98 Walk Score!",
+      "address": "287 Lisgar Street, Ottawa, Ontario K2P 1K8, Canada",
+      "lat": 45.417479,
+      "lon": -75.696241,
+      "rent_cad": 1700,
+      "bedrooms": 0,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/studio-apartment-in-centretown-98-walk-score/1728565294"
+    },
+    {
+      "id": "kijiji-1738319336",
+      "title": "Tenth Line - One Bedroom One Bathroom Apartment for Rent",
+      "address": "2190 Tenth Line Road, Orléans, Ontario K4A 5R4, Canada",
+      "lat": 45.454412,
+      "lon": -75.484994,
+      "rent_cad": 2125,
+      "bedrooms": 2,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/tenth-line-one-bedroom-one-bathroom-apartment-for-rent/1738319336"
+    },
+    {
+      "id": "kijiji-1738320021",
+      "title": "July 1 --2 BD unit 335 Nepean St $2250.00 plus hydro",
+      "address": "335 Nepean Street, Ottawa, Ontario K1R 5G4, Canada",
+      "lat": 45.415566,
+      "lon": -75.70285,
+      "rent_cad": 2250,
+      "bedrooms": 2,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/july-1-2-bd-unit-335-nepean-st-2250-00-plus-hydro/1738320021"
+    },
+    {
+      "id": "kijiji-1738318597",
+      "title": "Beautiful Downtown Condo for rent",
+      "address": "138 Somerset Street West, Ottawa, Ontario K2P 0A3, Canada",
+      "lat": 45.418011,
+      "lon": -75.689295,
+      "rent_cad": 1975,
+      "bedrooms": 1,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/beautiful-downtown-condo-for-rent/1738318597"
+    },
+    {
+      "id": "kijiji-1733944745",
+      "title": "July 2026 - 1 bedroom apartment",
+      "address": "141 Cooper Street, Ottawa, Ontario K2P 0E8, Canada",
+      "lat": 45.419247,
+      "lon": -75.68983,
+      "rent_cad": 1599,
+      "bedrooms": 1,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/july-2026-1-bedroom-apartment/1733944745"
+    },
+    {
+      "id": "kijiji-1737120415",
+      "title": "July 1st - Studio/Bachelor Apartment Available",
+      "address": "141 Cooper Street, Ottawa, Ontario K2P 0E8, Canada",
+      "lat": 45.419247,
+      "lon": -75.68983,
+      "rent_cad": 1349,
+      "bedrooms": 0,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/july-1st-studio-bachelor-apartment-available/1737120415"
+    },
+    {
+      "id": "kijiji-1732672786",
+      "title": "1BD apt Available @ $1699 - July 1st 2026 - The Carson",
+      "address": "141 Cooper Street, Ottawa, Ontario K2P 0E8, Canada",
+      "lat": 45.419247,
+      "lon": -75.68983,
+      "rent_cad": 1649,
+      "bedrooms": 1,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1bd-apt-available-1699-july-1st-2026-the-carson/1732672786"
+    },
+    {
+      "id": "kijiji-1737112813",
+      "title": "Station27 - 1 Bedroom available",
+      "address": "1155 Joseph Cyr Street, Gloucester, Ontario K1J 7T4, Canada",
+      "lat": 45.423939,
+      "lon": -75.634419,
+      "rent_cad": 1785,
+      "bedrooms": 1,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/station27-1-bedroom-available/1737112813"
+    },
+    {
+      "id": "kijiji-1735339690",
+      "title": "Ori Apartment: 2-Bedrooms Starting at $2420 | Brand New Suites",
+      "address": "1188 Cummings Avenue, Gloucester, Ontario K1J 7R8, Canada",
+      "lat": 45.426755,
+      "lon": -75.632456,
+      "rent_cad": 2420,
+      "bedrooms": 0,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/ori-apartment:-2-bedrooms-starting-at-2420-brand-new-suites/1735339690"
+    },
+    {
+      "id": "kijiji-1737958571",
+      "title": "Studio Apartment",
+      "address": "331 Cooper Street, Ottawa, Ontario K2P 0G5, Canada",
+      "lat": 45.41723,
+      "lon": -75.694639,
+      "rent_cad": 1700,
+      "bedrooms": 0,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/studio-apartment/1737958571"
+    },
+    {
+      "id": "kijiji-1735274648",
+      "title": "2 Bedrooms House for Rent - 5-80 Weeping Willow Lane",
+      "address": "80 Weeping Willow Lane, Kanata, Ontario K2K 1E4, Canada",
+      "lat": 45.332225,
+      "lon": -75.905381,
+      "rent_cad": 2399,
+      "bedrooms": 3,
+      "source": "kijiji",
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedrooms-house-for-rent-5-80-weeping-willow-lane/1735274648"
     }
   ]
 }

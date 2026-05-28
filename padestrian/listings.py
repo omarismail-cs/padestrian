@@ -38,6 +38,19 @@ def _load_catalog(path: Path = LISTINGS_JSON_PATH) -> dict[str, Any]:
     return data
 
 
+def load_catalog(path: Path = LISTINGS_JSON_PATH) -> dict[str, Any]:
+    """Load listings.json root object."""
+    return _load_catalog(path)
+
+
+def save_catalog(data: dict[str, Any], path: Path = LISTINGS_JSON_PATH) -> None:
+    """Write listings.json (and trailing newline)."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
+
 def validate_listing(row: dict[str, Any], index: int) -> list[str]:
     errors: list[str] = []
     prefix = f"listings[{index}]"

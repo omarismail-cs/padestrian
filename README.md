@@ -13,8 +13,9 @@ Default scoring uses a 10 minute walking budget.
 
 ```bash
 python -m venv .venv
-.venv\Scripts\activate
+.venv\Scripts\activate   # macOS/Linux: source .venv/bin/activate
 pip install -e .
+playwright install chromium   # required for scrape-listings only
 ```
 
 ### 2) Frontend setup
@@ -74,19 +75,42 @@ python -m padestrian filter-listings
 python -m padestrian validate-scoring
 ```
 
-### Pull and use Kijiji listings
+### Kijiji listings (scrape, prune, map)
+
+The map loads **`data/listings-scored.geojson`**, built from **`data/listings.json`**. Use **`--append`** so demo static listings and Kijiji ads can coexist. Sidebar toggles filter by `source` (`kijiji` vs municipal demo).
 
 ```bash
-# Scrape and normalize Kijiji listings into data/listings.json
-python -m padestrian scrape-listings --pages 3 --max 60
+# Add new Kijiji ads (skips IDs already in listings.json)
+python -m padestrian scrape-listings --pages 5 --max 40 --append
 
-# Optional: append to what you already have
-python -m padestrian scrape-listings --pages 1 --max 20 --append
+# Preview then remove ads that are no longer ACTIVE on Kijiji
+python -m padestrian prune-kijiji --dry-run
+python -m padestrian prune-kijiji
 
-# Switch active dataset snapshots
+# Push changes to the map layer
+python -m padestrian validate-listings
+python -m padestrian filter-listings
+```
+
+**Do not** run `scrape-listings` without `--append` unless you intend to replace the entire catalog with only this run’s scrape.
+
+Snapshots (optional):
+
+```bash
 python -m padestrian use-listings --source static
 python -m padestrian use-listings --source kijiji
+# then validate-listings && filter-listings
 ```
+
+### Regenerate map pin icons
+
+Colored house pins and the red grocery cart pin are generated from artwork under `scripts/assets/`:
+
+```bash
+python scripts/generate_map_icons.py
+```
+
+Outputs 64×64 PNGs in `public/images/` (walkable green, grocery-only lime, transit violet, neither slate, default gray; groceries stay red).
 
 ## CLI commands
 
@@ -99,7 +123,8 @@ python -m padestrian use-listings --source kijiji
 | `validate-scoring` | Compare scored listings to manual CSV labels |
 | `validate-listings` | Validate `listings.json` and export `listings.geojson` |
 | `seed-listings` | Generate demo listings |
-| `scrape-listings` | Scrape Kijiji listings, normalize, dedupe, and write `listings.json` |
+| `scrape-listings` | Scrape Kijiji (Playwright), normalize, dedupe, write `listings.json` |
+| `prune-kijiji` | Remove expired Kijiji ads via live page status check |
 | `use-listings` | Switch active `listings.json` between static and Kijiji snapshots |
 | `import-municipal-addresses` | Import City of Ottawa address points |
 | `fetch-osm-residential` | Cache OSM residential addresses |
@@ -109,11 +134,13 @@ python -m padestrian use-listings --source kijiji
 ## Project layout
 
 ```text
-padestrian/    Python CLI and scoring code
-components/    React map UI
-app/           Next.js app entry
-data/          GeoJSON, zones, and GTFS input
-public/data/   Link to data/ for frontend loading
+padestrian/       Python CLI, scoring, scraper, prune-kijiji
+components/       React map UI (popups, filters, Mapbox layers)
+app/              Next.js app entry + globals.css (popup shells)
+data/             GeoJSON, zones, listings JSON, GTFS input
+public/images/    Map marker PNGs
+public/data/      Junction → data/ for frontend fetches
+scripts/          Icon generation (generate_map_icons.py)
 ```
 
 For dataset details and Overpass instructions, see [data/README.md](data/README.md).

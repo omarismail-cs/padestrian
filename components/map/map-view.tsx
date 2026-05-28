@@ -5,9 +5,16 @@ import Map, { NavigationControl, Popup, Source, Layer, type MapRef } from "react
 import type { MapLayerMouseEvent } from "react-map-gl/mapbox"
 import type { GeoJSON } from "geojson"
 import "mapbox-gl/dist/mapbox-gl.css"
+import { GroceryPopupCard } from "@/components/map/grocery-popup"
+import { ListingPopupCard } from "@/components/map/listing-popup"
 
 const CENTER = { longitude: -75.6972, latitude: 45.4215 }
 const ZOOM   = 12.5
+
+const MAP_STYLE = {
+  dark: "mapbox://styles/mapbox/dark-v11",
+  light: "mapbox://styles/mapbox/light-v11",
+} as const
 
 // Map layer colours — distinct from listing house icons
 const LAYER_GROCERY_COLOR = "#14b8a6"  // teal  — grocery store pins
@@ -52,10 +59,14 @@ interface MapViewProps {
   theme: "light" | "dark"
 }
 
+/** Same as grocery POI popups — scalar offset works with Mapbox anchor-bottom */
+const POI_POPUP_OFFSET = 12
+
 export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps) {
   const mapRef = useRef<MapRef>(null)
   const [popupInfo, setPopupInfo]   = useState<PopupInfo | null>(null)
   const [cursor,    setCursor]      = useState<string>("auto")
+  const popupHoverRef = useRef(false)
 
   // Real GeoJSON data
   const [listings,  setListings]  = useState<GeoJSON.FeatureCollection | null>(null)
@@ -100,6 +111,28 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
       loadIcon(id, url, onHouseIconReady)
     }
   }, [])
+
+  // mapStyle changes wipe custom images; reload icons then let keyed Sources re-mount
+  useEffect(() => {
+    const map = mapRef.current?.getMap()
+    if (!map) return
+
+    const syncIcons = () => {
+      setGroceryIconReady(false)
+      setHouseIconReady(false)
+      loadMapIcons()
+    }
+
+    map.on("style.load", syncIcons)
+    // Catch style.load if it finished before this effect ran
+    map.once("idle", () => {
+      if (!map.hasImage("grocery-icon")) syncIcons()
+    })
+
+    return () => {
+      map.off("style.load", syncIcons)
+    }
+  }, [theme, loadMapIcons])
 
   // Load core data on mount
   useEffect(() => {
@@ -146,7 +179,8 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
     const showStatic = layers.staticListings
     const showKijiji = layers.kijijiListings
     if (!showStatic && !showKijiji) {
-      return ["==", 1, 0]
+      // Valid expression filter that matches nothing (both listing sources off)
+      return ["==", ["get", "source"], "__none__"]
     }
     if (showStatic && !showKijiji) {
       exprs.push(["!=", ["get", "source"], "kijiji"])
@@ -223,16 +257,39 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
     ]
   }, [hasScores])
 
+  const isListingPopup = useCallback((info: PopupInfo | null) => {
+    return info?.properties.rent_cad != null
+  }, [])
+
+  const tryDismissPopup = useCallback(() => {
+    if (popupHoverRef.current) return
+    setPopupInfo(null)
+    setCursor("auto")
+  }, [])
+
+  const handleListingPopupMouseEnter = useCallback(() => {
+    popupHoverRef.current = true
+  }, [])
+
+  const handleListingPopupMouseLeave = useCallback(() => {
+    popupHoverRef.current = false
+    setPopupInfo(null)
+    setCursor("auto")
+  }, [])
+
   const handleMouseMove = useCallback((event: MapLayerMouseEvent) => {
     const feature =
       event.features?.find((f) => f.layer?.id === "listings-symbol") ??
+      event.features?.find((f) => f.layer?.id === "groceries-symbol") ??
       event.features?.find((f) => f.properties?.rent_cad != null) ??
       event.features?.[0]
     if (!feature) {
       setCursor("auto")
-      setPopupInfo(null)
+      tryDismissPopup()
       return
     }
+
+    popupHoverRef.current = false
 
     let longitude = event.lngLat.lng
     let latitude = event.lngLat.lat
@@ -256,55 +313,19 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
       properties: feature.properties || {},
       layerId: feature.layer?.id || "",
     })
-  }, [])
+  }, [tryDismissPopup])
 
   const handleMouseLeave = useCallback(() => {
-    setCursor("auto")
-    setPopupInfo(null)
-  }, [])
+    // Next tick so pointer can enter the popup DOM without closing first
+    setTimeout(() => tryDismissPopup(), 0)
+  }, [tryDismissPopup])
 
   const formatPopup = (info: PopupInfo) => {
     const p = info.properties
 
     if (p.rent_cad != null) {
-      const beds = Number(p.bedrooms) === 0
-        ? "Studio"
-        : `${p.bedrooms} bed${Number(p.bedrooms) === 1 ? "" : "s"}`
-      const rent = Number(p.rent_cad).toLocaleString()
-
-      let badge = ""
-      if (p.eligible)          badge = "walkable"
-      else if (p.near_grocery) badge = "grocery"
-      else if (p.near_transit) badge = "transit"
-      else                     badge = "neither"
-
-      const badgeClass =
-        badge === "walkable" ? "bg-[#6BBF91]/20 text-[#6BBF91]" :
-        badge === "grocery"  ? "bg-lime-500/20 text-lime-500" :
-        badge === "transit"  ? "bg-violet-500/20 text-violet-400" :
-        "bg-muted text-muted-foreground"
-
-      const badgeLabel =
-        badge === "walkable" ? "Walkable ✓" :
-        badge === "grocery"  ? "Grocery only" :
-        badge === "transit"  ? "Transit only" : "Not walkable"
-
       return (
-        <div className="space-y-1">
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="font-semibold text-foreground leading-tight">
-              {String(p.title || p.address || "Listing")}
-            </span>
-            {hasScores ? (
-              <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${badgeClass}`}>
-                {badgeLabel}
-              </span>
-            ) : null}
-          </div>
-          <p className="text-muted-foreground text-sm">${rent}/mo · {beds}</p>
-          {p.neighborhood && <p className="text-muted-foreground text-xs">{String(p.neighborhood)}</p>}
-          {p.address && p.title && <p className="text-muted-foreground text-xs">{String(p.address)}</p>}
-        </div>
+        <ListingPopupCard properties={p} showBadge={hasScores} />
       )
     }
 
@@ -339,12 +360,7 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
     }
 
     if (p.name) {
-      return (
-        <div>
-          <p className="font-semibold text-foreground">{String(p.name)}</p>
-          {p.shop && <p className="text-muted-foreground text-xs capitalize">{String(p.shop)}</p>}
-        </div>
-      )
+      return <GroceryPopupCard properties={p} />
     }
 
     return <p className="text-foreground text-sm">No details</p>
@@ -352,14 +368,12 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
 
   return (
     <Map
-      key={theme}
       ref={mapRef}
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
       initialViewState={{ ...CENTER, zoom: ZOOM }}
       style={{ width: "100%", height: "100%" }}
-      mapStyle={theme === "dark"
-        ? "mapbox://styles/mapbox/dark-v11"
-        : "mapbox://styles/mapbox/light-v11"}
+      mapStyle={MAP_STYLE[theme]}
+      styleDiffing={false}
       interactiveLayerIds={[
         "listings-symbol",
         "groceries-symbol",
@@ -376,13 +390,14 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
 
       {/* ── Listings (pre-colored house icons, same pattern as groceries) ── */}
       {listings && houseIconReady && (
-        <Source id="listings" type="geojson" data={listings}>
+        <Source key={`listings-${theme}`} id="listings" type="geojson" data={listings}>
           <Layer
             id="listings-symbol"
             type="symbol"
             filter={listingFilter() as mapboxgl.FilterSpecification}
             layout={{
               "icon-image": listingIconImage(),
+              "icon-anchor": "bottom",
               "icon-size": [
                 "interpolate", ["linear"], ["zoom"],
                 10, 0.55,
@@ -398,12 +413,13 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
 
       {/* ── Groceries (custom store icon) ─────────────────────────── */}
       {groceries && layers.groceries && groceryIconReady && (
-        <Source id="groceries" type="geojson" data={groceries}>
+        <Source key={`groceries-${theme}`} id="groceries" type="geojson" data={groceries}>
           <Layer
             id="groceries-symbol"
             type="symbol"
             layout={{
               "icon-image": "grocery-icon",
+              "icon-anchor": "bottom",
               "icon-size": [
                 "interpolate", ["linear"], ["zoom"],
                 10, 0.55,
@@ -419,7 +435,7 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
 
       {/* ── Transit stops — individual dots, visible only when zoomed in ── */}
       {stops && layers.transit && (
-        <Source id="stops" type="geojson" data={stops}>
+        <Source key={`stops-${theme}`} id="stops" type="geojson" data={stops}>
           <Layer
             id="stops-circle"
             type="circle"
@@ -441,7 +457,7 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
 
       {/* ── Smoke / walk zones ───────────────────────────────────── */}
       {smokeData && layers.smoke && (
-        <Source id="smoke" type="geojson" data={smokeData}>
+        <Source key={`smoke-${theme}`} id="smoke" type="geojson" data={smokeData}>
           <Layer
             id="smoke-zones-fill"
             type="fill"
@@ -497,9 +513,25 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
           onClose={() => setPopupInfo(null)}
           closeButton={false}
           closeOnClick={false}
-          offset={12}
+          offset={POI_POPUP_OFFSET}
+          className={
+            popupInfo.properties.rent_cad != null
+              ? "padestrian-listing-popup"
+              : popupInfo.properties.name != null
+                ? "padestrian-grocery-popup"
+                : "padestrian-map-popup"
+          }
         >
-          {formatPopup(popupInfo)}
+          {isListingPopup(popupInfo) ? (
+            <div
+              onMouseEnter={handleListingPopupMouseEnter}
+              onMouseLeave={handleListingPopupMouseLeave}
+            >
+              {formatPopup(popupInfo)}
+            </div>
+          ) : (
+            formatPopup(popupInfo)
+          )}
         </Popup>
       )}
     </Map>

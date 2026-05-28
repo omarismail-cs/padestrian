@@ -24,6 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark bg-background">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"
+        />
+      </head>
       <body className={`${geist.variable} font-sans antialiased`}>
         {children}
       </body>

@@ -74,6 +74,20 @@ python -m padestrian filter-listings
 python -m padestrian validate-scoring
 ```
 
+### Pull and use Kijiji listings
+
+```bash
+# Scrape and normalize Kijiji listings into data/listings.json
+python -m padestrian scrape-listings --pages 3 --max 60
+
+# Optional: append to what you already have
+python -m padestrian scrape-listings --pages 1 --max 20 --append
+
+# Switch active dataset snapshots
+python -m padestrian use-listings --source static
+python -m padestrian use-listings --source kijiji
+```
+
 ## CLI commands
 
 | Command | Purpose |
@@ -85,6 +99,8 @@ python -m padestrian validate-scoring
 | `validate-scoring` | Compare scored listings to manual CSV labels |
 | `validate-listings` | Validate `listings.json` and export `listings.geojson` |
 | `seed-listings` | Generate demo listings |
+| `scrape-listings` | Scrape Kijiji listings, normalize, dedupe, and write `listings.json` |
+| `use-listings` | Switch active `listings.json` between static and Kijiji snapshots |
 | `import-municipal-addresses` | Import City of Ottawa address points |
 | `fetch-osm-residential` | Cache OSM residential addresses |
 | `smoke-isochrone` | Quick ORS test using one stop and one grocery |

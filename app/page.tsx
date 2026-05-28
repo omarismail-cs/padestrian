@@ -25,13 +25,15 @@ export default function Page() {
   const [filters, setFilters] = useState({
     walkableOnly: false,
     maxRent: 3500,
-    beds: "any",
+    beds: ["any"],
   })
 
   const [layers, setLayers] = useState({
     groceries: true,
     transit: false,
-    smoke: true,
+    smoke: false,
+    staticListings: true,
+    kijijiListings: true,
   })
 
   const [stats, setStats] = useState({

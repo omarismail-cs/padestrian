@@ -3963,50 +3963,405 @@
     },
     {
       "type": "Feature",
-      "id": "ott-fun-01",
+      "id": "kijiji-1734238961",
       "properties": {
-        "id": "ott-fun-01",
-        "title": "2 bedroom — Nepean",
-        "address": "22 Plumas Gt, Nepean, ON K2J 5C9",
-        "rent_cad": 2100,
-        "bedrooms": 2,
-        "neighborhood": "Nepean",
-        "source": "padestrian-demo-fun",
-        "bathrooms": 1.5,
-        "url": "https://example.com/listings/ott-fun-01"
+        "id": "kijiji-1734238961",
+        "title": "1 bedroom high rise apartment",
+        "address": "121 Parkdale Avenue, Ottawa, Ontario K1Y 4J2, Canada",
+        "rent_cad": 1876,
+        "bedrooms": 0,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1-bedroom-high-rise-apartment/1734238961"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.735693,
-          45.279527
+          -75.733453,
+          45.408452
         ]
       }
     },
     {
       "type": "Feature",
-      "id": "ott-fun-02",
+      "id": "kijiji-1730438894",
       "properties": {
-        "id": "ott-fun-02",
-        "title": "1 bedroom — Old Ottawa",
-        "address": "8 Glenhaven Priv, Old Ottawa, ON K1V 2B9",
-        "rent_cad": 1850,
-        "bedrooms": 1,
-        "neighborhood": "Old Ottawa",
-        "source": "padestrian-demo-fun",
-        "bathrooms": 1.0,
-        "url": "https://example.com/listings/ott-fun-02"
+        "id": "kijiji-1730438894",
+        "title": "2 Bedroom Apartment for Rent - 190 Lees Ave",
+        "address": "190 Lees Avenue, Ottawa, Ontario K1S 5L5, Canada",
+        "rent_cad": 2399,
+        "bedrooms": 2,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-apartment-for-rent-190-lees-ave/1730438894"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.665598,
-          45.370146
+          -75.669926,
+          45.41503
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1726183948",
+      "properties": {
+        "id": "kijiji-1726183948",
+        "title": "Aspen Tower Apartments - 2 bedrooms Apartment for Rent",
+        "address": "2935 Richmond Road, Ottawa, Ontario K2B 8C9, Canada",
+        "rent_cad": 2195,
+        "bedrooms": 0,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/aspen-tower-apartments-2-bedrooms-apartment-for-rent/1726183948"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.798762,
+          45.353939
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1736739467",
+      "properties": {
+        "id": "kijiji-1736739467",
+        "title": "2 Bedroom Apartment for Rent - 2880 Carling Avenue",
+        "address": "2880 Carling Avenue, Ottawa, Ontario K2B 7Z1, Canada",
+        "rent_cad": 2127,
+        "bedrooms": 2,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-apartment-for-rent-2880-carling-avenue/1736739467"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.798915,
+          45.357309
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1733752373",
+      "properties": {
+        "id": "kijiji-1733752373",
+        "title": "Tenth Line - Two Bedroom Two Bathroom Apartment for Rent",
+        "address": "2190 Tenth Line Road, Orléans, Ontario K4A 5R4, Canada",
+        "rent_cad": 2475,
+        "bedrooms": 2,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/tenth-line-two-bedroom-two-bathroom-apartment-for-rent/1733752373"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.484994,
+          45.454412
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1726171544",
+      "properties": {
+        "id": "kijiji-1726171544",
+        "title": "Aspen Tower Apartments - 1 bedroom Apartment for Rent",
+        "address": "2935 Richmond Road, Ottawa, Ontario K2B 8C9, Canada",
+        "rent_cad": 1795,
+        "bedrooms": 0,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/aspen-tower-apartments-1-bedroom-apartment-for-rent/1726171544"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.798762,
+          45.353939
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1732379662",
+      "properties": {
+        "id": "kijiji-1732379662",
+        "title": "1-Bed | Little Italy | All Utilities Included | Move in June",
+        "address": "285 Loretta Avenue South, Ottawa, Ontario K1S 4P9, Canada",
+        "rent_cad": 1750,
+        "bedrooms": 1,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1-bed-little-italy-all-utilities-included-move-in-june/1732379662"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.712439,
+          45.398578
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1736729875",
+      "properties": {
+        "id": "kijiji-1736729875",
+        "title": "3 bedroom townhouse for Rent near Britannia Beach!",
+        "address": "1300 Richmond Road, Ottawa, Ontario K2B 8L2, Canada",
+        "rent_cad": 2980,
+        "bedrooms": 3,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/3-bedroom-townhouse-for-rent-near-britannia-beach/1736729875"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.784826,
+          45.367672
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1736714377",
+      "properties": {
+        "id": "kijiji-1736714377",
+        "title": "Apartment for Rent: 1 Bedroom A - Parkway Towers",
+        "address": "1071 Ambleside Drive, Ottawa, Ontario K2B 5E7, Canada",
+        "rent_cad": 1659,
+        "bedrooms": 1,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/apartment-for-rent:-1-bedroom-a-parkway-towers/1736714377"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.780364,
+          45.374297
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1714341321",
+      "properties": {
+        "id": "kijiji-1714341321",
+        "title": "Beautiful 1 Bedroom $1685, 1 MONTH FREE #1909 Available JULY 1st",
+        "address": "160 Chapel Street, Ottawa, Ontario K1N 8P5, Canada",
+        "rent_cad": 1685,
+        "bedrooms": 1,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/beautiful-1-bedroom-1685-1-month-free-1909-available-july-1st/1714341321"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.681628,
+          45.431009
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1737020497",
+      "properties": {
+        "id": "kijiji-1737020497",
+        "title": "New 3BR — Truly All-Inclusive w/ Parking, Snow & Lawn Care",
+        "address": "1350 Summerville Avenue, Ottawa, Ontario K1Z 8H1, Canada",
+        "rent_cad": 2950,
+        "bedrooms": 3,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/new-3br-truly-all-inclusive-w-parking-snow-lawn-care/1737020497"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.731534,
+          45.375703
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1737020889",
+      "properties": {
+        "id": "kijiji-1737020889",
+        "title": "Renovated 3BR Lower Unit — Kitchen Island, Truly All-Inclusive",
+        "address": "1350 Summerville Avenue, Ottawa, Ontario K1Z 8H1, Canada",
+        "rent_cad": 2700,
+        "bedrooms": 3,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/renovated-3br-lower-unit-kitchen-island-truly-all-inclusive/1737020889"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.731534,
+          45.375703
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1738284311",
+      "properties": {
+        "id": "kijiji-1738284311",
+        "title": "Renovated Downtown 1 Bedroom Apt for June/July $1649.00+ Hydro",
+        "address": "475 Elgin Street, Ottawa, Ontario K2P 2E6, Canada",
+        "rent_cad": 1649,
+        "bedrooms": 1,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/renovated-downtown-1-bedroom-apt-for-june-july-1649-00-hydro/1738284311"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.685113,
+          45.412785
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1738285860",
+      "properties": {
+        "id": "kijiji-1738285860",
+        "title": "June 1st 3 Blocks to Ottawa University",
+        "address": "28 Sweetland Avenue, Ottawa, Ontario K1N 7T6, Canada",
+        "rent_cad": 2650,
+        "bedrooms": 3,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/june-1st-3-blocks-to-ottawa-university/1738285860"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.679882,
+          45.425773
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1703920709",
+      "properties": {
+        "id": "kijiji-1703920709",
+        "title": "WE ARE OPEN | New 55 + Lifestyle Apartments: 2-Bedroom",
+        "address": "1707 Carling Avenue, Ottawa, Ontario K2A 1C8, Canada",
+        "rent_cad": 2200,
+        "bedrooms": 0,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/we-are-open-new-55-lifestyle-apartments:-2-bedroom/1703920709"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.752005,
+          45.37869
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1703920708",
+      "properties": {
+        "id": "kijiji-1703920708",
+        "title": "WE ARE OPEN | Aged 55 + Senior Lifestyle: 1 Bedroom Apartment",
+        "address": "1707 Carling Avenue, Ottawa, Ontario K2A 1C8, Canada",
+        "rent_cad": 1825,
+        "bedrooms": 0,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/we-are-open-aged-55-senior-lifestyle:-1-bedroom-apartment/1703920708"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.752005,
+          45.37869
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1703906869",
+      "properties": {
+        "id": "kijiji-1703906869",
+        "title": "NOW OPEN | New 55+ Lifestyle Rentals: Studio",
+        "address": "1707 Carling Avenue, Ottawa, Ontario K2A 1C8, Canada",
+        "rent_cad": 1600,
+        "bedrooms": 0,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/now-open-new-55-lifestyle-rentals:-studio/1703906869"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.752005,
+          45.37869
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1738284200",
+      "properties": {
+        "id": "kijiji-1738284200",
+        "title": "NEW 2 BDR- GUIGUES AVENUE- OTTAWA UNIVERSITY- JULY 1ST- MARKET",
+        "address": "248 Guigues Avenue, Ottawa, Ontario K1N 5J2, Canada",
+        "rent_cad": 1695,
+        "bedrooms": 2,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/new-2-bdr-guigues-avenue-ottawa-university-july-1st-market/1738284200"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.689741,
+          45.432917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kijiji-1669182401",
+      "properties": {
+        "id": "kijiji-1669182401",
+        "title": "Modern 1 Bedroom Rental in Centertown",
+        "address": "287 Lisgar Street, Ottawa, Ontario K2P 1K8, Canada",
+        "rent_cad": 1900,
+        "bedrooms": 0,
+        "neighborhood": "",
+        "source": "kijiji",
+        "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/modern-1-bedroom-rental-in-centertown/1669182401"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.696241,
+          45.417479
         ]
       }
     }
   ],
   "city": "Ottawa, ON",
   "source": "padestrian demo seed (City of Ottawa municipal address points)",
-  "listingCount": 182
+  "listingCount": 199
 }

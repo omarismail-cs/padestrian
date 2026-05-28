@@ -1,8 +1,12 @@
 import argparse
+import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
+import shutil
 
 import httpx
+from playwright.sync_api import sync_playwright
 
 from padestrian import __version__
 from padestrian.gtfs_stops import export_stops_geojson
@@ -21,10 +25,17 @@ from padestrian.listings import (
 from padestrian.fetch_groceries import export_groceries_geojson
 from padestrian.municipal_addresses import import_municipal_geojson
 from padestrian.osm_addresses import OSM_RESIDENTIAL_PATH, export_osm_residential_geojson
+from padestrian.scraper import (
+    extract_kijiji_id,
+    normalize_listing,
+    scrape_kijiji_urls,
+    scrape_listing_detail,
+)
 from padestrian.paths import (
     GROCERIES_POINTS_PATH,
     GROCERIES_PATH,
     LISTINGS_GEOJSON_PATH,
+    LISTINGS_JSON_PATH,
     LISTINGS_SCORED_PATH,
     MUNICIPAL_POINTS_PATH,
     STOPS_GEOJSON_PATH,
@@ -36,6 +47,10 @@ def _print_stats(label: str, stats: dict[str, int]) -> None:
     print(f"{label}:")
     for key, value in stats.items():
         print(f"  {key}: {value}")
+
+
+STATIC_LISTINGS_PATH = LISTINGS_JSON_PATH.with_name("listings.static.json")
+KIJIJI_LISTINGS_PATH = LISTINGS_JSON_PATH.with_name("listings.kijiji.json")
 
 
 def cmd_build_essentials(_args: argparse.Namespace) -> int:
@@ -146,7 +161,12 @@ def cmd_seed_listings(args: argparse.Namespace) -> int:
     if args.no_geocode and source in ("osm", "municipal"):
         source = "jitter"
     path = write_seed_catalog(count=args.count, source=source)
+    try:
+        shutil.copy2(path, STATIC_LISTINGS_PATH)
+    except OSError as exc:
+        print(f"Warning: failed to snapshot static listings to {STATIC_LISTINGS_PATH}: {exc}", file=sys.stderr)
     print(f"Wrote {path} ({args.count} listings, source={source})")
+    print(f"Static snapshot: {STATIC_LISTINGS_PATH}")
     print("Run: python -m padestrian validate-listings")
     return 0
 
@@ -219,6 +239,120 @@ def cmd_validate_scoring(args: argparse.Namespace) -> int:
         print(exc, file=sys.stderr)
         return 1
     print_report(results, summary)
+    return 0
+
+
+def cmd_scrape_listings(args: argparse.Namespace) -> int:
+    """Scrape Kijiji rentals and write data/listings.json with dedupe options."""
+    existing_root: dict[str, object] = {}
+    existing_listings: list[dict[str, object]] = []
+    if LISTINGS_JSON_PATH.is_file():
+        try:
+            with LISTINGS_JSON_PATH.open(encoding="utf-8") as f:
+                payload = json.load(f)
+            if isinstance(payload, dict):
+                existing_root = payload
+                listings = payload.get("listings")
+                if isinstance(listings, list):
+                    existing_listings = [x for x in listings if isinstance(x, dict)]
+            elif isinstance(payload, list):
+                existing_listings = [x for x in payload if isinstance(x, dict)]
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"Failed to read {LISTINGS_JSON_PATH}: {exc}", file=sys.stderr)
+            return 1
+
+    known_ids = {
+        str(row.get("id"))
+        for row in existing_listings
+        if isinstance(row.get("id"), str) and str(row.get("id")).startswith("kijiji-")
+    }
+
+    discovered = scrape_kijiji_urls(args.pages)
+    candidates: list[str] = []
+    skipped_known = 0
+    seen_new_ids: set[str] = set()
+    for url in discovered:
+        kid = extract_kijiji_id(url)
+        if not kid:
+            continue
+        normalized_id = f"kijiji-{kid}"
+        if normalized_id in known_ids:
+            skipped_known += 1
+            continue
+        if normalized_id in seen_new_ids:
+            continue
+        seen_new_ids.add(normalized_id)
+        candidates.append(url)
+
+    scraped_new: list[dict[str, object]] = []
+    if candidates and args.max > 0:
+        with sync_playwright() as pw:
+            browser = pw.chromium.launch(headless=True)
+            context = browser.new_context()
+            page = context.new_page()
+            try:
+                for idx, url in enumerate(candidates):
+                    raw = scrape_listing_detail(page, url)
+                    listing = normalize_listing(raw)
+                    if listing is not None:
+                        scraped_new.append(listing)
+                        if len(scraped_new) >= args.max:
+                            break
+            finally:
+                context.close()
+                browser.close()
+
+    if args.append:
+        merged = [*existing_listings, *scraped_new]
+    else:
+        merged = scraped_new
+
+    city = str(existing_root.get("city") or "Ottawa, ON")
+    source = str(existing_root.get("source") or "kijiji scrape")
+    out_payload = {
+        "city": city,
+        "source": source,
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "listings": merged,
+    }
+    try:
+        LISTINGS_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with LISTINGS_JSON_PATH.open("w", encoding="utf-8") as f:
+            json.dump(out_payload, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+        shutil.copy2(LISTINGS_JSON_PATH, KIJIJI_LISTINGS_PATH)
+    except OSError as exc:
+        print(f"Failed to write {LISTINGS_JSON_PATH}: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"Discovered URLs: {len(discovered)}")
+    print(f"Skipped (already known IDs): {skipped_known}")
+    print(f"Scraped + normalized new listings: {len(scraped_new)}")
+    print(f"Wrote listings: {len(merged)}  -> {LISTINGS_JSON_PATH}")
+    print(f"Kijiji snapshot: {KIJIJI_LISTINGS_PATH}")
+    return 0
+
+
+def cmd_use_listings(args: argparse.Namespace) -> int:
+    """Switch active data/listings.json between static and kijiji snapshots."""
+    src = STATIC_LISTINGS_PATH if args.source == "static" else KIJIJI_LISTINGS_PATH
+    if not src.is_file():
+        print(f"Missing snapshot: {src}", file=sys.stderr)
+        if args.source == "static":
+            print("Run: python -m padestrian seed-listings --source municipal", file=sys.stderr)
+        else:
+            print("Run: python -m padestrian scrape-listings --pages 1 --max 20", file=sys.stderr)
+        return 1
+    try:
+        LISTINGS_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, LISTINGS_JSON_PATH)
+    except OSError as exc:
+        print(f"Failed to switch listings: {exc}", file=sys.stderr)
+        return 1
+    print(f"Active listings set to: {args.source}")
+    print(f"  from: {src}")
+    print(f"  to  : {LISTINGS_JSON_PATH}")
+    print("Next: python -m padestrian validate-listings && python -m padestrian filter-listings")
     return 0
 
 
@@ -387,6 +521,41 @@ def main(argv: list[str] | None = None) -> int:
         help="Filled validation CSV (default: data/validation_30_filled.csv)",
     )
     val_score_parser.set_defaults(func=cmd_validate_scoring)
+
+    scrape_parser = subparsers.add_parser(
+        "scrape-listings",
+        help="Scrape Kijiji listings and write data/listings.json",
+    )
+    scrape_parser.add_argument(
+        "--pages",
+        type=int,
+        default=3,
+        help="How many index pages to crawl (default: 3)",
+    )
+    scrape_parser.add_argument(
+        "--max",
+        type=int,
+        default=60,
+        help="Max normalized listings to keep from this run (default: 60)",
+    )
+    scrape_parser.add_argument(
+        "--append",
+        action="store_true",
+        help="Append to existing listings instead of replacing them",
+    )
+    scrape_parser.set_defaults(func=cmd_scrape_listings)
+
+    use_parser = subparsers.add_parser(
+        "use-listings",
+        help="Switch active listings.json between static and kijiji snapshots",
+    )
+    use_parser.add_argument(
+        "--source",
+        choices=("static", "kijiji"),
+        required=True,
+        help="Which snapshot to activate",
+    )
+    use_parser.set_defaults(func=cmd_use_listings)
 
     check_parser = subparsers.add_parser(
         "check-mapbox",

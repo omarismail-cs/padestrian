@@ -27,13 +27,15 @@ const HOUSE_ICONS = [
 interface Filters {
   walkableOnly: boolean
   maxRent: number
-  beds: string
+  beds: string[]
 }
 
 interface LayerVisibility {
   groceries: boolean
   transit: boolean
   smoke: boolean
+  staticListings: boolean
+  kijijiListings: boolean
 }
 
 interface PopupInfo {
@@ -141,6 +143,18 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
   const listingFilter = useCallback(() => {
     const exprs: unknown[] = ["all"]
 
+    const showStatic = layers.staticListings
+    const showKijiji = layers.kijijiListings
+    if (!showStatic && !showKijiji) {
+      return ["==", 1, 0]
+    }
+    if (showStatic && !showKijiji) {
+      exprs.push(["!=", ["get", "source"], "kijiji"])
+    }
+    if (!showStatic && showKijiji) {
+      exprs.push(["==", ["get", "source"], "kijiji"])
+    }
+
     if (filters.walkableOnly) {
       exprs.push(["==", ["get", "eligible"], true])
     }
@@ -149,26 +163,54 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
       exprs.push(["<=", ["get", "rent_cad"], filters.maxRent])
     }
 
-    if (filters.beds !== "any") {
-      const n = parseInt(filters.beds, 10)
-      if (n >= 3) {
-        exprs.push([">=", ["get", "bedrooms"], 3])
+    const selectedBeds = Array.isArray(filters.beds) && filters.beds.length > 0
+      ? filters.beds
+      : ["any"]
+    if (!selectedBeds.includes("any")) {
+      const clauses = selectedBeds.map((bed) => {
+        if (bed === "3") return ([">=", ["get", "bedrooms"], 3] as const)
+        return (["==", ["get", "bedrooms"], Number.parseInt(bed, 10)] as const)
+      })
+      if (clauses.length === 1) {
+        exprs.push(clauses[0])
       } else {
-        exprs.push(["==", ["get", "bedrooms"], n])
+        exprs.push(["any", ...clauses])
       }
     }
 
     return exprs.length === 1 ? true : exprs
-  }, [filters])
+  }, [filters, layers.staticListings, layers.kijijiListings])
+
+  const passesSourceToggles = useCallback((source: unknown) => {
+    const isKijiji = String(source ?? "").toLowerCase() === "kijiji"
+    return (layers.kijijiListings && isKijiji) || (layers.staticListings && !isKijiji)
+  }, [layers.kijijiListings, layers.staticListings])
 
   // Recompute stats from raw data (not rendered features) so they're always accurate
   useEffect(() => {
     if (!listings) return
-    const features = listings.features
+    const features = listings.features.filter((f) => {
+      const p = f.properties ?? {}
+      if (!passesSourceToggles(p.source)) return false
+      if (filters.walkableOnly && !p.eligible) return false
+      if (filters.maxRent < 3500 && Number(p.rent_cad) > filters.maxRent) return false
+      const selectedBeds = Array.isArray(filters.beds) && filters.beds.length > 0
+        ? filters.beds
+        : ["any"]
+      if (!selectedBeds.includes("any")) {
+        const beds = Number(p.bedrooms)
+        const bedMatch = selectedBeds.some((bed) => {
+          if (bed === "3") return beds >= 3
+          return beds === Number.parseInt(bed, 10)
+        })
+        if (!bedMatch) return false
+      }
+      return true
+    })
     const total = features.length
     const walkable = features.filter(f => f.properties?.eligible).length
     onStatsUpdate(total, walkable)
-  }, [listings, onStatsUpdate])
+  }, [filters, listings, onStatsUpdate, passesSourceToggles])
 
   const listingIconImage = useCallback((): mapboxgl.DataDrivenPropertyValueSpecification<string> => {
     if (!hasScores) return "house-default"
@@ -237,7 +279,7 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
       else                     badge = "neither"
 
       const badgeClass =
-        badge === "walkable" ? "bg-orange-500/20 text-orange-400" :
+        badge === "walkable" ? "bg-[#6BBF91]/20 text-[#6BBF91]" :
         badge === "grocery"  ? "bg-lime-500/20 text-lime-500" :
         badge === "transit"  ? "bg-violet-500/20 text-violet-400" :
         "bg-muted text-muted-foreground"
@@ -381,13 +423,17 @@ export function MapView({ filters, layers, onStatsUpdate, theme }: MapViewProps)
           <Layer
             id="stops-circle"
             type="circle"
-            minzoom={13}
+            minzoom={11}
             paint={{
-              "circle-radius": 4,
+              "circle-radius": [
+                "interpolate", ["linear"], ["zoom"],
+                11, 2.2,
+                13, 2.8,
+                16, 3.4,
+              ],
               "circle-color": LAYER_TRANSIT_COLOR,
-              "circle-stroke-width": 1.5,
-              "circle-stroke-color": "rgba(0,0,0,0.25)",
-              "circle-opacity": 0.85,
+              "circle-stroke-width": 0,
+              "circle-opacity": 1,
             }}
           />
         </Source>

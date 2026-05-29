@@ -1,11 +1,22 @@
 # Padestrian
 
-Padestrian is an Ottawa rental demo map.
-It scores each listing by whether you can walk to:
-- a full-size grocery store
-- transit
+**Padestrian** is a map for finding **car-light rentals in Ottawa**.  
+Each listing is placed on the map and colored by whether you can walk to groceries and transit within about **10 minutes**.
 
-Default scoring uses a 10 minute walking budget.
+## What you get
+
+- **Rental pins** on an interactive map, with filters for rent, bedrooms, and walkability
+- **Grocery stores** and **transit stops** as map layers
+- **Color-coded listings** — walkable (grocery + transit), grocery-only, transit-only, or neither
+- **Listing cards** on hover with price, address, and links when available
+
+## Stack
+
+| Part | Role |
+|------|------|
+| **Next.js + Mapbox** | Web map and UI |
+| **Python CLI** | Build datasets, score listings, optional Kijiji import |
+| **GeoJSON files** | Map data (no database) |
 
 ## Quick start
 
@@ -15,8 +26,9 @@ Default scoring uses a 10 minute walking budget.
 python -m venv .venv
 .venv\Scripts\activate   # macOS/Linux: source .venv/bin/activate
 pip install -e .
-playwright install chromium   # required for scrape-listings only
 ```
+
+For Kijiji import only, also run: `playwright install chromium`
 
 ### 2) Frontend setup
 
@@ -26,11 +38,13 @@ npm install
 
 ### 3) Env setup
 
-Copy `.env.example` to `.env` and set API keys:
+Copy `.env.example` to `.env` and set:
+
 - `ORS_API_KEY`
 - `MAPBOX_ACCESS_TOKEN`
 
-Also add `.env.local` for Next.js:
+For the web app, add `.env.local`:
+
 - `NEXT_PUBLIC_MAPBOX_TOKEN=<your mapbox token>`
 
 ### 4) Build data and score listings
@@ -49,11 +63,11 @@ python -m padestrian filter-listings
 npm run dev
 ```
 
-Open `http://localhost:3000` and hard refresh with `Ctrl+Shift+R` after data updates.
+Open `http://localhost:3000`. After updating data, hard refresh with `Ctrl+Shift+R`.
 
 ## Common workflows
 
-### Refresh grocery data (includes Costco rules)
+### Refresh groceries and re-score listings
 
 ```bash
 python -m padestrian fetch-groceries
@@ -62,74 +76,58 @@ python -m padestrian build-zones
 python -m padestrian filter-listings
 ```
 
-### Re-score without re-fetching groceries
+### Re-score listings only
 
 ```bash
 python -m padestrian build-zones
 python -m padestrian filter-listings
 ```
 
-### Run manual validation report
+### Add or update Kijiji listings
 
 ```bash
-python -m padestrian validate-scoring
-```
-
-### Kijiji listings (scrape, prune, map)
-
-The map loads **`data/listings-scored.geojson`**, built from **`data/listings.json`**. Use **`--append`** so demo static listings and Kijiji ads can coexist. Sidebar toggles filter by `source` (`kijiji` vs municipal demo).
-
-```bash
-# Add new Kijiji ads (skips IDs already in listings.json)
 python -m padestrian scrape-listings --pages 5 --max 40 --append
-
-# Preview then remove ads that are no longer ACTIVE on Kijiji
-python -m padestrian prune-kijiji --dry-run
-python -m padestrian prune-kijiji
-
-# Push changes to the map layer
 python -m padestrian validate-listings
 python -m padestrian filter-listings
 ```
 
-**Do not** run `scrape-listings` without `--append` unless you intend to replace the entire catalog with only this run’s scrape.
-
-Snapshots (optional):
+### Remove expired Kijiji listings
 
 ```bash
-python -m padestrian use-listings --source static
-python -m padestrian use-listings --source kijiji
-# then validate-listings && filter-listings
+python -m padestrian prune-kijiji --dry-run
+python -m padestrian prune-kijiji
+python -m padestrian validate-listings
+python -m padestrian filter-listings
 ```
 
 ## CLI commands
 
 | Command | Purpose |
 |---------|---------|
-| `build-essentials` | Export GTFS stops and grocery points |
-| `fetch-groceries` | Refresh `data/groceries.geojson` from OSM with project filters |
-| `build-zones` | Build walk-zone polygons for groceries (and optional transit) |
-| `filter-listings` | Score listings into `data/listings-scored.geojson` |
-| `validate-scoring` | Compare scored listings to manual CSV labels |
-| `validate-listings` | Validate `listings.json` and export `listings.geojson` |
-| `seed-listings` | Generate demo listings |
-| `scrape-listings` | Scrape Kijiji (Playwright), normalize, dedupe, write `listings.json` |
-| `prune-kijiji` | Remove expired Kijiji ads via live page status check |
-| `use-listings` | Switch active `listings.json` between static and Kijiji snapshots |
-| `import-municipal-addresses` | Import City of Ottawa address points |
-| `fetch-osm-residential` | Cache OSM residential addresses |
-| `smoke-isochrone` | Quick ORS test using one stop and one grocery |
-| `check-mapbox` | Verify the Mapbox token from `.env` |
+| `build-essentials` | Export transit stops and grocery locations |
+| `fetch-groceries` | Download grocery locations from OpenStreetMap |
+| `build-zones` | Build 10-minute walk zones |
+| `filter-listings` | Score listings and write the map layer |
+| `validate-listings` | Check listings and export GeoJSON |
+| `seed-listings` | Generate sample listings |
+| `scrape-listings` | Import listings from Kijiji |
+| `prune-kijiji` | Remove listings that are no longer on Kijiji |
+| `use-listings` | Switch between sample and Kijiji listing sets |
+| `validate-scoring` | Compare scores against a labeled test set |
+| `import-municipal-addresses` | Import Ottawa address points |
+| `fetch-osm-residential` | Download residential addresses from OSM |
+| `smoke-isochrone` | Test walking-zone API connectivity |
+| `check-mapbox` | Verify Mapbox token |
 
 ## Project layout
 
 ```text
-padestrian/       Python CLI, scoring, scraper, prune-kijiji
-components/       React map UI (popups, filters, Mapbox layers)
-app/              Next.js app entry + globals.css (popup shells)
-data/             GeoJSON, zones, listings JSON, GTFS input
-public/images/    Map marker PNGs
-public/data/      Junction → data/ for frontend fetches
+padestrian/       Python CLI and scoring
+components/       Map UI
+app/              Next.js app
+data/             GeoJSON and source data
+public/images/    Map icons
+public/data/      Files served to the map
 ```
 
-For dataset details and Overpass instructions, see [data/README.md](data/README.md).
+More detail on datasets: [data/README.md](data/README.md).

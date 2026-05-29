@@ -1,22 +1,17 @@
 import { ExternalLink } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 type WalkabilityBadge = "walkable" | "grocery" | "transit" | "neither"
 
-const POPUP_FONT =
-  "'Satoshi', var(--font-geist), system-ui, sans-serif"
-
-/** Secondary copy on the dark popup card (brighter than zinc-500 for readability) */
-const POPUP_MUTED = "#A1A1AA"
-const POPUP_ADDRESS = "#B4B4BC"
-
-const BADGE_CONFIG: Record<
-  WalkabilityBadge,
-  { bg: string; text: string; label: string }
-> = {
-  walkable: { bg: "#132218", text: "#6BBF91", label: "WALKABLE" },
-  grocery: { bg: "#1a2112", text: "#a3e635", label: "GROCERY ONLY" },
-  transit: { bg: "#221430", text: "#D8B4FE", label: "TRANSIT ONLY" },
-  neither: { bg: "#18181b", text: POPUP_MUTED, label: "NOT WALKABLE" },
+const BADGE_CLASS: Record<WalkabilityBadge, string> = {
+  walkable:
+    "bg-[#6BBF91]/15 text-[#3d8f5f] dark:bg-[#132218] dark:text-[#6BBF91]",
+  grocery:
+    "bg-lime-500/15 text-lime-700 dark:bg-[#1a2112] dark:text-[#a3e635]",
+  transit:
+    "bg-violet-500/15 text-violet-700 dark:bg-[#221430] dark:text-[#D8B4FE]",
+  neither:
+    "bg-zinc-200 text-zinc-600 dark:bg-[#18181b] dark:text-[#A1A1AA]",
 }
 
 function walkabilityBadge(props: Record<string, unknown>): WalkabilityBadge {
@@ -68,7 +63,6 @@ function formatBathrooms(bathrooms: unknown): string | null {
   const n = Number(bathrooms)
   if (!Number.isFinite(n) || n <= 0) return null
   return `${n} bath${n === 1 ? "" : "s"}`
-
 }
 
 function kijijiListingUrl(properties: Record<string, unknown>): string | null {
@@ -92,7 +86,6 @@ export function ListingPopupCard({ properties, showBadge }: ListingPopupCardProp
   const beds = formatBedrooms(properties.bedrooms)
   const baths = formatBathrooms(properties.bathrooms)
   const badge = walkabilityBadge(properties)
-  const badgeStyle = BADGE_CONFIG[badge]
 
   const rawAddress = String(properties.address || properties.title || "").trim()
   const { street, cityLine } = splitAddressLines(
@@ -104,31 +97,31 @@ export function ListingPopupCard({ properties, showBadge }: ListingPopupCardProp
   const listingUrl = kijijiListingUrl(properties)
 
   return (
-    <div
-      className="min-w-[220px] max-w-[280px] font-sans"
-      style={{ fontFamily: POPUP_FONT }}
-    >
+    <div className="w-full font-sans">
       {showBadge ? (
         <span
-          className="mb-3 inline-block rounded px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]"
-          style={{ backgroundColor: badgeStyle.bg, color: badgeStyle.text }}
+          className={cn(
+            "mb-4 inline-block rounded-md px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em]",
+            BADGE_CLASS[badge],
+          )}
         >
-          {badgeStyle.label}
+          {badge === "walkable"
+            ? "WALKABLE"
+            : badge === "grocery"
+              ? "GROCERY ONLY"
+              : badge === "transit"
+                ? "TRANSIT ONLY"
+                : "NOT WALKABLE"}
         </span>
       ) : null}
 
-      <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
-        <span
-          className="text-xl font-bold tracking-tight"
-          style={{ color: "#F4F4F5" }}
-        >
+      <div className="flex items-baseline gap-x-2 whitespace-nowrap">
+        <span className="text-xl font-bold tracking-tight text-foreground">
           ${rent.toLocaleString()}
         </span>
-        <span className="text-sm font-normal" style={{ color: POPUP_MUTED }}>
-          /mo
-        </span>
+        <span className="text-sm font-normal text-muted-foreground">/mo</span>
         {unitParts.length > 0 ? (
-          <span className="text-sm font-normal" style={{ color: POPUP_MUTED }}>
+          <span className="text-sm font-normal text-muted-foreground">
             · {unitParts.join(" · ")}
           </span>
         ) : null}
@@ -136,10 +129,12 @@ export function ListingPopupCard({ properties, showBadge }: ListingPopupCardProp
 
       {(street || cityLine) && (
         <>
-          <hr className="my-4 border-0 border-t border-[#27272A]" />
+          <hr className="my-5 border-0 border-t border-border" />
           <div
-            className={`space-y-1 text-sm leading-snug ${listingUrl ? "" : "pb-1"}`}
-            style={{ color: POPUP_ADDRESS }}
+            className={cn(
+              "space-y-1.5 text-sm leading-relaxed text-muted-foreground",
+              listingUrl ? "" : "pb-0.5",
+            )}
           >
             {street ? <p>{street}</p> : null}
             {cityLine ? <p>{cityLine}</p> : null}
@@ -152,7 +147,7 @@ export function ListingPopupCard({ properties, showBadge }: ListingPopupCardProp
           href={listingUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="listing-popup-cta mt-3.5"
+          className="listing-popup-cta mt-5"
         >
           View listing
           <ExternalLink width={12} height={12} aria-hidden />

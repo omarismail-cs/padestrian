@@ -203,89 +203,119 @@
   pointer-events: auto !important;
 }
 
-/* Listing hover card — same shell as grocery (tip + anchor behavior) */
-.padestrian-listing-popup .mapboxgl-popup-content {
-  background: rgba(9, 9, 11, 0.9) !important;
+/* Listing + grocery hover cards — theme follows html.dark */
+.padestrian-listing-popup .mapboxgl-popup-content,
+.padestrian-grocery-popup .mapboxgl-popup-content {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #27272a !important;
   border-radius: 12px !important;
-  padding: 18px 20px !important;
+  font-family: 'Satoshi', var(--font-geist), 'Geist', system-ui, sans-serif !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--foreground) !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.08),
+    0 16px 32px -8px rgba(0, 0, 0, 0.12) !important;
+}
+
+.padestrian-listing-popup .mapboxgl-popup-content {
+  padding: 24px !important;
+  width: 280px !important;
+  box-sizing: border-box !important;
+}
+
+.padestrian-grocery-popup .mapboxgl-popup-content {
+  padding: 18px !important;
+  width: auto !important;
+  min-width: 160px !important;
+  max-width: 260px !important;
+  box-sizing: border-box !important;
+}
+
+.dark .padestrian-listing-popup .mapboxgl-popup-content,
+.dark .padestrian-grocery-popup .mapboxgl-popup-content {
+  background: rgba(9, 9, 11, 0.92) !important;
+  border-color: #27272a !important;
+  color: #f4f4f5 !important;
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.35),
     0 20px 40px -12px rgba(0, 0, 0, 0.65) !important;
-  color: #f4f4f5 !important;
-  font-family: 'Satoshi', var(--font-geist), 'Geist', system-ui, sans-serif !important;
 }
 
 .padestrian-listing-popup a.listing-popup-cta {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
-  border: 1px solid #27272a;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 11px;
   font-weight: 500;
   line-height: 1.2;
-  color: #f4f4f5;
+  color: var(--foreground);
   text-decoration: none;
   transition: background-color 0.15s ease;
 }
 
 .padestrian-listing-popup a.listing-popup-cta:hover {
-  background-color: #18181b;
+  background-color: var(--secondary);
 }
 
 .padestrian-listing-popup a.listing-popup-cta svg {
+  color: var(--muted-foreground);
+}
+
+.dark .padestrian-listing-popup a.listing-popup-cta {
+  border-color: #27272a;
+  color: #f4f4f5;
+}
+
+.dark .padestrian-listing-popup a.listing-popup-cta:hover {
+  background-color: #18181b;
+}
+
+.dark .padestrian-listing-popup a.listing-popup-cta svg {
   color: #a1a1aa;
 }
 
-.padestrian-listing-popup.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-  border-top-color: rgba(9, 9, 11, 0.9) !important;
-}
-
-.padestrian-listing-popup.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
-  border-bottom-color: rgba(9, 9, 11, 0.9) !important;
-}
-
-.padestrian-listing-popup.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-  border-right-color: rgba(9, 9, 11, 0.9) !important;
-}
-
-.padestrian-listing-popup.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
-  border-left-color: rgba(9, 9, 11, 0.9) !important;
-}
-
-/* Grocery / POI hover card — compact premium shell */
-.padestrian-grocery-popup .mapboxgl-popup-content {
-  background: rgba(9, 9, 11, 0.9) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #27272a !important;
-  border-radius: 12px !important;
-  padding: 13px 14px !important;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.35),
-    0 20px 40px -12px rgba(0, 0, 0, 0.65) !important;
-  color: #f4f4f5 !important;
-  font-family: 'Satoshi', var(--font-geist), 'Geist', system-ui, sans-serif !important;
-}
-
+.padestrian-listing-popup.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
 .padestrian-grocery-popup.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-  border-top-color: rgba(9, 9, 11, 0.9) !important;
+  border-top-color: rgba(255, 255, 255, 0.96) !important;
 }
 
+.padestrian-listing-popup.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
 .padestrian-grocery-popup.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
-  border-bottom-color: rgba(9, 9, 11, 0.9) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.96) !important;
 }
 
+.padestrian-listing-popup.mapboxgl-popup-anchor-left .mapboxgl-popup-tip,
 .padestrian-grocery-popup.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-  border-right-color: rgba(9, 9, 11, 0.9) !important;
+  border-right-color: rgba(255, 255, 255, 0.96) !important;
 }
 
+.padestrian-listing-popup.mapboxgl-popup-anchor-right .mapboxgl-popup-tip,
 .padestrian-grocery-popup.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
-  border-left-color: rgba(9, 9, 11, 0.9) !important;
+  border-left-color: rgba(255, 255, 255, 0.96) !important;
+}
+
+.dark .padestrian-listing-popup.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+.dark .padestrian-grocery-popup.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: rgba(9, 9, 11, 0.92) !important;
+}
+
+.dark .padestrian-listing-popup.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.dark .padestrian-grocery-popup.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: rgba(9, 9, 11, 0.92) !important;
+}
+
+.dark .padestrian-listing-popup.mapboxgl-popup-anchor-left .mapboxgl-popup-tip,
+.dark .padestrian-grocery-popup.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: rgba(9, 9, 11, 0.92) !important;
+}
+
+.dark .padestrian-listing-popup.mapboxgl-popup-anchor-right .mapboxgl-popup-tip,
+.dark .padestrian-grocery-popup.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: rgba(9, 9, 11, 0.92) !important;
 }
 
 .mapboxgl-popup-tip {

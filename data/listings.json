@@ -2352,7 +2352,8 @@
       "rent_cad": 1876,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1-bedroom-high-rise-apartment/1734238961"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1-bedroom-high-rise-apartment/1734238961",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1730438894",
@@ -2363,7 +2364,8 @@
       "rent_cad": 2399,
       "bedrooms": 2,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-apartment-for-rent-190-lees-ave/1730438894"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-apartment-for-rent-190-lees-ave/1730438894",
+      "bathrooms": 1.5
     },
     {
       "id": "kijiji-1726183948",
@@ -2374,7 +2376,8 @@
       "rent_cad": 2195,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/aspen-tower-apartments-2-bedrooms-apartment-for-rent/1726183948"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/aspen-tower-apartments-2-bedrooms-apartment-for-rent/1726183948",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1736739467",
@@ -2385,7 +2388,8 @@
       "rent_cad": 2127,
       "bedrooms": 2,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-apartment-for-rent-2880-carling-avenue/1736739467"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-apartment-for-rent-2880-carling-avenue/1736739467",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1733752373",
@@ -2396,7 +2400,8 @@
       "rent_cad": 2475,
       "bedrooms": 2,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/tenth-line-two-bedroom-two-bathroom-apartment-for-rent/1733752373"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/tenth-line-two-bedroom-two-bathroom-apartment-for-rent/1733752373",
+      "bathrooms": 2.0
     },
     {
       "id": "kijiji-1726171544",
@@ -2407,7 +2412,8 @@
       "rent_cad": 1795,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/aspen-tower-apartments-1-bedroom-apartment-for-rent/1726171544"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/aspen-tower-apartments-1-bedroom-apartment-for-rent/1726171544",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1732379662",
@@ -2418,7 +2424,8 @@
       "rent_cad": 1750,
       "bedrooms": 1,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1-bed-little-italy-all-utilities-included-move-in-june/1732379662"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1-bed-little-italy-all-utilities-included-move-in-june/1732379662",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1736729875",
@@ -2429,7 +2436,8 @@
       "rent_cad": 2980,
       "bedrooms": 3,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/3-bedroom-townhouse-for-rent-near-britannia-beach/1736729875"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/3-bedroom-townhouse-for-rent-near-britannia-beach/1736729875",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1736714377",
@@ -2440,7 +2448,8 @@
       "rent_cad": 1659,
       "bedrooms": 1,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/apartment-for-rent:-1-bedroom-a-parkway-towers/1736714377"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/apartment-for-rent:-1-bedroom-a-parkway-towers/1736714377",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1714341321",
@@ -2451,7 +2460,8 @@
       "rent_cad": 1685,
       "bedrooms": 1,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/beautiful-1-bedroom-1685-1-month-free-1909-available-july-1st/1714341321"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/beautiful-1-bedroom-1685-1-month-free-1909-available-july-1st/1714341321",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1737020497",
@@ -2462,7 +2472,8 @@
       "rent_cad": 2950,
       "bedrooms": 3,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/new-3br-truly-all-inclusive-w-parking-snow-lawn-care/1737020497"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/new-3br-truly-all-inclusive-w-parking-snow-lawn-care/1737020497",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1737020889",
@@ -2473,7 +2484,8 @@
       "rent_cad": 2700,
       "bedrooms": 3,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/renovated-3br-lower-unit-kitchen-island-truly-all-inclusive/1737020889"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/renovated-3br-lower-unit-kitchen-island-truly-all-inclusive/1737020889",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1738284311",
@@ -2484,7 +2496,8 @@
       "rent_cad": 1649,
       "bedrooms": 1,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/renovated-downtown-1-bedroom-apt-for-june-july-1649-00-hydro/1738284311"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/renovated-downtown-1-bedroom-apt-for-june-july-1649-00-hydro/1738284311",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1738285860",
@@ -2495,7 +2508,8 @@
       "rent_cad": 2650,
       "bedrooms": 3,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/june-1st-3-blocks-to-ottawa-university/1738285860"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/june-1st-3-blocks-to-ottawa-university/1738285860",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1703920709",
@@ -2506,7 +2520,8 @@
       "rent_cad": 2200,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/we-are-open-new-55-lifestyle-apartments:-2-bedroom/1703920709"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/we-are-open-new-55-lifestyle-apartments:-2-bedroom/1703920709",
+      "bathrooms": 2.0
     },
     {
       "id": "kijiji-1703920708",
@@ -2517,7 +2532,8 @@
       "rent_cad": 1825,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/we-are-open-aged-55-senior-lifestyle:-1-bedroom-apartment/1703920708"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/we-are-open-aged-55-senior-lifestyle:-1-bedroom-apartment/1703920708",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1703906869",
@@ -2528,7 +2544,8 @@
       "rent_cad": 1600,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/now-open-new-55-lifestyle-rentals:-studio/1703906869"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/now-open-new-55-lifestyle-rentals:-studio/1703906869",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1738284200",
@@ -2539,7 +2556,8 @@
       "rent_cad": 1695,
       "bedrooms": 2,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/new-2-bdr-guigues-avenue-ottawa-university-july-1st-market/1738284200"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/new-2-bdr-guigues-avenue-ottawa-university-july-1st-market/1738284200",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1669182401",
@@ -2550,7 +2568,8 @@
       "rent_cad": 1900,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/modern-1-bedroom-rental-in-centertown/1669182401"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/modern-1-bedroom-rental-in-centertown/1669182401",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1735339700",
@@ -2561,7 +2580,8 @@
       "rent_cad": 1500,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/mata-living:-2-months-free-on-select-units-new-studios/1735339700"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/mata-living:-2-months-free-on-select-units-new-studios/1735339700",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1651329986",
@@ -2572,7 +2592,8 @@
       "rent_cad": 2600,
       "bedrooms": 2,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-2-bath-in-the-heart-of-centretown-ottawa/1651329986"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-2-bath-in-the-heart-of-centretown-ottawa/1651329986",
+      "bathrooms": 2.0
     },
     {
       "id": "kijiji-1735339704",
@@ -2583,7 +2604,8 @@
       "rent_cad": 2070,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/mata-living:-spacious-1-bedrooms-2-months-free-on-select-units/1735339704"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/mata-living:-spacious-1-bedrooms-2-months-free-on-select-units/1735339704",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1738326009",
@@ -2594,7 +2616,8 @@
       "rent_cad": 2200,
       "bedrooms": 2,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-old-ottawa-south-apartment-for-rent/1738326009"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedroom-old-ottawa-south-apartment-for-rent/1738326009",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1738321685",
@@ -2605,7 +2628,8 @@
       "rent_cad": 2285,
       "bedrooms": 3,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/3-bedroom-apartment/1738321685"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/3-bedroom-apartment/1738321685",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1736113867",
@@ -2616,7 +2640,8 @@
       "rent_cad": 1695,
       "bedrooms": 1,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1-bedroom-rentals-in-ottawas-east-end/1736113867"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1-bedroom-rentals-in-ottawas-east-end/1736113867",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1736113865",
@@ -2627,7 +2652,8 @@
       "rent_cad": 1975,
       "bedrooms": 2,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/beautiful-2-bedroom-apartment/1736113865"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/beautiful-2-bedroom-apartment/1736113865",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1728565294",
@@ -2638,7 +2664,8 @@
       "rent_cad": 1700,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/studio-apartment-in-centretown-98-walk-score/1728565294"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/studio-apartment-in-centretown-98-walk-score/1728565294",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1738319336",
@@ -2649,7 +2676,8 @@
       "rent_cad": 2125,
       "bedrooms": 2,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/tenth-line-one-bedroom-one-bathroom-apartment-for-rent/1738319336"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/tenth-line-one-bedroom-one-bathroom-apartment-for-rent/1738319336",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1738320021",
@@ -2660,7 +2688,8 @@
       "rent_cad": 2250,
       "bedrooms": 2,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/july-1-2-bd-unit-335-nepean-st-2250-00-plus-hydro/1738320021"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/july-1-2-bd-unit-335-nepean-st-2250-00-plus-hydro/1738320021",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1738318597",
@@ -2671,7 +2700,8 @@
       "rent_cad": 1975,
       "bedrooms": 1,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/beautiful-downtown-condo-for-rent/1738318597"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/beautiful-downtown-condo-for-rent/1738318597",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1733944745",
@@ -2682,7 +2712,8 @@
       "rent_cad": 1599,
       "bedrooms": 1,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/july-2026-1-bedroom-apartment/1733944745"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/july-2026-1-bedroom-apartment/1733944745",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1737120415",
@@ -2693,7 +2724,8 @@
       "rent_cad": 1349,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/july-1st-studio-bachelor-apartment-available/1737120415"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/july-1st-studio-bachelor-apartment-available/1737120415",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1732672786",
@@ -2704,7 +2736,8 @@
       "rent_cad": 1649,
       "bedrooms": 1,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1bd-apt-available-1699-july-1st-2026-the-carson/1732672786"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/1bd-apt-available-1699-july-1st-2026-the-carson/1732672786",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1737112813",
@@ -2715,7 +2748,8 @@
       "rent_cad": 1785,
       "bedrooms": 1,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/station27-1-bedroom-available/1737112813"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/station27-1-bedroom-available/1737112813",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1735339690",
@@ -2726,7 +2760,8 @@
       "rent_cad": 2420,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/ori-apartment:-2-bedrooms-starting-at-2420-brand-new-suites/1735339690"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/ori-apartment:-2-bedrooms-starting-at-2420-brand-new-suites/1735339690",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1737958571",
@@ -2737,7 +2772,8 @@
       "rent_cad": 1700,
       "bedrooms": 0,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/studio-apartment/1737958571"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/studio-apartment/1737958571",
+      "bathrooms": 1.0
     },
     {
       "id": "kijiji-1735274648",
@@ -2748,7 +2784,8 @@
       "rent_cad": 2399,
       "bedrooms": 3,
       "source": "kijiji",
-      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedrooms-house-for-rent-5-80-weeping-willow-lane/1735274648"
+      "url": "https://www.kijiji.ca/v-apartments-condos/ottawa/2-bedrooms-house-for-rent-5-80-weeping-willow-lane/1735274648",
+      "bathrooms": 1.0
     }
   ]
 }

@@ -1,6 +1,7 @@
 import argparse
 import json
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 import shutil
@@ -26,7 +27,9 @@ from padestrian.municipal_addresses import import_municipal_geojson
 from padestrian.osm_addresses import OSM_RESIDENTIAL_PATH, export_osm_residential_geojson
 from padestrian.prune_kijiji import run_prune_kijiji
 from padestrian.scraper import (
+    _parse_bathrooms,
     extract_kijiji_id,
+    fetch_kijiji_bathrooms_from_url,
     normalize_listing,
     scrape_kijiji_urls,
     scrape_listing_detail,
@@ -335,6 +338,118 @@ def cmd_scrape_listings(args: argparse.Namespace) -> int:
     return 0
 
 
+def _backfill_bathrooms_in_rows(
+    rows: list[dict[str, object]],
+    *,
+    dry_run: bool,
+    fetch: bool = False,
+    delay: float = 0.8,
+) -> tuple[int, int, int]:
+    """Return (kijiji_total, missing_before, updated)."""
+    kijiji_total = 0
+    missing_before = 0
+    updated = 0
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        ),
+        "Accept-Language": "en-CA,en;q=0.9",
+    }
+    with httpx.Client(timeout=25.0, headers=headers, follow_redirects=True) as client:
+        for row in rows:
+            if str(row.get("source") or "").lower() != "kijiji":
+                continue
+            kijiji_total += 1
+            if row.get("bathrooms") is not None:
+                continue
+            missing_before += 1
+            baths = _parse_bathrooms(
+                None,
+                title=row.get("title"),
+                url=row.get("url"),
+            )
+            if baths is None and fetch:
+                url = str(row.get("url") or "").strip()
+                if url:
+                    baths = fetch_kijiji_bathrooms_from_url(url, client=client)
+                    if delay > 0:
+                        time.sleep(delay)
+            if baths is None:
+                continue
+            updated += 1
+            if not dry_run:
+                row["bathrooms"] = baths
+    return kijiji_total, missing_before, updated
+
+
+def _load_listings_root(path: Path) -> tuple[dict[str, object], list[dict[str, object]]]:
+    with path.open(encoding="utf-8") as f:
+        payload = json.load(f)
+    if isinstance(payload, dict):
+        listings = payload.get("listings")
+        if not isinstance(listings, list):
+            raise ListingValidationError(f"Invalid listings array in {path}")
+        return payload, [x for x in listings if isinstance(x, dict)]
+    if isinstance(payload, list):
+        return {}, [x for x in payload if isinstance(x, dict)]
+    raise ListingValidationError(f"Invalid JSON root in {path}")
+
+
+def _write_listings_root(path: Path, root: dict[str, object], listings: list[dict[str, object]]) -> None:
+    out = dict(root)
+    out["listings"] = listings
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
+
+def cmd_backfill_bathrooms(args: argparse.Namespace) -> int:
+    """Fill missing bathrooms on Kijiji rows from title/URL text."""
+    if not LISTINGS_JSON_PATH.is_file():
+        print(f"Missing {LISTINGS_JSON_PATH}", file=sys.stderr)
+        return 1
+
+    try:
+        root, listings = _load_listings_root(LISTINGS_JSON_PATH)
+    except ListingValidationError as exc:
+        print(exc, file=sys.stderr)
+        return 1
+
+    total, missing, updated = _backfill_bathrooms_in_rows(
+        listings,
+        dry_run=args.dry_run,
+        fetch=args.fetch,
+        delay=max(0.0, args.delay),
+    )
+
+    if not args.dry_run:
+        _write_listings_root(LISTINGS_JSON_PATH, root, listings)
+
+        if KIJIJI_LISTINGS_PATH.is_file():
+            k_root, k_listings = _load_listings_root(KIJIJI_LISTINGS_PATH)
+            _, _, k_updated = _backfill_bathrooms_in_rows(
+                k_listings,
+                dry_run=False,
+                fetch=args.fetch,
+                delay=max(0.0, args.delay),
+            )
+            _write_listings_root(KIJIJI_LISTINGS_PATH, k_root, k_listings)
+            print(f"Kijiji snapshot: updated {k_updated} row(s) in {KIJIJI_LISTINGS_PATH}")
+
+    prefix = "Would update" if args.dry_run else "Updated"
+    print(f"{prefix} {updated} / {missing} Kijiji listings missing bathrooms ({total} Kijiji total)")
+    if updated < missing:
+        hint = "title/URL"
+        if args.fetch:
+            hint += " or vip-attributes-section"
+        print(f"  {missing - updated} still have no parseable bathroom count in {hint}")
+    if not args.dry_run and updated:
+        print("Next: python -m padestrian validate-listings && python -m padestrian filter-listings")
+    return 0
+
+
 def cmd_prune_kijiji(args: argparse.Namespace) -> int:
     """Remove expired Kijiji ads from data/listings.json."""
     try:
@@ -576,6 +691,28 @@ def main(argv: list[str] | None = None) -> int:
         help="Seconds between HTTP checks (default: 0.8)",
     )
     prune_parser.set_defaults(func=cmd_prune_kijiji)
+
+    backfill_baths_parser = subparsers.add_parser(
+        "backfill-bathrooms",
+        help="Parse bathrooms from Kijiji title/URL for rows missing the field",
+    )
+    backfill_baths_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print counts without writing files",
+    )
+    backfill_baths_parser.add_argument(
+        "--fetch",
+        action="store_true",
+        help="HTTP-fetch each listing page for data-testid=vip-attributes-section (e.g. 1 Bathrooms)",
+    )
+    backfill_baths_parser.add_argument(
+        "--delay",
+        type=float,
+        default=0.8,
+        help="Seconds between HTTP fetches when --fetch (default: 0.8)",
+    )
+    backfill_baths_parser.set_defaults(func=cmd_backfill_bathrooms)
 
     use_parser = subparsers.add_parser(
         "use-listings",

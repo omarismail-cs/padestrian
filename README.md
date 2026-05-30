@@ -8,7 +8,7 @@
 
 **Find rentals you can actually live in without a car, on one map.**
 
-Padestrian is a full-stack Ottawa rental explorer built around a simple idea: **walkability should mean a real walk**, not a straight line on a map. Most listing sites hand you a generic score that ignores highways, missing sidewalks, and how long winter walks actually feel. This project scores each apartment using **pedestrian routing**, official **transit stop data**, and real **grocery locations**, then shows you the results instantly.
+**Where can I rent and still walk to the bus and the store?** Padestrian is a full-stack Ottawa rental explorer built around that question — and a simple idea: **walkability should mean a real walk**, not a straight line on a map. Most listing sites hand you a generic score that ignores highways, missing sidewalks, and how long winter walks actually feel. This project scores each apartment using **pedestrian routing**, official **transit stop data**, and real **grocery locations**, then shows you the results instantly.
 
 ## Screenshots
 
@@ -42,7 +42,7 @@ Padestrian puts that in one place: hover a pin, see rent and address, know at a 
 
 ---
 
-## What you’ll see when you run it
+## Features
 
 - **Interactive Mapbox map** with dark/light theme, rent and bedroom filters, and a “walkable only” toggle  
 - **~180 demo listings** placed on real City of Ottawa address coordinates (not random pins)  
@@ -50,11 +50,12 @@ Padestrian puts that in one place: hover a pin, see rent and address, know at a 
 - **Grocery + transit layers** you can turn on and off  
 - **Listing cards** on hover (price, beds/baths, address, Kijiji link when available)  
 - **Check an address** in the sidebar: Ottawa autocomplete, then the same color-coded house pin and walkability badge as rentals (saved in your browser until you clear it)  
+- **Kijiji list** (chevron beside the layer toggle): browse all live ads, click to pan and open the listing card  
 - **Optional live Kijiji import** via the Python CLI (batch scrape → score → map)
 
 ---
 
-## How it works (the interesting part)
+## How it works
 
 ```mermaid
 flowchart TB
@@ -79,7 +80,7 @@ flowchart TB
 5. The Next.js app loads the scored GeoJSON and paints pins by category.  
 6. **Custom addresses** (sidebar) geocode in the browser via Mapbox, score with the same grocery-zone + nearest-transit rules as the Python CLI (Turf.js point-in-polygon), and merge into the listings layer as `source: "custom"` pins.
 
-No database. Datasets are GeoJSON and JSON on disk, rebuilt with a CLI and served to the frontend. That keeps the demo fast to clone and easy to inspect.
+No database. Datasets are GeoJSON and JSON on disk, rebuilt with a CLI and served to the frontend.
 
 ---
 
@@ -95,67 +96,29 @@ No database. Datasets are GeoJSON and JSON on disk, rebuilt with a CLI and serve
 ---
 
 <details>
-<summary>🛠️ Local Setup / Quick Start</summary>
+<summary><strong>Getting started</strong></summary>
 
 <br />
 
-**Requirements:** Node 18+, Python 3.11+, API keys for Mapbox and OpenRouteService.
-
-#### Step 1: Prerequisites & API Keys
-
-Copy the example env file and add your API keys before running the data pipeline or the map.
+**Requirements:** Node 18+, Python 3.11+, Mapbox and OpenRouteService API keys.
 
 ```bash
-cp .env.example .env            # ORS_API_KEY, MAPBOX_ACCESS_TOKEN
-# .env.local → NEXT_PUBLIC_MAPBOX_TOKEN=<same mapbox token>
-```
+cp .env.example .env
+# ORS_API_KEY, MAPBOX_ACCESS_TOKEN in .env
+# NEXT_PUBLIC_MAPBOX_TOKEN in .env.local (same Mapbox token)
 
-#### Step 2: Backend & Data Pipeline Setup
-
-Create the Python environment, install the CLI, then build and score the datasets the map reads.
-
-```bash
-# Clone, then:
-python -m venv .venv
-.venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
+python -m venv .venv && .venv\Scripts\activate   # source .venv/bin/activate on macOS/Linux
 pip install -e .
 
 python -m padestrian build-essentials
 python -m padestrian validate-listings
 python -m padestrian build-zones
 python -m padestrian filter-listings
+
+npm install && npm run dev
 ```
 
-**First-time grocery refresh (optional):**
-
-```bash
-python -m padestrian fetch-groceries
-python -m padestrian build-essentials
-python -m padestrian build-zones
-python -m padestrian filter-listings
-```
-
-**Kijiji import (optional, needs `playwright install chromium`):**
-
-```bash
-python -m padestrian scrape-listings --pages 3 --max 30 --append
-python -m padestrian validate-listings
-python -m padestrian filter-listings
-```
-
-#### Step 3: Frontend Setup & Run
-
-Install frontend dependencies and start the Next.js dev server.
-
-```bash
-npm install
-
-npm run dev
-```
-
-Open **http://localhost:3000**. The map should load with listings already scored.  
-Use **Check an address** in the sidebar to score any Ottawa street address (needs `data/zones/grocery-10min.geojson` from `build-zones`).  
-After changing data: `Ctrl+Shift+R` to hard refresh.
+Open **http://localhost:3000**. Dataset details, Kijiji scrape/prune workflow, and zone rebuild notes: [data/README.md](data/README.md).
 
 </details>
 
@@ -173,39 +136,9 @@ After changing data: `Ctrl+Shift+R` to hard refresh.
 | `seed-listings` | Generate the demo rental set |
 | `scrape-listings` | Import ads from Kijiji |
 | `prune-kijiji` | Drop listings no longer active on Kijiji |
+| `backfill-bathrooms --fetch` | Fill missing Kijiji bath counts from live ad pages |
 | `validate-scoring` | Compare scores to a hand-labeled test CSV |
 | `check-mapbox` | Sanity-check your Mapbox token |
-
-Full dataset notes: [data/README.md](data/README.md).
-
----
-
-## Deploying to Vercel
-
-The map and **Check an address** feature are fully static at runtime: no Python on Vercel. The browser geocodes via Mapbox and scores points against GeoJSON you ship in `public/data`.
-
-**Environment variables** (Vercel project settings):
-
-| Variable | Purpose |
-|----------|---------|
-| `NEXT_PUBLIC_MAPBOX_TOKEN` | Map tiles + address geocoding |
-
-Restrict the token to your production URL in the Mapbox dashboard.
-
-**Data files to include before deploy** (run the pipeline locally, then ensure these are served under `/data/` via `public/data` → `data/`):
-
-| File | Required for |
-|------|----------------|
-| `data/listings-scored.geojson` | Colored listing pins on the map |
-| `data/zones/grocery-10min.geojson` | Grocery walk scoring + custom address check |
-| `data/stops.geojson` | Nearest-transit fallback (already in repo) |
-| `data/groceries-points.geojson` | Grocery layer (already in repo) |
-
-Optional: `data/zones/transit-10min.geojson`, `data/isochrones/smoke.geojson` (fallback if merged zones are missing).
-
-Generated zone and scored listing files are gitignored by default. Either commit them for the demo deploy or add a CI step that runs `build-zones` and `filter-listings` and copies outputs into `data/` before `vercel build`.
-
-Custom addresses are stored in the user’s browser (`localStorage`) only; they are not written to the server.
 
 ---
 
@@ -214,13 +147,9 @@ Custom addresses are stored in the user’s browser (`localStorage`) only; they 
 ```text
 padestrian/     Python CLI (ingest, zones, scoring, scrape)
 components/     Map UI (filters, popups, address search, layers)
-lib/            Browser geocoding + walk scoring (Vercel-safe, no Python at runtime)
+lib/            Browser geocoding + walk scoring
 app/            Next.js entry
 data/           Source + generated GeoJSON
 public/data/    Served to the browser (/data/… in the app)
 public/images/  Map markers + README screenshots
 ```
-
----
-
-Built as a portfolio-grade geospatial demo: real APIs, real city open data, and a product story that solves an everyday problem: **where can I rent and still walk to the bus and the store?**

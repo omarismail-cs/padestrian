@@ -1,11 +1,14 @@
 "use client"
 
-import { useState } from "react"
-import { ChevronLeft, Moon, Sun } from "lucide-react"
+import { useMemo, useState } from "react"
+import { ChevronDown, ChevronLeft, ChevronRight, Moon, Sun } from "lucide-react"
+import type { FeatureCollection } from "geojson"
 import { Slider } from "@/components/ui/slider"
 import { PedestrianToggle } from "@/components/ui/pedestrian-toggle"
 import { AddressSearch } from "@/components/map/address-search"
+import { KijijiListPanel } from "@/components/map/kijiji-list-panel"
 import type { GeocodeResult } from "@/lib/geocode"
+import { buildKijijiListItems, type KijijiListItem } from "@/lib/kijiji-listings"
 import { cn } from "@/lib/utils"
 
 interface Filters {
@@ -36,6 +39,9 @@ interface FilterPanelProps {
   onCheckAddressQuery: (query: string) => void
   onSelectAddress: (result: GeocodeResult) => void
   onClearCustomAddress: () => void
+  listingsData: FeatureCollection | null
+  onFocusKijijiListing: (item: KijijiListItem) => void
+  selectedKijijiId: string | null
 }
 
 const bedOptions = [
@@ -60,10 +66,33 @@ export function FilterPanel({
   onCheckAddressQuery,
   onSelectAddress,
   onClearCustomAddress,
+  listingsData,
+  onFocusKijijiListing,
+  selectedKijijiId,
 }: FilterPanelProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [pressed, setPressed] = useState(false)
+  const [kijijiListOpen, setKijijiListOpen] = useState(false)
   const [isEditingMaxRent, setIsEditingMaxRent] = useState(false)
   const [maxRentInput, setMaxRentInput] = useState("")
+
+  // Staggered entry style for each content section
+  const section = (delay: number): React.CSSProperties => ({
+    opacity: isOpen ? 1 : 0,
+    transform: isOpen ? 'translateY(0)' : 'translateY(12px)',
+    transition: isOpen
+      ? `opacity 200ms ease ${delay}ms, transform 260ms cubic-bezier(0.25, 1, 0.5, 1) ${delay}ms`
+      : 'opacity 80ms ease, transform 80ms ease',
+  })
+
+  const kijijiListItems = useMemo(
+    () =>
+      buildKijijiListItems(listingsData, filters, {
+        staticListings: layers.staticListings,
+        kijijiListings: layers.kijijiListings,
+      }),
+    [listingsData, filters, layers.staticListings, layers.kijijiListings],
+  )
 
   const MIN_RENT = 1000
   const MAX_RENT = 3500
@@ -121,11 +150,18 @@ export function FilterPanel({
       {/* Collapsed state - floating logo button */}
       <button
         onClick={() => setIsOpen(true)}
-        className={cn(
-          "absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-2.5 rounded-xl border shadow-lg transition-all duration-300",
-          "bg-card/95 backdrop-blur-xl border-border hover:bg-card",
-          isOpen && "opacity-0 pointer-events-none"
-        )}
+        onMouseDown={() => setPressed(true)}
+        onMouseUp={() => setPressed(false)}
+        onMouseLeave={() => setPressed(false)}
+        onTouchStart={() => setPressed(true)}
+        onTouchEnd={() => setPressed(false)}
+        style={{
+          transform: pressed ? 'scale(0.97)' : 'scale(1)',
+          opacity: isOpen ? 0 : 1,
+          pointerEvents: isOpen ? 'none' : undefined,
+          transition: 'transform 60ms ease, opacity 180ms ease',
+        }}
+        className="absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-2.5 rounded-xl border shadow-lg bg-card/95 backdrop-blur-xl border-border hover:bg-card"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -155,13 +191,19 @@ export function FilterPanel({
 
       {/* Expanded sidebar */}
       <aside
-        className={cn(
-          "absolute top-0 left-0 z-30 flex h-full w-80 flex-col bg-card/95 backdrop-blur-xl border-r border-border shadow-2xl transition-transform duration-300 ease-out",
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        )}
+        className="absolute top-0 left-0 z-30 flex h-full w-80 flex-col bg-card/95 backdrop-blur-xl border-r border-border shadow-2xl overflow-hidden"
+        style={{
+          transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transition: isOpen
+            ? 'transform 320ms cubic-bezier(0.25, 1, 0.5, 1)'
+            : 'transform 240ms cubic-bezier(0.4, 0, 0.6, 1)',
+        }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+        <div
+          className="flex items-center justify-between px-5 py-4 border-b border-border"
+          style={section(40)}
+        >
           <div className="flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -179,7 +221,10 @@ export function FilterPanel({
         </div>
 
         {/* Stats banner */}
-        <div className="px-5 py-3 bg-secondary/50 border-b border-border">
+        <div
+          className="px-5 py-3 bg-secondary/50 border-b border-border"
+          style={section(80)}
+        >
           <div className="flex items-center justify-between">
             <span className="text-sm text-muted-foreground dark:text-zinc-300">Showing</span>
             <div className="flex items-center gap-2">
@@ -193,7 +238,7 @@ export function FilterPanel({
         {/* Scrollable content */}
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
           <div className="p-5 space-y-5 pb-4">
-            <div>
+            <div style={section(120)}>
               <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground dark:text-zinc-300 mb-3">
                 Check an address
               </div>
@@ -208,7 +253,7 @@ export function FilterPanel({
             </div>
 
             {/* Filters section */}
-            <div>
+            <div style={section(165)}>
               <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground dark:text-zinc-300 mb-4">
                 Filters
               </div>
@@ -303,7 +348,7 @@ export function FilterPanel({
             </div>
 
             {/* Legend */}
-            <div className="pt-4 border-t border-border">
+            <div className="pt-4 border-t border-border" style={section(215)}>
               <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground dark:text-zinc-300 mb-3">
                 Legend
               </div>
@@ -339,7 +384,7 @@ export function FilterPanel({
             </div>
 
             {/* Layers section */}
-            <div className="mt-2 pt-3 border-t border-border">
+            <div className="mt-2 pt-3 border-t border-border" style={section(260)}>
               <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground dark:text-zinc-300 mb-3">
                 Layers
               </div>
@@ -399,25 +444,61 @@ export function FilterPanel({
                     ariaLabel="Toggle static listings source"
                   />
                 </label>
-                <label className="flex items-center justify-between py-1.5 cursor-pointer group">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground dark:text-zinc-300 group-hover:text-foreground transition-colors">Kijiji/live listings</span>
-                  </div>
-                  <PedestrianToggle
-                    checked={layers.kijijiListings}
-                    onCheckedChange={(checked) =>
-                      onLayersChange({ ...layers, kijijiListings: checked })
-                    }
-                    ariaLabel="Toggle Kijiji listings source"
-                  />
-                </label>
+                <div>
+                  <label className="flex items-center justify-between py-1.5 cursor-pointer group">
+                    <div className="flex min-w-0 items-center gap-1">
+                      <span className="text-sm text-muted-foreground dark:text-zinc-300 group-hover:text-foreground transition-colors">
+                        Kijiji/live listings
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setKijijiListOpen((open) => !open)
+                        }}
+                        className={cn(
+                          "flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors",
+                          "hover:bg-secondary hover:text-foreground",
+                          kijijiListOpen && "text-foreground",
+                        )}
+                        aria-expanded={kijijiListOpen}
+                        aria-label={
+                          kijijiListOpen ? "Collapse Kijiji list" : "Expand Kijiji list"
+                        }
+                      >
+                        {kijijiListOpen ? (
+                          <ChevronDown className="h-3.5 w-3.5" aria-hidden />
+                        ) : (
+                          <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+                        )}
+                      </button>
+                    </div>
+                    <PedestrianToggle
+                      checked={layers.kijijiListings}
+                      onCheckedChange={(checked) =>
+                        onLayersChange({ ...layers, kijijiListings: checked })
+                      }
+                      ariaLabel="Toggle Kijiji listings source"
+                    />
+                  </label>
+                  {kijijiListOpen ? (
+                    <div className="ml-7">
+                      <KijijiListPanel
+                        items={kijijiListItems}
+                        selectedId={selectedKijijiId}
+                        onSelect={onFocusKijijiListing}
+                      />
+                    </div>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="shrink-0 border-t border-border bg-secondary/30 px-5 py-3">
+        <div className="shrink-0 border-t border-border bg-secondary/30 px-5 py-3" style={section(300)}>
           <p className="text-center text-xs text-muted-foreground dark:text-zinc-400">
             Find your car-free apartment
           </p>

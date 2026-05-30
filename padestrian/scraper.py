@@ -124,19 +124,9 @@ def scrape_listing_detail(page: Any, url: str) -> dict[str, Any]:
             or _address_from_jsonld(ld)
         )
 
-        # Bedroom / bathroom are often in attributes table.
-        attrs = page.eval_on_selector_all(
-            "[data-qa-id='item-attribute'], [class*='attribute']",
-            "els => els.map(e => (e.textContent || '').trim())",
+        bedrooms_text, bathrooms_text = _pick_bed_bath_from_attribute_lines(
+            _kijiji_attribute_lines_from_page(page)
         )
-        bedrooms_text = None
-        bathrooms_text = None
-        for text in attrs:
-            low = text.lower()
-            if bedrooms_text is None and ("bedroom" in low or re.search(r'\\bbr\\b', low)):
-                bedrooms_text = text
-            if bathrooms_text is None and ("bathroom" in low or re.search(r'\\bba\\b', low)):
-                bathrooms_text = text
 
     except Exception as exc:  # noqa: BLE001
         print(f"[scrape_listing_detail] failed for {url}: {exc}")
@@ -202,8 +192,13 @@ def normalize_listing(raw: dict[str, Any]) -> dict[str, Any] | None:
     if geo is None:
         return None
 
-    bathrooms = _parse_bathrooms(raw.get("bathrooms_text"))
     title = str(raw.get("title") or "").strip() or address_query
+    bathrooms = _parse_bathrooms(
+        raw.get("bathrooms_text"),
+        title=title,
+        description=raw.get("description"),
+        url=url,
+    )
 
     listing: dict[str, Any] = {
         "id": f"kijiji-{listing_id}",
@@ -267,6 +262,114 @@ def _clean_text(value: Any) -> str | None:
     if not text:
         return None
     return re.sub(r"\s+", " ", text)
+
+
+def _kijiji_attribute_lines_from_page(page: Any) -> list[str]:
+    """Read VIP attribute chips (e.g. '1 Bathrooms') from the listing page."""
+    lines: list[str] = []
+    try:
+        page.wait_for_selector(
+            '[data-testid="vip-attributes-section"]',
+            timeout=8_000,
+            state="attached",
+        )
+    except PlaywrightTimeoutError:
+        pass
+
+    vip = page.eval_on_selector(
+        '[data-testid="vip-attributes-section"]',
+        """section => {
+            if (!section) return [];
+            return Array.from(section.querySelectorAll('p'))
+                .map(p => (p.textContent || '').trim())
+                .filter(Boolean);
+        }""",
+    )
+    if isinstance(vip, list):
+        lines.extend(str(x).strip() for x in vip if str(x).strip())
+
+    legacy = page.eval_on_selector_all(
+        "[data-qa-id='item-attribute'], [class*='attribute']",
+        "els => els.map(e => (e.textContent || '').trim()).filter(Boolean)",
+    )
+    if isinstance(legacy, list):
+        for text in legacy:
+            t = str(text).strip()
+            if t and t not in lines:
+                lines.append(t)
+    return lines
+
+
+def _kijiji_attribute_lines_from_html(html: str) -> list[str]:
+    """Parse VIP attribute lines from server-rendered HTML (no Playwright)."""
+    for marker in ('data-testid="vip-attributes-section"', "data-testid='vip-attributes-section'"):
+        idx = html.find(marker)
+        if idx == -1:
+            continue
+        chunk = html[idx : idx + 12_000]
+        lines = [
+            t
+            for m in re.finditer(r"<p[^>]*>([^<]+)</p>", chunk, re.IGNORECASE)
+            if (t := _clean_text(m.group(1)))
+        ]
+        if lines:
+            return lines
+    return []
+
+
+def _pick_bed_bath_from_attribute_lines(
+    lines: list[str],
+) -> tuple[str | None, str | None]:
+    bedrooms_text = None
+    bathrooms_text = None
+    for text in lines:
+        low = text.lower()
+        if bedrooms_text is None and (
+            "bedroom" in low or re.search(r"\bbr\b", low)
+        ):
+            bedrooms_text = text
+        if bathrooms_text is None and (
+            "bathroom" in low
+            or " bath" in low
+            or re.search(r"\bba\b", low)
+        ):
+            bathrooms_text = text
+    return bedrooms_text, bathrooms_text
+
+
+def fetch_kijiji_bathrooms_from_url(
+    url: str,
+    *,
+    client: httpx.Client | None = None,
+) -> float | None:
+    """
+    Fetch listing HTML and parse bathrooms from vip-attributes-section.
+
+    Uses plain HTTP (same idea as prune-kijiji); no Playwright required.
+    """
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        ),
+        "Accept-Language": "en-CA,en;q=0.9",
+    }
+    own_client = client is None
+    if own_client:
+        client = httpx.Client(timeout=25.0, headers=headers, follow_redirects=True)
+    try:
+        response = client.get(url)
+        if response.status_code >= 400:
+            return None
+        _, bathrooms_text = _pick_bed_bath_from_attribute_lines(
+            _kijiji_attribute_lines_from_html(response.text)
+        )
+        return _parse_bathrooms(bathrooms_text, url=url)
+    except httpx.RequestError:
+        return None
+    finally:
+        if own_client:
+            client.close()
 
 
 def _try_text(page: Any, selector: str) -> str | None:
@@ -358,22 +461,55 @@ def _parse_bedrooms(value: Any, *, title: Any, description: Any) -> int | None:
     return beds
 
 
-def _parse_bathrooms(value: Any) -> float | None:
-    text = _clean_text(value)
-    if not text:
+_WORD_BATHS = {
+    "one": 1.0,
+    "two": 2.0,
+    "three": 3.0,
+    "four": 4.0,
+}
+
+
+def _parse_bathrooms(
+    value: Any,
+    *,
+    title: Any = None,
+    description: Any = None,
+    url: Any = None,
+) -> float | None:
+    base = " ".join(
+        filter(
+            None,
+            [
+                _clean_text(value),
+                _clean_text(title),
+                _clean_text(description),
+                _clean_text(url),
+            ],
+        )
+    )
+    if not base:
         return None
-    m = re.search(r"(\d+(?:\.\d+)?)\s*(?:bath|ba)\b", text.lower())
+
+    low = base.lower()
+
+    m = re.search(r"(\d+(?:\.\d+)?)\s*(?:bath|bathroom|ba)s?\b", low)
     if not m:
-        m = re.search(r"\b(\d+(?:\.\d+)?)\b", text)
-    if not m:
-        return None
-    try:
-        baths = float(m.group(1))
-    except ValueError:
-        return None
-    if baths <= 0 or baths > 10:
-        return None
-    return baths
+        m = re.search(r"(\d+(?:\.\d+)?)[-_](?:bath|bathroom|ba)s?\b", low)
+    if m:
+        try:
+            baths = float(m.group(1))
+            if 0 < baths <= 10:
+                return baths
+        except ValueError:
+            pass
+
+    for word, count in _WORD_BATHS.items():
+        if re.search(rf"\b{word}\s+(?:bath|bathroom)s?\b", low):
+            return count
+        if re.search(rf"{word}[-_](?:bath|bathroom)s?\b", low):
+            return count
+
+    return None
 
 
 def _normalize_address(value: Any) -> str | None:

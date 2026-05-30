@@ -2,8 +2,9 @@
 
 import { useState, useCallback, useEffect } from "react"
 import dynamic from "next/dynamic"
-import type { Feature, Point } from "geojson"
+import type { Feature, FeatureCollection, Point } from "geojson"
 import { FilterPanel } from "@/components/map/filter-panel"
+import type { MapFocusListing } from "@/components/map/map-view"
 import { geocodeAddress, type GeocodeResult } from "@/lib/geocode"
 import {
   buildCustomListingFeature,
@@ -11,6 +12,7 @@ import {
   loadCustomAddressFromStorage,
   saveCustomAddressToStorage,
 } from "@/lib/custom-listing"
+import type { KijijiListItem } from "@/lib/kijiji-listings"
 import { scorePoint, ScoringDataError } from "@/lib/score-point"
 
 const MapView = dynamic(
@@ -49,10 +51,14 @@ export default function Page() {
     walkable: 0,
   })
 
+  const [listingsData, setListingsData] = useState<FeatureCollection | null>(null)
   const [customListing, setCustomListing] = useState<Feature<Point> | null>(null)
   const [isCheckingAddress, setIsCheckingAddress] = useState(false)
   const [addressError, setAddressError] = useState<string | null>(null)
   const [flyToCustomKey, setFlyToCustomKey] = useState(0)
+  const [focusListing, setFocusListing] = useState<MapFocusListing | null>(null)
+  const [focusListingKey, setFocusListingKey] = useState(0)
+  const [selectedKijijiId, setSelectedKijijiId] = useState<string | null>(null)
 
   useEffect(() => {
     const stored = loadCustomAddressFromStorage()
@@ -73,6 +79,10 @@ export default function Page() {
 
   const handleStatsUpdate = useCallback((total: number, walkable: number) => {
     setStats({ total, walkable })
+  }, [])
+
+  const handleListingsChange = useCallback((fc: FeatureCollection) => {
+    setListingsData(fc)
   }, [])
 
   const applyGeocodedAddress = useCallback(async (geocoded: GeocodeResult) => {
@@ -122,6 +132,22 @@ export default function Page() {
     setAddressError(null)
   }, [])
 
+  const handleFocusKijijiListing = useCallback(
+    (item: KijijiListItem) => {
+      if (!layers.kijijiListings) {
+        setLayers((prev) => ({ ...prev, kijijiListings: true }))
+      }
+      setSelectedKijijiId(item.id)
+      setFocusListing({
+        lon: item.lon,
+        lat: item.lat,
+        properties: item.properties,
+      })
+      setFocusListingKey((k) => k + 1)
+    },
+    [layers.kijijiListings],
+  )
+
   return (
     <main className="relative w-full h-screen overflow-hidden bg-background">
       <MapView
@@ -131,6 +157,9 @@ export default function Page() {
         theme={theme}
         customListing={customListing}
         flyToCustomKey={flyToCustomKey}
+        onListingsChange={handleListingsChange}
+        focusListing={focusListing}
+        focusListingKey={focusListingKey}
       />
       <FilterPanel
         filters={filters}
@@ -146,6 +175,9 @@ export default function Page() {
         onCheckAddressQuery={handleCheckAddressQuery}
         onSelectAddress={handleSelectAddress}
         onClearCustomAddress={handleClearCustomAddress}
+        listingsData={listingsData}
+        onFocusKijijiListing={handleFocusKijijiListing}
+        selectedKijijiId={selectedKijijiId}
       />
     </main>
   )

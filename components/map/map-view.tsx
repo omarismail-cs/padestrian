@@ -62,6 +62,12 @@ interface PopupInfo {
   layerId: string
 }
 
+export interface MapFocusListing {
+  lon: number
+  lat: number
+  properties: Record<string, unknown>
+}
+
 interface MapViewProps {
   filters: Filters
   layers: LayerVisibility
@@ -69,6 +75,9 @@ interface MapViewProps {
   theme: "light" | "dark"
   customListing: Feature<Point> | null
   flyToCustomKey: number
+  onListingsChange?: (fc: GeoJSON.FeatureCollection) => void
+  focusListing: MapFocusListing | null
+  focusListingKey: number
 }
 
 /** Same as grocery POI popups — scalar offset works with Mapbox anchor-bottom */
@@ -81,6 +90,9 @@ export function MapView({
   theme,
   customListing,
   flyToCustomKey,
+  onListingsChange,
+  focusListing,
+  focusListingKey,
 }: MapViewProps) {
   const mapRef = useRef<MapRef>(null)
   const [popupInfo, setPopupInfo]   = useState<PopupInfo | null>(null)
@@ -202,6 +214,27 @@ export function MapView({
     })
     if (anyScores) setHasScores(true)
   }, [baseListings, customListing])
+
+  useEffect(() => {
+    if (listings) onListingsChange?.(listings)
+  }, [listings, onListingsChange])
+
+  useEffect(() => {
+    if (!focusListing || focusListingKey === 0) return
+    const map = mapRef.current?.getMap()
+    if (!map) return
+    map.flyTo({
+      center: [focusListing.lon, focusListing.lat],
+      zoom: 15,
+      duration: 1200,
+    })
+    setPopupInfo({
+      longitude: focusListing.lon,
+      latitude: focusListing.lat,
+      properties: focusListing.properties,
+      layerId: "listings-symbol",
+    })
+  }, [focusListing, focusListingKey])
 
   useEffect(() => {
     if (!customListing || flyToCustomKey === 0) return

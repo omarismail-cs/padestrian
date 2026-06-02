@@ -31,8 +31,13 @@ data/osm-residential.geojson
 data/municipal-addresses.geojson
 data/municipal-addresses.csv
 
-# Junction at public/data → data/ (do not commit copies of generated GeoJSON)
-public/data/
+# public/data is committed — exclude only large/irrelevant files
+public/data/GTFSExport/
+public/data/osm-residential.geojson
+public/data/municipal-addresses.geojson
+public/data/validation_30*.csv
+public/data/manifest.json
+public/data/overpass-groceries.ql
 
 # OS / editor
 .DS_Store

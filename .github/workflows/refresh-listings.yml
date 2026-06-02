@@ -1,0 +1,50 @@
+name: Refresh listings
+
+on:
+  schedule:
+    - cron: '0 13 */5 * *'  # every 5 days at 9 AM Ottawa time (UTC-4)
+  workflow_dispatch:         # run manually from GitHub Actions tab anytime
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Install Playwright browser
+        run: python -m playwright install chromium --with-deps
+
+      - name: Run pipeline
+        env:
+          ORS_API_KEY: ${{ secrets.ORS_API_KEY }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+        run: |
+          python -m padestrian prune-kijiji
+          python -m padestrian scrape-listings
+          python -m padestrian backfill-bathrooms --fetch
+          python -m padestrian filter-listings
+
+      - name: Copy outputs to public/data
+        run: |
+          cp data/listings-scored.geojson        public/data/
+          cp data/listings.json                  public/data/
+          cp data/listings.kijiji.json           public/data/
+          cp data/listings.geojson               public/data/
+          cp data/zones/grocery-10min.geojson    public/data/zones/
+          cp data/zones/transit-10min.geojson    public/data/zones/
+
+      - name: Commit and push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/
+          git diff --staged --quiet || git commit -m "chore: refresh listings $(date -u +%Y-%m-%d)"
+          git push

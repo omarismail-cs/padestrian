@@ -1,14 +1,15 @@
 # Padestrian
 
-Live demo → [padestrian website](https://padestrian.vercel.app)
+> **Live demo** → [padestrian website](https://padestrian.vercel.app)  
+> Open the map, filter Ottawa rentals by walkability to grocery and transit, or check any address.
+
+**Find rentals you can actually live in without a car, on one map.**
 
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Mapbox](https://img.shields.io/badge/Mapbox-4264FB?style=flat-square&logo=mapbox&logoColor=white)
-
-**Find rentals you can actually live in without a car, on one map.**
 
 **Where can I rent and still walk to the bus and the store?** Padestrian is a full-stack Ottawa rental explorer built around that question — and a simple idea: **walkability should mean a real walk**, not a straight line on a map. Most listing sites hand you a generic score that ignores highways, missing sidewalks, and how long winter walks actually feel. This project scores each apartment using **pedestrian routing**, official **transit stop data**, and real **grocery locations**, then shows you the results instantly.
 

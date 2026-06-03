@@ -80,6 +80,11 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    transition:
+      background-color 400ms ease-in-out,
+      border-color 300ms ease-in-out,
+      color 250ms ease-in-out,
+      fill 250ms ease-in-out;
   }
   html {
     scrollbar-gutter: stable;

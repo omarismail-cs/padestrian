@@ -80,7 +80,7 @@ export function FilterPanel({
   onFocusKijijiListing,
   selectedKijijiId,
 }: FilterPanelProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
   const [pressed, setPressed] = useState(false)
   const [kijijiListOpen, setKijijiListOpen] = useState(false)
 
@@ -256,7 +256,7 @@ export function FilterPanel({
           pointerEvents: isOpen ? 'none' : undefined,
           transition: 'transform 60ms ease, opacity 180ms ease',
         }}
-        className="absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-2.5 rounded-xl border shadow-lg bg-card/95 backdrop-blur-xl border-border hover:bg-card"
+        className="absolute top-4 right-4 z-20 flex items-center gap-2 px-3 py-2.5 rounded-xl border shadow-lg bg-card/95 backdrop-blur-xl border-border hover:bg-card"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -271,10 +271,10 @@ export function FilterPanel({
         </div>
       </button>
 
-      {/* Theme toggle - always visible top right */}
+      {/* Theme toggle - top left so it does not compete with the right sidebar */}
       <button
         onClick={onThemeToggle}
-        className="absolute top-4 right-4 z-20 flex size-10 shrink-0 items-center justify-center rounded-xl bg-card/95 backdrop-blur-xl border border-border shadow-lg hover:bg-card transition-colors"
+        className="absolute top-4 left-4 z-20 flex size-10 shrink-0 items-center justify-center rounded-xl bg-card/95 backdrop-blur-xl border border-border shadow-lg hover:bg-card transition-colors"
         aria-label="Toggle theme"
       >
         {theme === "dark" ? (
@@ -286,9 +286,9 @@ export function FilterPanel({
 
       {/* Expanded sidebar */}
       <aside
-        className="absolute top-0 left-0 z-30 flex h-full w-80 flex-col bg-card/95 backdrop-blur-xl border-r border-border shadow-2xl overflow-hidden"
+        className="absolute top-0 right-0 z-30 flex h-full w-80 flex-col bg-card/95 backdrop-blur-xl border-l border-border shadow-2xl overflow-hidden"
         style={{
-          transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
           transition: isOpen
             ? 'transform 320ms cubic-bezier(0.25, 1, 0.5, 1)'
             : 'transform 240ms cubic-bezier(0.4, 0, 0.6, 1)',
@@ -741,12 +741,12 @@ export function FilterPanel({
       <button
         onClick={() => setIsOpen(false)}
         className={cn(
-          "absolute top-1/2 -translate-y-1/2 z-30 p-1.5 rounded-r-lg bg-card border border-l-0 border-border shadow-lg transition-all duration-300 hidden md:flex",
-          isOpen ? "left-80" : "left-0 opacity-0 pointer-events-none"
+          "absolute top-1/2 -translate-y-1/2 z-30 p-1.5 rounded-l-lg bg-card border border-r-0 border-border shadow-lg transition-all duration-300 hidden md:flex",
+          isOpen ? "right-80" : "right-0 opacity-0 pointer-events-none"
         )}
         aria-label="Collapse panel"
       >
-        <ChevronLeft className="w-4 h-4 text-muted-foreground" />
+        <ChevronRight className="w-4 h-4 text-muted-foreground" />
       </button>
     </>
   )

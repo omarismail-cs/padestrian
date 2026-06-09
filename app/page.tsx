@@ -42,7 +42,7 @@ export default function Page() {
     groceries: true,
     transit: false,
     smoke: false,
-    staticListings: true,
+    staticListings: false,
     kijijiListings: true,
   })
 

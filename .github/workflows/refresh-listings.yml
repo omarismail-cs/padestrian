@@ -2,7 +2,7 @@ name: Refresh listings
 
 on:
   schedule:
-    - cron: '0 13 */5 * *'  # every 5 days at 9 AM Ottawa time (UTC-4)
+    - cron: '0 13 */4 * *'  # every 4 days at 9 AM Ottawa time (UTC-4)
   workflow_dispatch:         # run manually from GitHub Actions tab anytime
 
 permissions:

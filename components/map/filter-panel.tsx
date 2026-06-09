@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
-import { Check, ChevronDown, ChevronLeft, ChevronRight, Moon, RefreshCw, Sun, X } from "lucide-react"
+import { Check, ChevronDown, ChevronLeft, ChevronRight, Github, Moon, RefreshCw, Sun, X } from "lucide-react"
 import type { FeatureCollection } from "geojson"
 import { Slider } from "@/components/ui/slider"
 import { PedestrianToggle } from "@/components/ui/pedestrian-toggle"
@@ -723,9 +723,20 @@ export function FilterPanel({
 
         {/* Footer */}
         <div className="shrink-0 border-t border-border bg-secondary/30 px-5 py-3" style={section(300)}>
-          <p className="text-center text-xs text-muted-foreground dark:text-zinc-400">
-            Find your car-free apartment
-          </p>
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-xs text-muted-foreground dark:text-zinc-400">
+              Find your car-free apartment
+            </p>
+            <a
+              href="https://github.com/omarismall-cs/Padestrian"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="View source on GitHub"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+          </div>
         </div>
       </aside>
 

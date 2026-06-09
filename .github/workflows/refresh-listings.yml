@@ -45,20 +45,34 @@ jobs:
           python -m padestrian validate-listings
           python -m padestrian filter-listings
 
-      - name: Copy outputs to public/data
+      - name: Copy listing outputs to public/data
         run: |
-          mkdir -p public/data/zones
-          cp data/listings-scored.geojson public/data/
-          cp data/listings.json public/data/
-          cp data/listings.kijiji.json public/data/
-          cp data/listings.geojson public/data/
-          cp data/zones/grocery-10min.geojson public/data/zones/
-          cp data/zones/transit-10min.geojson public/data/zones/
+          set -euo pipefail
+          mkdir -p public/data
+          for f in listings-scored.geojson listings.json listings.kijiji.json listings.geojson; do
+            if [ ! -f "data/$f" ]; then
+              echo "ERROR: pipeline did not produce data/$f" >&2
+              exit 1
+            fi
+            cp "data/$f" "public/data/$f"
+            echo "Copied $f"
+          done
+          python -c "
+          import json
+          d = json.load(open('public/data/listings-scored.geojson'))
+          print('generated_at:', d.get('generated_at'))
+          print('total:', d.get('total'), 'eligible:', d.get('eligible'))
+          "
 
       - name: Commit and push
         run: |
+          set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/
-          git diff --staged --quiet || git commit -m "chore: refresh listings $(date -u +%Y-%m-%d)"
+          git add public/data/listings-scored.geojson public/data/listings.json public/data/listings.kijiji.json public/data/listings.geojson
+          if git diff --staged --quiet; then
+            echo "ERROR: no listing changes to commit — refresh may not have updated data" >&2
+            exit 1
+          fi
+          git commit -m "chore: refresh listings $(date -u +%Y-%m-%d)"
           git push

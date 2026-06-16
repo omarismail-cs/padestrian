@@ -85,6 +85,41 @@ const bedOptions = [
   { value: "3", label: "3+" },
 ]
 
+const MIN_RENT = 1000
+const MAX_RENT = 3500
+const RENT_STEP = 50
+const RENT_HISTOGRAM_BINS = 25
+
+function buildRentHistogram(
+  fc: FeatureCollection | null,
+  layers: { staticListings: boolean; kijijiListings: boolean },
+): number[] {
+  const bins = Array(RENT_HISTOGRAM_BINS).fill(0)
+  if (!fc?.features?.length) return bins
+
+  const binWidth = (MAX_RENT - MIN_RENT) / RENT_HISTOGRAM_BINS
+
+  for (const feature of fc.features) {
+    const p = feature.properties ?? {}
+    if (String(p.source ?? "").toLowerCase() === "custom") continue
+    if (p.rent_cad == null) continue
+
+    const isKijiji = String(p.source ?? "").toLowerCase() === "kijiji"
+    if (isKijiji && !layers.kijijiListings) continue
+    if (!isKijiji && !layers.staticListings) continue
+
+    const rent = Number(p.rent_cad)
+    if (!Number.isFinite(rent) || rent < MIN_RENT) continue
+
+    const clamped = Math.min(rent, MAX_RENT)
+    let idx = Math.floor((clamped - MIN_RENT) / binWidth)
+    if (idx >= RENT_HISTOGRAM_BINS) idx = RENT_HISTOGRAM_BINS - 1
+    bins[idx]++
+  }
+
+  return bins
+}
+
 export function FilterPanel({
   filters,
   onFiltersChange,
@@ -213,9 +248,19 @@ export function FilterPanel({
     [listingsData, filters, layers.staticListings, layers.kijijiListings],
   )
 
-  const MIN_RENT = 1000
-  const MAX_RENT = 3500
-  const RENT_STEP = 50
+  const rentHistogram = useMemo(
+    () =>
+      buildRentHistogram(listingsData, {
+        staticListings: layers.staticListings,
+        kijijiListings: layers.kijijiListings,
+      }),
+    [listingsData, layers.staticListings, layers.kijijiListings],
+  )
+
+  const rentHistogramMax = useMemo(
+    () => Math.max(...rentHistogram, 1),
+    [rentHistogram],
+  )
 
   const clampRent = (value: number) =>
     Math.min(MAX_RENT, Math.max(MIN_RENT, value))
@@ -435,16 +480,33 @@ export function FilterPanel({
                     </button>
                   )}
                 </div>
-                <Slider
-                  value={[filters.maxRent]}
-                  min={MIN_RENT}
-                  max={MAX_RENT}
-                  step={RENT_STEP}
-                  onValueChange={([value]) =>
-                    onFiltersChange({ ...filters, maxRent: clampRent(value) })
-                  }
-                  className="w-full"
-                />
+                <div className="relative h-9 flex items-center">
+                  <div
+                    className="pointer-events-none absolute inset-x-0 flex h-7 items-end gap-px"
+                    aria-hidden
+                  >
+                    {rentHistogram.map((count, i) => (
+                      <div
+                        key={i}
+                        className="flex-1 rounded-t-[2px] bg-[#6BBF91]/25 dark:bg-[#6BBF91]/20"
+                        style={{
+                          height: `${(count / rentHistogramMax) * 100}%`,
+                          minHeight: count > 0 ? 2 : 0,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <Slider
+                    value={[filters.maxRent]}
+                    min={MIN_RENT}
+                    max={MAX_RENT}
+                    step={RENT_STEP}
+                    onValueChange={([value]) =>
+                      onFiltersChange({ ...filters, maxRent: clampRent(value) })
+                    }
+                    className="relative z-10 w-full"
+                  />
+                </div>
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>$1,000</span>
                   <span>$3,500+</span>

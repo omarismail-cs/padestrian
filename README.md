@@ -1,7 +1,7 @@
 # Padestrian
 
-> **Live demo** → [padestrian website](https://padestrian.vercel.app)  
-> Open the map, filter Ottawa rentals by walkability to grocery and transit, or check any address.
+> **Live app:** [padestrian.vercel.app](https://padestrian.vercel.app)  
+> Ottawa rental map — filter by walkability to grocery and transit, browse Kijiji listings, or score any address.
 
 **Find rentals you can actually live in without a car, on one map.**
 
@@ -58,6 +58,17 @@ Padestrian puts that in one place: hover a pin, see rent and address, know at a 
 
 ---
 
+## Tech stack
+
+| Layer | Tools |
+|-------|--------|
+| **Frontend** | Next.js 16, React 19, Mapbox GL, Tailwind, Turf.js (client walk scoring) |
+| **Backend / data** | Python 3.11+, Shapely, httpx, Playwright (Kijiji) |
+| **Routing & map APIs** | OpenRouteService (walk isochrones, CLI), Mapbox (tiles + geocoding + address autocomplete) |
+| **Data sources** | OC Transpo GTFS, OpenStreetMap groceries, City of Ottawa address points |
+
+---
+
 ## How it works
 
 ```mermaid
@@ -84,17 +95,6 @@ flowchart TB
 6. **Custom addresses** (sidebar) geocode in the browser via Mapbox, score with the same grocery-zone + nearest-transit rules as the Python CLI (Turf.js point-in-polygon), and merge into the listings layer as `source: "custom"` pins.
 
 No database. Datasets are GeoJSON and JSON on disk, rebuilt with a CLI and served to the frontend.
-
----
-
-## Tech stack
-
-| Layer | Tools |
-|-------|--------|
-| **Frontend** | Next.js 16, React 19, Mapbox GL, Tailwind, Turf.js (client walk scoring) |
-| **Backend / data** | Python 3.11+, Shapely, httpx, Playwright (Kijiji) |
-| **Routing & map APIs** | OpenRouteService (walk isochrones, CLI), Mapbox (tiles + geocoding + address autocomplete) |
-| **Data sources** | OC Transpo GTFS, OpenStreetMap groceries, City of Ottawa address points |
 
 ---
 
@@ -127,7 +127,10 @@ Open **http://localhost:3000**. Dataset details, Kijiji scrape/prune workflow, a
 
 ---
 
-## CLI reference
+<details>
+<summary><strong>CLI reference</strong></summary>
+
+<br />
 
 | Command | What it does |
 |---------|----------------|
@@ -142,6 +145,8 @@ Open **http://localhost:3000**. Dataset details, Kijiji scrape/prune workflow, a
 | `backfill-bathrooms --fetch` | Fill missing Kijiji bath counts from live ad pages |
 | `validate-scoring` | Compare scores to a hand-labeled test CSV |
 | `check-mapbox` | Sanity-check your Mapbox token |
+
+</details>
 
 ---
 

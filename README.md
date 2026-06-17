@@ -15,18 +15,25 @@
 
 ## Screenshots
 
+**Map** — color-coded rentals, groceries, transit stops, and listing cards with walkability badges.
+
+<img src="public/images/screenshot-map.png" alt="Padestrian map with walkable listing popup" width="100%" />
+
+**Sidebar** — address check, walk-time slider, rent histogram, layers, and Kijiji sources.
+
 <table>
   <tr>
-    <td width="65%" valign="middle" align="center">
-      <div align="left">
-        <strong>Map</strong>: color-coded rentals, groceries, transit stops, and a listing card with walkability badge
-      </div>
-      <br />
-      <img src="public/images/screenshot-map.png" alt="Padestrian map with walkable listing popup" width="100%" />
+    <td width="33%" align="center" valign="top">
+      <img src="public/images/screenshot-sidebar-walktime.png" alt="Walk time slider and address check" width="100%" />
+      <br /><sub>Walk time · address check</sub>
     </td>
-    <td width="35%" valign="middle">
-      <strong>Filters &amp; layers</strong>: rent, bedrooms, walkable-only toggle, legend, and grocery/transit/Kijiji sources<br /><br />
-      <img src="public/images/screenshot-filters.png" alt="Padestrian filter panel and layer controls" width="100%" />
+    <td width="33%" align="center" valign="top">
+      <img src="public/images/screenshot-sidebar-rent.png" alt="Max rent histogram and bedroom filters" width="100%" />
+      <br /><sub>Rent · bedrooms</sub>
+    </td>
+    <td width="34%" align="center" valign="top">
+      <img src="public/images/screenshot-sidebar-layers.png" alt="Legend, map layers, and listing sources" width="100%" />
+      <br /><sub>Legend · layers · sources</sub>
     </td>
   </tr>
 </table>
@@ -47,14 +54,15 @@ Padestrian puts that in one place: hover a pin, see rent and address, know at a 
 
 ## Features
 
-- **Interactive Mapbox map** with dark/light theme, rent and bedroom filters, and a “walkable only” toggle  
-- **~180 demo listings** placed on real City of Ottawa address coordinates (not random pins)  
-- **Color-coded house markers**: walkable, grocery-only, transit-only, or neither  
-- **Grocery + transit layers** you can turn on and off  
+- **Interactive Mapbox map** with dark/light theme, rent and bedroom filters, **walk-time slider (10 / 15 / 20 min)**, and a “walkable only” toggle  
+- **Live Kijiji listings** (~270+ ads) scored against walk zones; optional demo/static set from City of Ottawa address points  
+- **Color-coded house markers**: walkable, grocery-only, transit-only, or neither (updates when you change walk time)  
+- **Grocery + transit + walk-zone layers** you can turn on and off  
 - **Listing cards** on hover (price, beds/baths, address, Kijiji link when available)  
-- **Check an address** in the sidebar: Ottawa autocomplete, then the same color-coded house pin and walkability badge as rentals (saved in your browser until you clear it)  
+- **Check an address** or **Locate me** on the map: Ottawa autocomplete or GPS, then the same color-coded pin and walkability badge as rentals (saved in your browser until you clear it)  
 - **Kijiji list** (chevron beside the layer toggle): browse all live ads, click to pan and open the listing card  
-- **Optional live Kijiji import** via the Python CLI (batch scrape → score → map)
+- **Automated listing refresh** via GitHub Actions (scrape → validate → score → deploy); sidebar shows **last updated** time  
+- **Optional local Kijiji import** via the Python CLI or the in-app refresh button (local dev only)
 
 ---
 
@@ -76,23 +84,25 @@ flowchart TB
     L["Listings (JSON)"]
     G["Groceries (OSM)"]
     T["Transit (GTFS)"]
-    W["10-min walk zones<br/>(OpenRouteService isochrones)"]
+    W["Walk zones 10/15/20 min<br/>(OpenRouteService isochrones)"]
     P["Point-in-polygon + nearest-stop check"]
     M["listings-scored.geojson → Map"]
+    S["Browser re-score at 15/20 min<br/>(Turf.js, same rules)"]
 
     L --> W
     G --> W
     T --> W
     W --> P
     P --> M
+    M --> S
 ```
 
-1. **Listings** land on the map with real lat/lon from municipal address points (demo set) or imported Kijiji ads.  
+1. **Listings** land on the map with real lat/lon from Kijiji imports or municipal address points (demo set).  
 2. **Groceries** come from OpenStreetMap; **transit stops** from OC Transpo GTFS.  
-3. **Walk zones** are built with OpenRouteService: actual sidewalk/path routing for a **10-minute** budget, drawn as polygons around each store (and optionally stops).  
-4. Each listing is scored: near grocery? near transit? **eligible** only when both are true.  
+3. **Walk zones** are built with OpenRouteService: pedestrian routing for a chosen time budget (default **10 min**; **15** and **20** in the UI), drawn as polygons around each store (and optionally stops).  
+4. Each listing is scored: near grocery? near transit? **eligible** only when both are true. Batch scoring runs at 10 min; moving the **walk-time slider** re-scores all pins in the browser with the same rules.  
 5. The Next.js app loads the scored GeoJSON and paints pins by category.  
-6. **Custom addresses** (sidebar) geocode in the browser via Mapbox, score with the same grocery-zone + nearest-transit rules as the Python CLI (Turf.js point-in-polygon), and merge into the listings layer as `source: "custom"` pins.
+6. **Custom addresses** (sidebar or Locate me) geocode in the browser via Mapbox, score with the selected walk budget, and merge into the listings layer as `source: "custom"` pins.
 
 No database. Datasets are GeoJSON and JSON on disk, rebuilt with a CLI and served to the frontend.
 
@@ -115,8 +125,9 @@ pip install -e .
 
 python -m padestrian build-essentials
 python -m padestrian validate-listings
-python -m padestrian build-zones
-python -m padestrian filter-listings
+python -m padestrian build-zones              # 10-min grocery zones (default)
+python -m padestrian build-zones --minutes 15 # optional: 15-min zones for the slider
+python -m padestrian filter-listings          # score at 10 min → listings-scored.geojson
 
 npm install && npm run dev
 ```
@@ -136,8 +147,8 @@ Open **http://localhost:3000**. Dataset details, Kijiji scrape/prune workflow, a
 |---------|----------------|
 | `build-essentials` | Export transit stops + grocery points |
 | `fetch-groceries` | Pull supermarkets from OpenStreetMap |
-| `build-zones` | Generate 10-minute walk polygons |
-| `filter-listings` | Score every listing → `listings-scored.geojson` |
+| `build-zones` | Generate walk polygons (`--minutes 10` default; also 15 / 20 for the UI slider) |
+| `filter-listings` | Score every listing at 10 min → `listings-scored.geojson` |
 | `validate-listings` | Validate catalog + export map layer |
 | `seed-listings` | Generate the demo rental set |
 | `scrape-listings` | Import ads from Kijiji |

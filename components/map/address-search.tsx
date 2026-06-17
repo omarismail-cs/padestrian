@@ -16,6 +16,7 @@ const DEBOUNCE_MS = 280
 const MIN_QUERY_LEN = 3
 
 interface AddressSearchProps {
+  walkMinutes: number
   hasCustomListing: boolean
   isChecking: boolean
   error: string | null
@@ -25,6 +26,7 @@ interface AddressSearchProps {
 }
 
 export function AddressSearch({
+  walkMinutes,
   hasCustomListing,
   isChecking,
   error,
@@ -269,7 +271,7 @@ export function AddressSearch({
         </p>
       ) : (
         <p className="text-xs leading-relaxed text-muted-foreground dark:text-zinc-400">
-          See if a place is within a 10-minute walk of grocery and transit.
+          See if a place is within a {walkMinutes}-minute walk of grocery and transit.
         </p>
       )}
     </div>

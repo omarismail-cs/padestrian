@@ -34,6 +34,7 @@ export default function Page() {
   const [theme, setTheme] = useState<"light" | "dark">("dark")
   const [filters, setFilters] = useState({
     walkableOnly: false,
+    walkMinutes: 10 as const,
     maxRent: 3500,
     beds: ["any"],
   })
@@ -67,6 +68,38 @@ export default function Page() {
   }, [])
 
   useEffect(() => {
+    if (!customListing) return
+    const coords = customListing.geometry?.coordinates
+    if (!coords || coords.length < 2) return
+
+    const storedMinutes = Number(customListing.properties?.walk_minutes)
+    if (storedMinutes === filters.walkMinutes) return
+
+    let cancelled = false
+    const lon = Number(coords[0])
+    const lat = Number(coords[1])
+    if (!Number.isFinite(lon) || !Number.isFinite(lat)) return
+
+    void (async () => {
+      try {
+        const score = await scorePoint(lon, lat, filters.walkMinutes)
+        const label = String(customListing.properties?.address ?? "Your location")
+        const feature = buildCustomListingFeature({ label, lon, lat }, score)
+        if (!cancelled) {
+          setCustomListing(feature)
+          saveCustomAddressToStorage(feature)
+        }
+      } catch {
+        // Keep existing custom pin if rescoring fails
+      }
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [filters.walkMinutes, customListing])
+
+  useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark")
     } else {
@@ -92,7 +125,7 @@ export default function Page() {
     setIsCheckingAddress(true)
     setAddressError(null)
     try {
-      const score = await scorePoint(geocoded.lon, geocoded.lat)
+      const score = await scorePoint(geocoded.lon, geocoded.lat, filters.walkMinutes)
       const feature = buildCustomListingFeature(geocoded, score)
       setCustomListing(feature)
       saveCustomAddressToStorage(feature)
@@ -108,7 +141,7 @@ export default function Page() {
     } finally {
       setIsCheckingAddress(false)
     }
-  }, [])
+  }, [filters.walkMinutes])
 
   const handleCheckAddressQuery = useCallback(
     async (query: string) => {

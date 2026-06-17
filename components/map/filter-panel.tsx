@@ -9,14 +9,18 @@ import { AddressSearch } from "@/components/map/address-search"
 import { KijijiListPanel } from "@/components/map/kijiji-list-panel"
 import type { GeocodeResult } from "@/lib/geocode"
 import { buildKijijiListItems, type KijijiListItem } from "@/lib/kijiji-listings"
+import type { WalkMinutes } from "@/lib/score-point"
 import { cn } from "@/lib/utils"
 
-function formatRelative(iso: string): string {
+function formatLastUpdated(iso: string): string {
   const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
   if (diff < 60) return "just now"
-  if (diff < 3600) return `${Math.floor(diff / 60)} min ago`
-  if (diff < 86400) return `${Math.floor(diff / 3600)} hr ago`
-  return `${Math.floor(diff / 86400)} days ago`
+  const mins = Math.floor(diff / 60)
+  if (mins < 60) return `${mins} minute${mins === 1 ? "" : "s"} ago`
+  const hours = Math.floor(diff / 3600)
+  if (hours < 24) return `${hours} hour${hours === 1 ? "" : "s"} ago`
+  const days = Math.floor(diff / 86400)
+  return `${days} day${days === 1 ? "" : "s"} ago`
 }
 
 const LAYER_ICON_SLOT = "flex w-6 shrink-0 items-center justify-center"
@@ -45,6 +49,7 @@ function WalkZonesIcon() {
 
 interface Filters {
   walkableOnly: boolean
+  walkMinutes: WalkMinutes
   maxRent: number
   beds: string[]
 }
@@ -89,6 +94,15 @@ const MIN_RENT = 1000
 const MAX_RENT = 3500
 const RENT_STEP = 50
 const RENT_HISTOGRAM_BINS = 25
+const MIN_WALK_MINUTES = 10
+const MAX_WALK_MINUTES = 20
+const WALK_MINUTES_STEP = 5
+
+function clampWalkMinutes(value: number): WalkMinutes {
+  if (value <= 10) return 10
+  if (value <= 15) return 15
+  return 20
+}
 
 function buildRentHistogram(
   fc: FeatureCollection | null,
@@ -229,6 +243,13 @@ export function FilterPanel({
   }
   const [isEditingMaxRent, setIsEditingMaxRent] = useState(false)
   const [maxRentInput, setMaxRentInput] = useState("")
+  const [, setRelativeTick] = useState(0)
+
+  useEffect(() => {
+    if (!listingsUpdatedAt) return
+    const id = setInterval(() => setRelativeTick((t) => t + 1), 60_000)
+    return () => clearInterval(id)
+  }, [listingsUpdatedAt])
 
   // Staggered entry style for each content section
   const section = (delay: number): React.CSSProperties => ({
@@ -390,20 +411,18 @@ export function FilterPanel({
           style={section(80)}
         >
           <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-0.5">
-              <span className="text-sm text-muted-foreground dark:text-zinc-300">Showing</span>
-              {listingsUpdatedAt && (
-                <span className="text-[10px] text-muted-foreground/60">
-                  Updated {formatRelative(listingsUpdatedAt)}
-                </span>
-              )}
-            </div>
+            <span className="text-sm text-muted-foreground dark:text-zinc-300">Showing</span>
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-foreground">{stats.total} listings</span>
               <span className="text-muted-foreground">·</span>
               <span className="text-sm text-[#6BBF91] font-medium">{stats.walkable} walkable</span>
             </div>
           </div>
+          {listingsUpdatedAt && (
+            <span className="mt-2 inline-flex items-center rounded-full border border-border/60 bg-background/60 px-2.5 py-0.5 text-[11px] text-muted-foreground dark:text-zinc-400">
+              Last updated: {formatLastUpdated(listingsUpdatedAt)}
+            </span>
+          )}
         </div>
 
         {/* Scrollable content */}
@@ -414,6 +433,7 @@ export function FilterPanel({
                 Check an address
               </div>
               <AddressSearch
+                walkMinutes={filters.walkMinutes}
                 hasCustomListing={hasCustomListing}
                 isChecking={isCheckingAddress}
                 error={addressError}
@@ -442,6 +462,34 @@ export function FilterPanel({
                   }
                   ariaLabel="Toggle walkable only"
                 />
+              </div>
+
+              {/* Walk time slider */}
+              <div className="py-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground dark:text-zinc-300">Walk time</span>
+                  <span className="text-sm font-medium text-foreground tabular-nums">
+                    {filters.walkMinutes} min
+                  </span>
+                </div>
+                <Slider
+                  value={[filters.walkMinutes]}
+                  min={MIN_WALK_MINUTES}
+                  max={MAX_WALK_MINUTES}
+                  step={WALK_MINUTES_STEP}
+                  onValueChange={([value]) =>
+                    onFiltersChange({
+                      ...filters,
+                      walkMinutes: clampWalkMinutes(value),
+                    })
+                  }
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>10 min</span>
+                  <span>15 min</span>
+                  <span>20 min</span>
+                </div>
               </div>
 
               {/* Max rent slider */}

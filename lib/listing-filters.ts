@@ -1,7 +1,9 @@
 import { isCustomListing } from "@/lib/custom-listing"
+import type { WalkMinutes } from "@/lib/score-point"
 
 export interface ListingFilterState {
   walkableOnly: boolean
+  walkMinutes: WalkMinutes
   maxRent: number
   beds: string[]
 }

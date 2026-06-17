@@ -16,6 +16,11 @@ import {
   isListingFeature,
   passesListingFilters,
 } from "@/lib/listing-filters"
+import {
+  fetchWalkZoneLayers,
+  rescoreFeatureCollection,
+  type WalkMinutes,
+} from "@/lib/score-point"
 import type { Feature, Point } from "geojson"
 
 const CENTER = { longitude: -75.6972, latitude: 45.4215 }
@@ -42,6 +47,7 @@ const HOUSE_ICONS = [
 
 interface Filters {
   walkableOnly: boolean
+  walkMinutes: WalkMinutes
   maxRent: number
   beds: string[]
 }
@@ -188,12 +194,18 @@ export function MapView({
       .then(r => r.json())
       .then(setGroceries)
       .catch(() => console.warn("No groceries data found"))
-
-    fetch("/data/isochrones/smoke.geojson")
-      .then(r => r.json())
-      .then(setSmokeData)
-      .catch(() => console.warn("No smoke data found"))
   }, [])
+
+  useEffect(() => {
+    if (!layers.smoke) return
+    let cancelled = false
+    void fetchWalkZoneLayers(filters.walkMinutes).then((data) => {
+      if (!cancelled) setSmokeData(data)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [layers.smoke, filters.walkMinutes])
 
   // Lazy-load transit stops when that layer is turned on
   useEffect(() => {
@@ -207,14 +219,27 @@ export function MapView({
 
   useEffect(() => {
     if (!baseListings) return
-    const merged = mergeListingsWithCustom(baseListings, customListing)
-    setListings(merged)
-    const anyScores = merged.features.some((f) => {
-      const p = f.properties
-      return p != null && ("near_grocery" in p || "near_transit" in p)
-    })
-    if (anyScores) setHasScores(true)
-  }, [baseListings, customListing])
+    let cancelled = false
+
+    void (async () => {
+      let fc = baseListings
+      if (filters.walkMinutes !== 10) {
+        fc = await rescoreFeatureCollection(baseListings, filters.walkMinutes)
+      }
+      if (cancelled) return
+      const merged = mergeListingsWithCustom(fc, customListing)
+      setListings(merged)
+      const anyScores = merged.features.some((f) => {
+        const p = f.properties
+        return p != null && ("near_grocery" in p || "near_transit" in p)
+      })
+      if (anyScores) setHasScores(true)
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [baseListings, customListing, filters.walkMinutes])
 
   useEffect(() => {
     if (listings) onListingsChange?.(listings)
@@ -506,7 +531,7 @@ export function MapView({
 
       {/* ── Smoke / walk zones ───────────────────────────────────── */}
       {smokeData && layers.smoke && (
-        <Source key={`smoke-${theme}`} id="smoke" type="geojson" data={smokeData}>
+        <Source key={`smoke-${filters.walkMinutes}-${theme}`} id="smoke" type="geojson" data={smokeData}>
           <Layer
             id="smoke-zones-fill"
             type="fill"

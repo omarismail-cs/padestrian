@@ -122,6 +122,6 @@ The Next.js map can score **any Ottawa address** in the browser. It uses the sam
 |------|------|
 | Grocery walk (required) | `zones/grocery-{10,15,20}min.geojson` (or `isochrones/smoke.geojson` fallback with `grocery_zone` role) |
 | Transit walk | `zones/transit-{10,15,20}min.geojson` optional; `stops.geojson` always used for nearest-stop fallback |
-| Rental pins on map | `listings-scored.geojson` |
+| Rental pins on map | **`GET /api/listings`** (Supabase); fallback `listings-scored.geojson` |
 
-Run `build-zones` and `filter-listings` locally, then serve the files under `/data/`. Custom addresses are **not** written to `listings.json`; they live in the user’s `localStorage` only.
+Listings live in Supabase; `filter-listings` writes scores to the database. CI may export `public/data/listings-scored.geojson` as a static fallback only. Custom addresses are **not** stored in Supabase; they live in the user’s `localStorage` only.

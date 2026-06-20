@@ -122,15 +122,6 @@ def fetch_active_listings() -> list[dict[str, Any]]:
     return [db_row_to_catalog(r) for r in rows]
 
 
-def fetch_all_listings(*, active_only: bool = False) -> list[dict[str, Any]]:
-    client = get_client()
-    query = client.table("listings").select("*").order("id")
-    if active_only:
-        query = query.eq("active", True)
-    rows = _select_all(query)
-    return [db_row_to_catalog(r) for r in rows]
-
-
 def fetch_kijiji_ids() -> set[str]:
     client = get_client()
     rows = _select_all(client.table("listings").select("id").like("id", "kijiji-%"))
@@ -180,12 +171,6 @@ def deactivate_listings(ids: list[str]) -> int:
         client.table("listings").update({"active": False, "updated_at": _now_iso()}).in_("id", batch).execute()
         updated += len(batch)
     return updated
-
-
-def update_listing_bathrooms(listing_id: str, bathrooms: float) -> None:
-    get_client().table("listings").update(
-        {"bathrooms": bathrooms, "updated_at": _now_iso()}
-    ).eq("id", listing_id).execute()
 
 
 def update_scores_batch(updates: list[dict[str, Any]]) -> None:

@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useCallback, useState, useEffect } from "react"
+import { useRef, useCallback, useState, useEffect, useMemo } from "react"
 import Map, { NavigationControl, GeolocateControl, Popup, Source, Layer, type MapRef } from "react-map-gl/mapbox"
 import type { MapLayerMouseEvent } from "react-map-gl/mapbox"
 import type { GeoJSON } from "geojson"
@@ -102,6 +102,7 @@ export function MapView({
   onLocateMe,
 }: MapViewProps) {
   const mapRef = useRef<MapRef>(null)
+  const mapInteractingRef = useRef(false)
   const [popupInfo, setPopupInfo]   = useState<PopupInfo | null>(null)
   const [cursor,    setCursor]      = useState<string>("auto")
   const popupHoverRef = useRef(false)
@@ -283,14 +284,35 @@ export function MapView({
     })
   }, [customListing, flyToCustomKey])
 
-  const listingFilter = useCallback(
+  const listingFilterExpr = useMemo(
     () =>
       buildListingMapFilter(filters, {
         staticListings: layers.staticListings,
         kijijiListings: layers.kijijiListings,
-      }),
+      }) as mapboxgl.FilterSpecification,
     [filters, layers.staticListings, layers.kijijiListings],
   )
+
+  const listingIconExpr = useMemo((): mapboxgl.DataDrivenPropertyValueSpecification<string> => {
+    if (!hasScores) return "house-default"
+    return [
+      "case",
+      ["==", ["get", "eligible"], true], "house-walkable",
+      ["==", ["get", "near_grocery"], true], "house-grocery",
+      ["==", ["get", "near_transit"], true], "house-transit",
+      "house-neither",
+    ]
+  }, [hasScores])
+
+  const handleMoveStart = useCallback(() => {
+    mapInteractingRef.current = true
+    setPopupInfo(null)
+    setCursor("auto")
+  }, [])
+
+  const handleMoveEnd = useCallback(() => {
+    mapInteractingRef.current = false
+  }, [])
 
   // Recompute stats from raw data (not rendered features) so they're always accurate
   useEffect(() => {
@@ -308,17 +330,6 @@ export function MapView({
     const walkable = features.filter(f => f.properties?.eligible).length
     onStatsUpdate(total, walkable)
   }, [filters, listings, layers.staticListings, layers.kijijiListings, onStatsUpdate])
-
-  const listingIconImage = useCallback((): mapboxgl.DataDrivenPropertyValueSpecification<string> => {
-    if (!hasScores) return "house-default"
-    return [
-      "case",
-      ["==", ["get", "eligible"], true], "house-walkable",
-      ["==", ["get", "near_grocery"], true], "house-grocery",
-      ["==", ["get", "near_transit"], true], "house-transit",
-      "house-neither",
-    ]
-  }, [hasScores])
 
   const isListingPopup = useCallback((info: PopupInfo | null) => {
     if (!info) return false
@@ -342,6 +353,8 @@ export function MapView({
   }, [])
 
   const handleMouseMove = useCallback((event: MapLayerMouseEvent) => {
+    if (mapInteractingRef.current) return
+
     const feature =
       event.features?.find((f) => f.layer?.id === "listings-symbol") ??
       event.features?.find((f) => f.layer?.id === "groceries-symbol") ??
@@ -450,6 +463,8 @@ export function MapView({
       ]}
       cursor={cursor}
       onLoad={loadMapIcons}
+      onMoveStart={handleMoveStart}
+      onMoveEnd={handleMoveEnd}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -469,9 +484,9 @@ export function MapView({
           <Layer
             id="listings-symbol"
             type="symbol"
-            filter={listingFilter() as mapboxgl.FilterSpecification}
+            filter={listingFilterExpr}
             layout={{
-              "icon-image": listingIconImage(),
+              "icon-image": listingIconExpr,
               "icon-anchor": "bottom",
               "icon-size": [
                 "interpolate", ["linear"], ["zoom"],

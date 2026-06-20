@@ -5,6 +5,7 @@
 
 # Local interview / personal notes (not for repo)
 INTERVIEW_NOTES.local.md
+HOW_IT_WORKS.local.md
 
 # Python
 .venv/
@@ -31,13 +32,18 @@ data/osm-residential.geojson
 data/municipal-addresses.geojson
 data/municipal-addresses.csv
 
-# public/data is committed — exclude only large/irrelevant files
+# public/data is committed — zones, stops, groceries-points, listings fallback GeoJSON
 public/data/GTFSExport/
 public/data/osm-residential.geojson
 public/data/municipal-addresses.geojson
 public/data/validation_30*.csv
 public/data/manifest.json
 public/data/overpass-groceries.ql
+public/data/listings.json
+public/data/listings.geojson
+public/data/listings.kijiji.json
+public/data/listings.static.json
+public/data/groceries.geojson
 
 # OS / editor
 .DS_Store

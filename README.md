@@ -67,8 +67,8 @@ Padestrian puts that in one place: hover a pin, see rent and address, know at a 
 
 | Layer | Tools |
 |-------|--------|
-| **Frontend** | Next.js 16, React 19, Mapbox GL, Tailwind, Turf.js (client walk scoring) |
-| **Backend / data** | Python 3.11+, Shapely, httpx, Playwright (Kijiji) |
+| Frontend | Next.js 16, React 19, Mapbox GL, Tailwind, Turf.js (client walk scoring), Supabase |
+| **Backend / data** | Python 3.11+, Shapely, httpx, Playwright (Kijiji), Supabase (PostGIS listings) |
 | **Routing & map APIs** | OpenRouteService (walk isochrones, CLI), Mapbox (tiles + geocoding + address autocomplete) |
 | **Data sources** | OC Transpo GTFS, OpenStreetMap groceries, City of Ottawa address points |
 
@@ -78,15 +78,15 @@ Padestrian puts that in one place: hover a pin, see rent and address, know at a 
 
 ```mermaid
 flowchart TB
-    L["Listings (JSON)"]
+    L["Listings (Supabase)"]
     G["Groceries (OSM)"]
     T["Transit (GTFS)"]
     W["Walk zones 10/15/20 min<br/>(OpenRouteService isochrones)"]
     P["Point-in-polygon + nearest-stop check"]
-    M["listings-scored.geojson → Map"]
+    M["GET /api/listings → Map"]
     S["Browser re-score at 15/20 min<br/>(Turf.js, same rules)"]
 
-    L --> W
+    L --> P
     G --> W
     T --> W
     W --> P
@@ -94,14 +94,14 @@ flowchart TB
     M --> S
 ```
 
-1. **Listings** land on the map with real lat/lon from Kijiji imports or municipal address points (demo set).  
-2. **Groceries** come from OpenStreetMap; **transit stops** from OC Transpo GTFS.  
-3. **Walk zones** are built with OpenRouteService: pedestrian routing for a chosen time budget (default **10 min**; **15** and **20** in the UI), drawn as polygons around each store (and optionally stops).  
-4. Each listing is scored: near grocery? near transit? **eligible** only when both are true. Batch scoring runs at 10 min; moving the **walk-time slider** re-scores all pins in the browser with the same rules.  
-5. The Next.js app loads the scored GeoJSON and paints pins by category.  
-6. **Custom addresses** (sidebar or Locate me) geocode in the browser via Mapbox, score with the selected walk budget, and merge into the listings layer as `source: "custom"` pins.
+1. **Listings** live in **Supabase** (scraped Kijiji + demo municipal coords); the map loads them via `/api/listings`.
+2. **Groceries** come from OpenStreetMap; **transit stops** from OC Transpo GTFS.
+3. **Walk zones** are built with OpenRouteService: pedestrian routing for a chosen time budget (default **10 min**; **15** and **20** in the UI), drawn as polygons around each store and curated transit hubs.
+4. Each listing is scored: near grocery? near transit? **eligible** only when both are true. Batch scoring runs at 10 min into the database; moving the **walk-time slider** re-scores all pins in the browser with the same rules.
+5. The Next.js app paints pins by category. `public/data/listings-scored.geojson` remains a static fallback if the API is unavailable.
+6. **Custom addresses** (sidebar or Locate me) geocode in the browser via Mapbox, score with the selected walk budget, and merge into the listings layer as `source: "custom"` pins (browser `localStorage` only).
 
-No database. Datasets are GeoJSON and JSON on disk, rebuilt with a CLI and served to the frontend.
+Walk zones and stops stay as GeoJSON on disk; only the **listing catalog** moved to Postgres.
 
 ---
 

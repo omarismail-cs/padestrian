@@ -32,8 +32,3 @@ def listings_backend(*, fresh: bool = False) -> ListingsBackend:
     if os.getenv("SUPABASE_URL", "").strip() and os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip():
         return "supabase"
     return "file"
-
-
-def supabase_configured(*, fresh: bool = False) -> bool:
-    load_env(fresh=fresh)
-    return bool(os.getenv("SUPABASE_URL", "").strip() and os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip())

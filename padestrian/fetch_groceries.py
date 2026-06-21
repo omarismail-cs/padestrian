@@ -9,7 +9,6 @@ from typing import Any
 
 import httpx
 
-from padestrian.geojson_io import write_feature_collection
 from padestrian.grocery_catalog import (
     inclusion_rank,
     is_costco_warehouse,

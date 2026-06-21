@@ -8,7 +8,7 @@ import math
 from pathlib import Path
 from typing import Any
 
-from padestrian.gtfs_stops import OTTAWA_BBOX, _in_ottawa_bbox
+from padestrian.gtfs_stops import _in_ottawa_bbox
 from padestrian.paths import DATA_DIR, MUNICIPAL_POINTS_PATH
 
 # Web Mercator (EPSG:3857) — CSV columns X, Y

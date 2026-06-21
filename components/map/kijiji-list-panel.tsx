@@ -51,11 +51,18 @@ export function KijijiListPanel({
         {items.map((item) => {
           const hint = hiddenHint(item)
           const isSelected = selectedId === item.id
+          const label = formatListAddress(item.address)
+          const rentLabel = item.rent_cad > 0 ? `$${item.rent_cad.toLocaleString()}/mo` : null
           return (
             <li key={item.id} role="option" aria-selected={isSelected}>
               <button
                 type="button"
                 onClick={() => onSelect(item)}
+                aria-label={
+                  rentLabel
+                    ? `${label}, ${rentLabel}${hint ? `, ${hint}` : ""}`
+                    : `${label}${hint ? `, ${hint}` : ""}`
+                }
                 className={cn(
                   "flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors",
                   item.visibleOnMap
@@ -80,12 +87,10 @@ export function KijijiListPanel({
                         : "text-muted-foreground",
                     )}
                   >
-                    {formatListAddress(item.address)}
+                    {label}
                   </span>
                   <span className="mt-0.5 flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground">
-                    {item.rent_cad > 0 ? (
-                      <span>${item.rent_cad.toLocaleString()}/mo</span>
-                    ) : null}
+                    {rentLabel ? <span>{rentLabel}</span> : null}
                     {hint ? <span className="italic">{hint}</span> : null}
                   </span>
                 </span>

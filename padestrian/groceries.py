@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from shapely.geometry import mapping, shape
+from shapely.geometry import shape
 
 from padestrian.geojson_io import write_feature_collection
 from padestrian.grocery_catalog import feature_tags, should_include_grocery

@@ -37,7 +37,6 @@ from padestrian.paths import (
     LISTINGS_SCORED_PATH,
     SMOKE_ISOCHRONE_PATH,
     STOPS_GEOJSON_PATH,
-    minute_tag,
     zone_merged_path,
 )
 from padestrian.transit_proximity import (

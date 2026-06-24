@@ -105,7 +105,7 @@ export function KijijiImportForm({ onImported, disabled }: KijijiImportFormProps
         className={cn(
           "mt-2 w-full resize-none rounded-md border border-border/80 bg-background/60 px-2.5 py-2",
           "text-xs text-foreground placeholder:text-muted-foreground/70",
-          "focus:outline-none focus:ring-1 focus:ring-[#6BBF91]/40",
+          "focus:outline-none focus:ring-1 focus:ring-brand/40",
           "disabled:opacity-60",
         )}
         aria-label="Kijiji listing URLs to import"
@@ -117,7 +117,7 @@ export function KijijiImportForm({ onImported, disabled }: KijijiImportFormProps
         <p
           className={cn(
             "mt-1 text-[11px]",
-            state === "error" ? "text-red-400" : "text-[#6BBF91]",
+            state === "error" ? "text-red-400" : "text-brand",
           )}
         >
           {message}

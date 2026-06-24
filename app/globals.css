@@ -4,6 +4,9 @@
 
 /* Padestrian Light Theme */
 :root {
+  --brand: #c7f820;
+  --brand-muted: #657a00;
+  --brand-surface: #141a08;
   --background: oklch(0.98 0.005 90);
   --foreground: oklch(0.15 0 0);
   --card: oklch(1 0 0);
@@ -16,13 +19,13 @@
   --secondary-foreground: oklch(0.15 0 0);
   --muted: oklch(0.94 0.005 90);
   --muted-foreground: oklch(0.45 0 0);
-  --accent: oklch(0.76 0.09 154);
+  --accent: var(--brand);
   --accent-foreground: oklch(0.15 0 0);
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.88 0.005 90);
   --input: oklch(0.94 0.005 90);
-  --ring: oklch(0.76 0.09 154);
+  --ring: var(--brand);
   --radius: 0.75rem;
 }
 
@@ -41,13 +44,13 @@
   --secondary-foreground: oklch(0.95 0 0);
   --muted: oklch(0.18 0 0);
   --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.76 0.09 154);
+  --accent: var(--brand);
   --accent-foreground: oklch(0.09 0 0);
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(0.95 0 0);
   --border: oklch(0.22 0 0);
   --input: oklch(0.18 0 0);
-  --ring: oklch(0.76 0.09 154);
+  --ring: var(--brand);
 }
 
 @theme inline {
@@ -71,6 +74,9 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-surface: var(--brand-surface);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

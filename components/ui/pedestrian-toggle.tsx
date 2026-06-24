@@ -68,7 +68,7 @@ function PedestrianToggle({
         'relative inline-flex h-7 w-12 cursor-pointer items-center justify-center rounded-full border transition-all duration-300 ease-out',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
         checked
-          ? 'border-[#6BBF91]/60 bg-[#6BBF91]/15 shadow-[0_0_14px_rgba(107,191,145,0.35)]'
+          ? 'border-brand/60 bg-brand/15 shadow-[0_0_14px_color-mix(in_srgb,var(--brand)_35%,transparent)]'
           : 'border-[#d88758]/45 bg-[#d88758]/10',
         className,
       )}
@@ -77,14 +77,14 @@ function PedestrianToggle({
         className={cn(
           'absolute inset-0 rounded-full transition-opacity duration-300',
           checked
-            ? 'opacity-100 shadow-[inset_0_0_10px_rgba(107,191,145,0.45)]'
+            ? 'opacity-100 shadow-[inset_0_0_10px_color-mix(in_srgb,var(--brand)_45%,transparent)]'
             : 'opacity-0',
         )}
       />
       <span
         className={cn(
           'relative z-10 flex h-5 w-5 flex-shrink-0 items-center justify-center transition-all duration-300',
-          checked ? 'text-[#6BBF91]' : 'text-[#d88758]',
+          checked ? 'text-brand' : 'text-[#d88758]',
         )}
       >
         {checked ? (

@@ -139,13 +139,13 @@ export function AddressSearch({
         <div
           className={cn(
             "flex items-stretch overflow-hidden rounded-xl border bg-background/80 shadow-sm transition-shadow",
-            "border-border focus-within:border-[#6BBF91]/50 focus-within:ring-2 focus-within:ring-[#6BBF91]/20",
+            "border-border focus-within:border-brand/50 focus-within:ring-2 focus-within:ring-brand/20",
             error && "border-red-500/40 focus-within:ring-red-500/15",
           )}
         >
           <div className="flex min-w-0 flex-1 items-center gap-2 pl-3">
             <MapPin
-              className="h-4 w-4 shrink-0 text-[#6BBF91]"
+              className="h-4 w-4 shrink-0 text-brand"
               aria-hidden
             />
             <input
@@ -207,7 +207,7 @@ export function AddressSearch({
           >
             {isLoadingSuggestions ? (
               <div className="flex items-center gap-2 px-3 py-3 text-xs text-muted-foreground">
-                <Loader2 className="h-3.5 w-3.5 animate-spin text-[#6BBF91]" />
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-brand" />
                 Searching Ottawa addresses…
               </div>
             ) : showEmpty ? (
@@ -226,7 +226,7 @@ export function AddressSearch({
                       className={cn(
                         "flex w-full items-start gap-2.5 px-3 py-2.5 text-left text-sm transition-colors",
                         activeIndex === index
-                          ? "bg-[#6BBF91]/15 text-foreground"
+                          ? "bg-brand/15 text-foreground"
                           : "text-foreground hover:bg-secondary/80",
                       )}
                     >
@@ -234,7 +234,7 @@ export function AddressSearch({
                         className={cn(
                           "mt-0.5 h-3.5 w-3.5 shrink-0",
                           activeIndex === index
-                            ? "text-[#6BBF91]"
+                            ? "text-brand"
                             : "text-muted-foreground",
                         )}
                         aria-hidden

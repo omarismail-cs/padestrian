@@ -6,7 +6,7 @@ type WalkabilityBadge = "walkable" | "grocery" | "transit" | "neither"
 
 const BADGE_CLASS: Record<WalkabilityBadge, string> = {
   walkable:
-    "bg-[#6BBF91]/15 text-[#3d8f5f] dark:bg-[#132218] dark:text-[#6BBF91]",
+    "bg-brand/15 text-brand-muted dark:bg-brand-surface dark:text-brand",
   grocery:
     "bg-lime-500/15 text-lime-700 dark:bg-[#1a2112] dark:text-[#a3e635]",
   transit:

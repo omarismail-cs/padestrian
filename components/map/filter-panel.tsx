@@ -368,7 +368,7 @@ export function FilterPanel({
           height={28}
           className="shrink-0"
         />
-        <div className="ml-1 px-2 py-0.5 rounded-full bg-[#6BBF91]/20 text-[#6BBF91] text-xs font-medium">
+        <div className="ml-1 px-2 py-0.5 rounded-full bg-brand/20 text-brand text-xs font-medium">
           {stats.walkable}
         </div>
       </button>
@@ -424,7 +424,7 @@ export function FilterPanel({
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-foreground">{stats.total} listings</span>
               <span className="text-muted-foreground">·</span>
-              <span className="text-sm text-[#6BBF91] font-medium">{stats.walkable} walkable</span>
+              <span className="text-sm text-brand font-medium">{stats.walkable} walkable</span>
             </div>
           </div>
           {listingsUpdatedAt && (
@@ -461,7 +461,7 @@ export function FilterPanel({
               {/* Walkable toggle */}
               <div className="flex items-center justify-between py-2">
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#6BBF91]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-brand" />
                   <span className="text-sm font-medium text-foreground">Walkable only</span>
                 </div>
                 <PedestrianToggle
@@ -545,7 +545,7 @@ export function FilterPanel({
                     {rentHistogram.map((count, i) => (
                       <div
                         key={i}
-                        className="flex-1 rounded-t-[2px] bg-[#6BBF91]/25 dark:bg-[#6BBF91]/20"
+                        className="flex-1 rounded-t-[2px] bg-brand/25 dark:bg-brand/20"
                         style={{
                           height: `${(count / rentHistogramMax) * 100}%`,
                           minHeight: count > 0 ? 2 : 0,
@@ -756,8 +756,8 @@ export function FilterPanel({
                           className={cn(
                             "relative flex size-6 shrink-0 items-center justify-center rounded-md transition-colors disabled:pointer-events-none",
                             refreshState === "idle" && "text-muted-foreground hover:bg-secondary hover:text-foreground",
-                            refreshState === "loading" && "text-[#6BBF91]",
-                            refreshState === "done" && "text-[#6BBF91]",
+                            refreshState === "loading" && "text-brand",
+                            refreshState === "done" && "text-brand",
                             refreshState === "error" && "text-red-500",
                           )}
                           aria-label="Refresh Kijiji listings"
@@ -823,7 +823,7 @@ export function FilterPanel({
                                 }}
                                 className="w-full flex items-center gap-2 px-3 py-2 text-xs text-left text-foreground transition-colors hover:bg-secondary"
                               >
-                                <span className={cn("h-1.5 w-1.5 rounded-full shrink-0", refreshMode === m ? "bg-[#6BBF91]" : "bg-transparent")} />
+                                <span className={cn("h-1.5 w-1.5 rounded-full shrink-0", refreshMode === m ? "bg-brand" : "bg-transparent")} />
                                 {m === "prune" ? "Prune dead listings" : "Prune + scrape new"}
                               </button>
                             ))}
@@ -849,7 +849,7 @@ export function FilterPanel({
                       </div>
                       <div className="h-1 w-full rounded-full bg-secondary overflow-hidden">
                         <div
-                          className="h-full rounded-full bg-[#6BBF91] transition-all duration-500 ease-out"
+                          className="h-full rounded-full bg-brand transition-all duration-500 ease-out"
                           style={{ width: `${refreshProgress}%` }}
                         />
                       </div>
@@ -859,7 +859,7 @@ export function FilterPanel({
                   {(refreshState === "done" || refreshState === "error") && refreshMessage && (
                     <p className={cn(
                       "text-[11px] mt-1 mb-0.5",
-                      refreshState === "done" ? "text-[#6BBF91]" : "text-red-400"
+                      refreshState === "done" ? "text-brand" : "text-red-400"
                     )}>
                       {refreshMessage}
                     </p>

@@ -23,7 +23,7 @@ function walkabilityDotClass(item: {
   near_grocery: boolean
   near_transit: boolean
 }): string {
-  if (item.eligible) return "bg-[#6BBF91]"
+  if (item.eligible) return "bg-brand"
   if (item.near_grocery) return "bg-lime-500"
   if (item.near_transit) return "bg-violet-500"
   return "bg-slate-500"
@@ -74,7 +74,7 @@ function KijijiListRow({
           "flex min-w-0 items-start gap-2.5 px-3 py-2 text-left transition-colors",
           trailing ? "flex-1" : "w-full",
           item.visibleOnMap ? "hover:bg-secondary/80" : "opacity-55 hover:opacity-75",
-          isSelected && "bg-[#6BBF91]/10 ring-1 ring-inset ring-[#6BBF91]/30",
+          isSelected && "bg-brand/10 ring-1 ring-inset ring-brand/30",
         )}
       >
         <span

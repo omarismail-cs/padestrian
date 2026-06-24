@@ -46,7 +46,7 @@ function Slider({
           style={{
             backgroundColor: "transparent",
             backgroundImage:
-              "radial-gradient(circle, #6BBF91 45%, transparent 46%)",
+              "radial-gradient(circle, var(--brand) 45%, transparent 46%)",
             backgroundSize: "10px 100%",
             backgroundRepeat: "repeat-x",
             backgroundPosition: "center",

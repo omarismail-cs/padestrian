@@ -1,4 +1,4 @@
-import { isCustomListing } from "@/lib/custom-listing"
+import { isCustomListing, isSavedKijijiListing } from "@/lib/custom-listing"
 import type { WalkMinutes } from "@/lib/score-point"
 
 export interface ListingFilterState {
@@ -18,6 +18,7 @@ function passesSourceToggles(
   layers: ListingLayerState,
 ): boolean {
   if (isCustomListing(source)) return true
+  if (isSavedKijijiListing(source)) return layers.kijijiListings
   const isKijiji = String(source ?? "").toLowerCase() === "kijiji"
   return (layers.kijijiListings && isKijiji) || (layers.staticListings && !isKijiji)
 }
@@ -67,13 +68,22 @@ export function buildListingMapFilter(
   const showKijiji = layers.kijijiListings
 
   if (!showStatic && !showKijiji) {
-    exprs.push(["==", ["get", "source"], "custom"])
+    exprs.push([
+      "any",
+      ["==", ["get", "source"], "custom"],
+      ["==", ["get", "source"], "kijiji-saved"],
+    ])
   } else if (showStatic && !showKijiji) {
-    exprs.push(["!=", ["get", "source"], "kijiji"])
+    exprs.push([
+      "all",
+      ["!=", ["get", "source"], "kijiji"],
+      ["!=", ["get", "source"], "kijiji-saved"],
+    ])
   } else if (!showStatic && showKijiji) {
     exprs.push([
       "any",
       ["==", ["get", "source"], "kijiji"],
+      ["==", ["get", "source"], "kijiji-saved"],
       ["==", ["get", "source"], "custom"],
     ])
   }

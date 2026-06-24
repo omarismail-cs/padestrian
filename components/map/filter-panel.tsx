@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { Check, ChevronDown, ChevronLeft, ChevronRight, Github, Moon, RefreshCw, Sun, X } from "lucide-react"
-import type { FeatureCollection } from "geojson"
+import type { FeatureCollection, Feature, Point } from "geojson"
 import { Slider } from "@/components/ui/slider"
 import { PedestrianToggle } from "@/components/ui/pedestrian-toggle"
 import { AddressSearch } from "@/components/map/address-search"
@@ -80,6 +80,9 @@ interface FilterPanelProps {
   listingsUpdatedAt?: string
   onFocusKijijiListing: (item: KijijiListItem) => void
   selectedKijijiId: string | null
+  savedKijijiImports: Feature<Point>[]
+  onImportedKijiji: (features: Feature<Point>[]) => void
+  onRemoveSavedKijiji: (id: string) => void
 }
 
 const bedOptions = [
@@ -118,7 +121,9 @@ function buildRentHistogram(
     if (String(p.source ?? "").toLowerCase() === "custom") continue
     if (p.rent_cad == null) continue
 
-    const isKijiji = String(p.source ?? "").toLowerCase() === "kijiji"
+    const isKijiji =
+      String(p.source ?? "").toLowerCase() === "kijiji" ||
+      String(p.source ?? "").toLowerCase() === "kijiji-saved"
     if (isKijiji && !layers.kijijiListings) continue
     if (!isKijiji && !layers.staticListings) continue
 
@@ -152,10 +157,17 @@ export function FilterPanel({
   listingsUpdatedAt,
   onFocusKijijiListing,
   selectedKijijiId,
+  savedKijijiImports,
+  onImportedKijiji,
+  onRemoveSavedKijiji,
 }: FilterPanelProps) {
   const [isOpen, setIsOpen] = useState(true)
   const [pressed, setPressed] = useState(false)
   const [kijijiListOpen, setKijijiListOpen] = useState(false)
+  const logoIcon =
+    theme === "dark" ? "/images/logo-icon-light.png" : "/images/logo-icon-dark.png"
+  const logoLockup =
+    theme === "dark" ? "/images/logo-lockup-light.png" : "/images/logo-lockup-dark.png"
 
   type RefreshMode = "prune" | "scrape"
   type RefreshState = "idle" | "loading" | "done" | "error"
@@ -350,13 +362,13 @@ export function FilterPanel({
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/logo.png"
+          src={logoIcon}
           alt="Padestrian"
           width={28}
-          style={{ height: "auto" }}
+          height={28}
+          className="shrink-0"
         />
-        <span className="font-semibold text-foreground tracking-tight">Padestrian</span>
-        <div className="ml-2 px-2 py-0.5 rounded-full bg-[#6BBF91]/20 text-[#6BBF91] text-xs font-medium">
+        <div className="ml-1 px-2 py-0.5 rounded-full bg-[#6BBF91]/20 text-[#6BBF91] text-xs font-medium">
           {stats.walkable}
         </div>
       </button>
@@ -389,18 +401,15 @@ export function FilterPanel({
           className="flex items-center justify-between px-5 py-4 border-b border-border"
           style={section(40)}
         >
-          <div className="flex items-center gap-3">
+          <div className="min-w-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/logo.png"
+              src={logoLockup}
               alt="Padestrian"
-              width={32}
-              style={{ height: "auto" }}
+              height={28}
+              className="h-7 w-auto max-w-[200px] object-contain object-left"
             />
-            <div>
-              <h1 className="font-semibold text-foreground tracking-tight">Padestrian</h1>
-              <p className="text-xs text-muted-foreground">Ottawa walkable rentals</p>
-            </div>
+            <p className="mt-1 text-xs text-muted-foreground">Ottawa walkable rentals</p>
           </div>
           <div className="w-8" aria-hidden />
         </div>
@@ -860,8 +869,11 @@ export function FilterPanel({
                     <div className="ml-7">
                       <KijijiListPanel
                         items={kijijiListItems}
+                        savedItems={savedKijijiImports}
                         selectedId={selectedKijijiId}
                         onSelect={onFocusKijijiListing}
+                        onRemoveSaved={onRemoveSavedKijiji}
+                        onImported={onImportedKijiji}
                       />
                     </div>
                   ) : null}

@@ -123,6 +123,10 @@ export function isCustomListing(source: unknown): boolean {
   return String(source ?? "").toLowerCase() === "custom"
 }
 
+export function isSavedKijijiListing(source: unknown): boolean {
+  return String(source ?? "").toLowerCase() === "kijiji-saved"
+}
+
 export function mergeListingsWithCustom(
   base: GeoJSON.FeatureCollection,
   custom: Feature<Point> | null,
@@ -137,4 +141,28 @@ export function mergeListingsWithCustom(
     type: "FeatureCollection",
     features: [...withoutCustom, custom],
   }
+}
+
+/** Merge personal saved Kijiji imports and optional custom pin onto the catalog. */
+export function mergeListingsWithPersonal(
+  base: GeoJSON.FeatureCollection,
+  savedImports: Feature<Point>[] | undefined,
+  custom: Feature<Point> | null,
+): GeoJSON.FeatureCollection {
+  const saved = savedImports ?? []
+  const savedIds = new Set(
+    saved.map((f) => String(f.properties?.id ?? f.id ?? "")),
+  )
+
+  const catalog = base.features.filter((f) => {
+    if (isCustomListing(f.properties?.source)) return false
+    if (isSavedKijijiListing(f.properties?.source)) return false
+    const fid = String(f.properties?.id ?? f.id ?? "")
+    return !savedIds.has(fid)
+  })
+
+  const features = [...catalog, ...saved]
+  if (custom) features.push(custom)
+
+  return { type: "FeatureCollection", features }
 }

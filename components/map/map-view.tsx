@@ -3,12 +3,12 @@
 import { useRef, useCallback, useState, useEffect, useMemo } from "react"
 import Map, { NavigationControl, GeolocateControl, Popup, Source, Layer, type MapRef } from "react-map-gl/mapbox"
 import type { MapLayerMouseEvent } from "react-map-gl/mapbox"
-import type { GeoJSON } from "geojson"
+import type { GeoJSON, Feature, Point } from "geojson"
 import "mapbox-gl/dist/mapbox-gl.css"
 import { GroceryPopupCard } from "@/components/map/grocery-popup"
 import { ListingPopupCard } from "@/components/map/listing-popup"
 import {
-  mergeListingsWithCustom,
+  mergeListingsWithPersonal,
   isCustomListing,
 } from "@/lib/custom-listing"
 import {
@@ -21,7 +21,6 @@ import {
   rescoreFeatureCollection,
   type WalkMinutes,
 } from "@/lib/score-point"
-import type { Feature, Point } from "geojson"
 
 const CENTER = { longitude: -75.6972, latitude: 45.4215 }
 const ZOOM   = 12.5
@@ -79,6 +78,7 @@ interface MapViewProps {
   onStatsUpdate: (total: number, walkable: number) => void
   theme: "light" | "dark"
   customListing: Feature<Point> | null
+  savedKijijiImports: Feature<Point>[]
   flyToCustomKey: number
   onListingsChange?: (fc: GeoJSON.FeatureCollection) => void
   focusListing: MapFocusListing | null
@@ -95,6 +95,7 @@ export function MapView({
   onStatsUpdate,
   theme,
   customListing,
+  savedKijijiImports,
   flyToCustomKey,
   onListingsChange,
   focusListing,
@@ -229,7 +230,7 @@ export function MapView({
         fc = await rescoreFeatureCollection(baseListings, filters.walkMinutes)
       }
       if (cancelled) return
-      const merged = mergeListingsWithCustom(fc, customListing)
+      const merged = mergeListingsWithPersonal(fc, savedKijijiImports, customListing)
       setListings(merged)
       const anyScores = merged.features.some((f) => {
         const p = f.properties
@@ -241,7 +242,7 @@ export function MapView({
     return () => {
       cancelled = true
     }
-  }, [baseListings, customListing, filters.walkMinutes])
+  }, [baseListings, customListing, savedKijijiImports, filters.walkMinutes])
 
   useEffect(() => {
     if (listings) onListingsChange?.(listings)

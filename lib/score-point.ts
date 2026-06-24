@@ -62,9 +62,37 @@ function haversineMeters(lon1: number, lat1: number, lon2: number, lat2: number)
   return 2 * r * Math.asin(Math.sqrt(a))
 }
 
-async function fetchGeoJson(url: string): Promise<FeatureCollection | null> {
+async function readPublicGeoJson(relativePath: string): Promise<FeatureCollection | null> {
+  if (typeof window !== "undefined") return null
   try {
-    const resp = await fetch(url)
+    const { readFile } = await import("node:fs/promises")
+    const { join } = await import("node:path")
+    const filePath = join(process.cwd(), "public", relativePath.replace(/^\//, ""))
+    const raw = await readFile(filePath, "utf-8")
+    return JSON.parse(raw) as FeatureCollection
+  } catch {
+    return null
+  }
+}
+
+function resolveFetchUrl(url: string): string {
+  if (url.startsWith("http://") || url.startsWith("https://")) return url
+  if (typeof window !== "undefined") return url
+  const base =
+    process.env.VERCEL_URL != null
+      ? `https://${process.env.VERCEL_URL}`
+      : `http://localhost:${process.env.PORT ?? "3000"}`
+  return `${base}${url}`
+}
+
+async function fetchGeoJson(url: string): Promise<FeatureCollection | null> {
+  if (url.startsWith("/data/")) {
+    const fromDisk = await readPublicGeoJson(url)
+    if (fromDisk) return fromDisk
+  }
+
+  try {
+    const resp = await fetch(resolveFetchUrl(url))
     if (!resp.ok) return null
     return (await resp.json()) as FeatureCollection
   } catch {

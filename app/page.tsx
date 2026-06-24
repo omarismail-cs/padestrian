@@ -13,6 +13,13 @@ import {
   saveCustomAddressToStorage,
 } from "@/lib/custom-listing"
 import type { KijijiListItem } from "@/lib/kijiji-listings"
+import {
+  applyScoreToSavedFeature,
+  loadSavedKijijiImportsFromStorage,
+  removeSavedKijijiImport,
+  saveSavedKijijiImportsToStorage,
+  upsertSavedKijijiImports,
+} from "@/lib/saved-kijiji-imports"
 import { scorePoint, ScoringDataError } from "@/lib/score-point"
 
 const MapView = dynamic(
@@ -55,6 +62,7 @@ export default function Page() {
   const [listingsData, setListingsData] = useState<FeatureCollection | null>(null)
   const [listingsUpdatedAt, setListingsUpdatedAt] = useState<string | null>(null)
   const [customListing, setCustomListing] = useState<Feature<Point> | null>(null)
+  const [savedKijijiImports, setSavedKijijiImports] = useState<Feature<Point>[]>([])
   const [isCheckingAddress, setIsCheckingAddress] = useState(false)
   const [addressError, setAddressError] = useState<string | null>(null)
   const [flyToCustomKey, setFlyToCustomKey] = useState(0)
@@ -65,6 +73,7 @@ export default function Page() {
   useEffect(() => {
     const stored = loadCustomAddressFromStorage()
     if (stored) setCustomListing(stored)
+    setSavedKijijiImports(loadSavedKijijiImportsFromStorage())
   }, [])
 
   useEffect(() => {
@@ -98,6 +107,42 @@ export default function Page() {
       cancelled = true
     }
   }, [filters.walkMinutes, customListing])
+
+  useEffect(() => {
+    if (!savedKijijiImports.length) return
+
+    const needsRescore = savedKijijiImports.some(
+      (f) => Number(f.properties?.walk_minutes) !== filters.walkMinutes,
+    )
+    if (!needsRescore) return
+
+    let cancelled = false
+    void (async () => {
+      try {
+        const rescored = await Promise.all(
+          savedKijijiImports.map(async (feature) => {
+            const coords = feature.geometry?.coordinates
+            if (!coords || coords.length < 2) return feature
+            const lon = Number(coords[0])
+            const lat = Number(coords[1])
+            if (!Number.isFinite(lon) || !Number.isFinite(lat)) return feature
+            const score = await scorePoint(lon, lat, filters.walkMinutes)
+            return applyScoreToSavedFeature(feature, score)
+          }),
+        )
+        if (!cancelled) {
+          setSavedKijijiImports(rescored)
+          saveSavedKijijiImportsToStorage(rescored)
+        }
+      } catch {
+        // Keep existing saved imports if rescoring fails
+      }
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [filters.walkMinutes, savedKijijiImports])
 
   useEffect(() => {
     if (theme === "dark") {
@@ -191,6 +236,28 @@ export default function Page() {
     [layers.kijijiListings],
   )
 
+  const handleImportedKijiji = useCallback((features: Feature<Point>[]) => {
+    const next = upsertSavedKijijiImports(features)
+    setSavedKijijiImports(next)
+    const first = features[0]
+    const coords = first?.geometry?.coordinates
+    if (first && coords && coords.length >= 2) {
+      setSelectedKijijiId(String(first.properties?.id ?? first.id ?? ""))
+      setFocusListing({
+        lon: Number(coords[0]),
+        lat: Number(coords[1]),
+        properties: first.properties ?? {},
+      })
+      setFocusListingKey((k) => k + 1)
+    }
+  }, [])
+
+  const handleRemoveSavedKijiji = useCallback((id: string) => {
+    const next = removeSavedKijijiImport(id)
+    setSavedKijijiImports(next)
+    if (selectedKijijiId === id) setSelectedKijijiId(null)
+  }, [selectedKijijiId])
+
   return (
     <main className="relative w-full h-screen overflow-hidden bg-background">
       <MapView
@@ -199,6 +266,7 @@ export default function Page() {
         onStatsUpdate={handleStatsUpdate}
         theme={theme}
         customListing={customListing}
+        savedKijijiImports={savedKijijiImports}
         flyToCustomKey={flyToCustomKey}
         onListingsChange={handleListingsChange}
         focusListing={focusListing}
@@ -223,6 +291,9 @@ export default function Page() {
         listingsUpdatedAt={listingsUpdatedAt ?? undefined}
         onFocusKijijiListing={handleFocusKijijiListing}
         selectedKijijiId={selectedKijijiId}
+        savedKijijiImports={savedKijijiImports}
+        onImportedKijiji={handleImportedKijiji}
+        onRemoveSavedKijiji={handleRemoveSavedKijiji}
       />
     </main>
   )

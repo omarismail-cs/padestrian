@@ -184,13 +184,36 @@ def normalize_listing(raw: dict[str, Any]) -> dict[str, Any] | None:
         raw.get("title"),
         raw.get("description"),
     )
-    if not address_query:
-        return None
 
-    with httpx.Client(timeout=20.0) as client:
-        geo = geocode_address(address_query, proximity=_OTTAWA_PROXIMITY, client=client)
+    geo = None
+    raw_lat = raw.get("lat")
+    raw_lon = raw.get("lon")
+    if raw_lat is not None and raw_lon is not None:
+        try:
+            lat_f = float(raw_lat)
+            lon_f = float(raw_lon)
+            from padestrian.geocode import _in_bbox
+
+            if _in_bbox(lon_f, lat_f):
+                label = (
+                    str(raw.get("address") or "").strip()
+                    or address_query
+                    or str(raw.get("title") or "").strip()
+                )
+                if label:
+                    from padestrian.geocode import GeocodeResult
+
+                    geo = GeocodeResult(lon=lon_f, lat=lat_f, label=label)
+        except (TypeError, ValueError):
+            geo = None
+
     if geo is None:
-        return None
+        if not address_query:
+            return None
+        with httpx.Client(timeout=20.0) as client:
+            geo = geocode_address(address_query, proximity=_OTTAWA_PROXIMITY, client=client)
+        if geo is None:
+            return None
 
     title = str(raw.get("title") or "").strip() or address_query
     bathrooms = _parse_bathrooms(

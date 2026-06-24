@@ -55,8 +55,8 @@ Download a fresh export from OC Transpo when the feed expires (see `feed_start_d
 
 | File | Description |
 |------|-------------|
-| `stops.geojson` | OC Transpo boarding stops as points (`location_type` 0) |
-| `groceries-points.geojson` | One point per grocery (centroid of building polygons) |
+| `public/data/stops.geojson` | OC Transpo boarding stops as points (`location_type` 0) |
+| `public/data/groceries-points.geojson` | One point per grocery (centroid of building polygons) |
 | `transit-hubs.geojson` | Curated hub stops for transit zone building (`build-transit-hubs`) |
 
 Re-run the command after refreshing raw GTFS or Overpass exports.
@@ -100,6 +100,19 @@ Scraped with `python -m padestrian scrape-listings`; snapshot in `listings.kijij
 - **Existing JSON** (title + URL only): `python -m padestrian backfill-bathrooms --fetch` reads each ad’s `vip-attributes-section` over HTTP (e.g. `1 Bathrooms`), then `validate-listings` and `filter-listings`.
 
 **In-app refresh:** The sidebar has a refresh button next to "Kijiji/live listings" with two modes — *Prune* (remove dead ads + rescore) and *Prune + scrape* (also fetch new ads). Calls `/api/refresh-kijiji` which streams step-by-step progress while chaining the Python CLI commands. Requires a local Python environment.
+
+### Personal Kijiji import (saved on your device)
+
+Paste specific Kijiji listing URLs in the sidebar under **Kijiji/live listings** (expand the list). Imports are **not** added to the public Supabase catalog — they are stored in your browser (`localStorage`), same idea as the custom address pin.
+
+| Path | Role |
+|------|------|
+| `POST /api/import-kijiji` | Scrape + geocode + score; returns GeoJSON features (no DB write) |
+| `lib/saved-kijiji-imports.ts` | Persist personal imports in `localStorage` |
+| `python -m padestrian import-kijiji --url URL` | Print GeoJSON to stdout (debug) |
+| `python -m padestrian import-kijiji --url URL --to-db` | Owner: upsert into Supabase catalog |
+
+Up to 3 URLs per import, 25 saved links max per browser.
 
 ## Walk zones (`data/zones/`)
 

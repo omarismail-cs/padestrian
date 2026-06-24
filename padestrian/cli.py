@@ -375,6 +375,96 @@ def cmd_scrape_listings(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_import_kijiji(args: argparse.Namespace) -> int:
+    """Import one or more Kijiji listing URLs (stdout GeoJSON or --to-db)."""
+    from padestrian.kijiji_fetch import fetch_listing_raw, validate_kijiji_listing_url
+
+    urls: list[str] = []
+    for u in args.url or []:
+        canonical = validate_kijiji_listing_url(u)
+        if canonical:
+            urls.append(canonical)
+    if args.file:
+        try:
+            for line in Path(args.file).read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                canonical = validate_kijiji_listing_url(line)
+                if canonical:
+                    urls.append(canonical)
+        except OSError as exc:
+            print(f"Failed to read {args.file}: {exc}", file=sys.stderr)
+            return 1
+
+    if not urls:
+        print("No valid Kijiji listing URLs provided.", file=sys.stderr)
+        return 1
+
+    seen: set[str] = set()
+    unique_urls: list[str] = []
+    for url in urls:
+        kid = extract_kijiji_id(url)
+        if not kid or kid in seen:
+            continue
+        seen.add(kid)
+        unique_urls.append(url)
+
+    imported: list[dict[str, object]] = []
+    errors: list[str] = []
+
+    with httpx.Client(timeout=25.0, follow_redirects=True) as client:
+        for url in unique_urls:
+            raw = fetch_listing_raw(url, client=client)
+            if raw.get("error"):
+                errors.append(f"{url}: {raw.get('error')}")
+                if args.playwright:
+                    from playwright.sync_api import sync_playwright
+
+                    with sync_playwright() as pw:
+                        browser = pw.chromium.launch(headless=True)
+                        context = browser.new_context()
+                        page = context.new_page()
+                        try:
+                            raw = scrape_listing_detail(page, url)
+                        finally:
+                            context.close()
+                            browser.close()
+                else:
+                    continue
+
+            listing = normalize_listing(raw)
+            if listing is None:
+                errors.append(f"{url}: could not normalize (missing price, beds, or address)")
+                continue
+            imported.append(listing)
+            if args.delay > 0:
+                time.sleep(args.delay)
+
+    if args.to_db:
+        if not imported:
+            print("Nothing to upsert.")
+            for err in errors:
+                print(f"  error: {err}", file=sys.stderr)
+            return 1 if errors else 0
+        from padestrian.db import upsert_listings
+
+        upsert_listings(imported)
+        print(f"Upserted {len(imported)} listing(s) to Supabase")
+        if not args.no_score:
+            score_listings(minutes=10.0)
+            print("Rescored catalog (filter-listings)")
+    else:
+        features = listings_to_features(imported)
+        payload = {"type": "FeatureCollection", "features": features}
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+
+    print(f"Imported: {len(imported)}, errors: {len(errors)}")
+    for err in errors:
+        print(f"  error: {err}", file=sys.stderr)
+    return 0 if imported or not errors else 1
+
+
 def _backfill_bathrooms_in_rows(
     rows: list[dict[str, object]],
     *,
@@ -794,6 +884,45 @@ def main(argv: list[str] | None = None) -> int:
         help="Append to existing listings instead of replacing them",
     )
     scrape_parser.set_defaults(func=cmd_scrape_listings)
+
+    import_kijiji_parser = subparsers.add_parser(
+        "import-kijiji",
+        help="Import specific Kijiji listing URL(s) — stdout GeoJSON or --to-db",
+    )
+    import_kijiji_parser.add_argument(
+        "--url",
+        action="append",
+        metavar="URL",
+        help="Kijiji listing detail URL (repeatable)",
+    )
+    import_kijiji_parser.add_argument(
+        "--file",
+        type=Path,
+        default=None,
+        help="Text file with one URL per line",
+    )
+    import_kijiji_parser.add_argument(
+        "--to-db",
+        action="store_true",
+        help="Upsert into Supabase catalog (owner); default prints GeoJSON only",
+    )
+    import_kijiji_parser.add_argument(
+        "--playwright",
+        action="store_true",
+        help="Fall back to Playwright when HTTP parse fails",
+    )
+    import_kijiji_parser.add_argument(
+        "--no-score",
+        action="store_true",
+        help="With --to-db, skip filter-listings after upsert",
+    )
+    import_kijiji_parser.add_argument(
+        "--delay",
+        type=float,
+        default=0.8,
+        help="Seconds between URL fetches (default: 0.8)",
+    )
+    import_kijiji_parser.set_defaults(func=cmd_import_kijiji)
 
     prune_parser = subparsers.add_parser(
         "prune-kijiji",

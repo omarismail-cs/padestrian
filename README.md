@@ -1,5 +1,9 @@
 # Padestrian
 
+<p align="center">
+  <img src="public/images/logo-lockup-green-banner.png" alt="Padestrian — Ottawa walkable rentals" width="520" />
+</p>
+
 > **Live app:** [padestrian.vercel.app](https://padestrian.vercel.app)  
 > Ottawa rental map — filter by walkability to grocery and transit, browse Kijiji listings, or score any address.
 
@@ -58,8 +62,9 @@ Padestrian puts that in one place: hover a pin, see rent and address, know at a 
 - **Listing cards** on hover (price, beds/baths, address, Kijiji link when available)  
 - **Check an address** or **Locate me** on the map: Ottawa autocomplete or GPS, then the same color-coded pin and walkability badge as rentals (saved in your browser until you clear it)  
 - **Kijiji list** (chevron beside the layer toggle): browse all live ads, click to pan and open the listing card  
+- **Personal Kijiji import** — paste listing URLs under the expanded Kijiji list; saved on **this device only** (`localStorage`), not the public catalog  
 - **Automated listing refresh** via GitHub Actions every 4 days (scrape → prune dead ads → score → deploy); sidebar **last updated** badge reflects the latest run  
-- **Optional local Kijiji import** via the Python CLI or the in-app refresh button (local dev only)
+- **Local dev tools**: sidebar Kijiji refresh (prune / scrape) and owner CLI `import-kijiji --to-db` for the global catalog
 
 ---
 
@@ -100,6 +105,7 @@ flowchart TB
 4. Each listing is scored: near grocery? near transit? **eligible** only when both are true. Batch scoring runs at 10 min into the database; moving the **walk-time slider** re-scores all pins in the browser with the same rules.
 5. The Next.js app paints pins by category. `public/data/listings-scored.geojson` remains a static fallback if the API is unavailable.
 6. **Custom addresses** (sidebar or Locate me) geocode in the browser via Mapbox, score with the selected walk budget, and merge into the listings layer as `source: "custom"` pins (browser `localStorage` only).
+7. **Personal Kijiji imports** (paste a URL in the sidebar) scrape via `POST /api/import-kijiji`, score server-side, and save as `kijiji-saved` pins in `localStorage` — visible only to you on this browser.
 
 Walk zones and stops stay as GeoJSON on disk; only the **listing catalog** moved to Postgres.
 
@@ -159,6 +165,7 @@ Open **http://localhost:3000**. Dataset details, Kijiji scrape/prune workflow, a
 | `validate-listings` | Validate catalog + export map layer |
 | `seed-listings` | Generate the demo rental set |
 | `scrape-listings` | Import ads from Kijiji |
+| `import-kijiji` | Import specific Kijiji URLs (stdout GeoJSON; `--to-db` for owner catalog) |
 | `prune-kijiji` | Drop listings no longer active on Kijiji |
 | `backfill-bathrooms --fetch` | Fill missing Kijiji bath counts from live ad pages |
 | `validate-scoring` | Compare scores to a hand-labeled test CSV |
@@ -173,9 +180,9 @@ Open **http://localhost:3000**. Dataset details, Kijiji scrape/prune workflow, a
 ```text
 padestrian/     Python CLI (ingest, zones, scoring, scrape)
 components/     Map UI (filters, popups, address search, layers)
-lib/            Browser geocoding + walk scoring
-app/            Next.js entry
+lib/            Browser geocoding, walk scoring, personal Kijiji import
+app/            Next.js entry + API routes (`/api/listings`, `/api/import-kijiji`)
 data/           Source + generated GeoJSON
 public/data/    Served to the browser (/data/… in the app)
-public/images/  Map markers + README screenshots
+public/images/  Map markers, logos, README screenshots
 ```

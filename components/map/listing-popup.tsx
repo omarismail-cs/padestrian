@@ -72,7 +72,7 @@ function kijijiListingUrl(properties: Record<string, unknown>): string | null {
 
   const source = String(properties.source ?? "").toLowerCase()
   const id = String(properties.id ?? "")
-  if (source === "kijiji" || id.startsWith("kijiji-")) return url
+  if (source === "kijiji" || source === "kijiji-saved" || id.startsWith("kijiji-")) return url
 
   return null
 }
@@ -85,7 +85,9 @@ interface ListingPopupCardProps {
 export function ListingPopupCard({ properties, showBadge }: ListingPopupCardProps) {
   const custom = isCustomListing(properties.source)
   const rent = Number(properties.rent_cad)
+  const contactPrice = Boolean(properties.price_contact)
   const showRent = !custom && Number.isFinite(rent) && rent > 0
+  const showContact = !custom && !showRent && contactPrice
   const beds = formatBedrooms(properties.bedrooms)
   const baths = formatBathrooms(properties.bathrooms)
   const badge = walkabilityBadge(properties)
@@ -100,7 +102,7 @@ export function ListingPopupCard({ properties, showBadge }: ListingPopupCardProp
   const listingUrl = kijijiListingUrl(properties)
 
   return (
-    <div className="w-full font-sans">
+    <div className="w-max max-w-[min(320px,calc(100vw-2rem))] font-sans">
       {showBadge ? (
         <span
           className={cn(
@@ -119,7 +121,7 @@ export function ListingPopupCard({ properties, showBadge }: ListingPopupCardProp
       ) : null}
 
       {showRent ? (
-        <div className="flex items-baseline gap-x-2 whitespace-nowrap">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
           <span className="text-xl font-bold tracking-tight text-foreground">
             ${rent.toLocaleString()}
           </span>
@@ -130,11 +132,21 @@ export function ListingPopupCard({ properties, showBadge }: ListingPopupCardProp
             </span>
           ) : null}
         </div>
+      ) : showContact ? (
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+          <span className="text-xl font-bold tracking-tight text-foreground">Contact</span>
+          <span className="text-sm font-normal text-muted-foreground">for price</span>
+          {unitParts.length > 0 ? (
+            <span className="text-sm font-normal text-muted-foreground">
+              · {unitParts.join(" · ")}
+            </span>
+          ) : null}
+        </div>
       ) : null}
 
       {(street || cityLine) && (
         <>
-          {showRent ? (
+          {showRent || showContact ? (
             <hr className="my-5 border-0 border-t border-border" />
           ) : showBadge ? (
             <hr className="my-4 border-0 border-t border-border" />

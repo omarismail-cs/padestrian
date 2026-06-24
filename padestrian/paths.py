@@ -2,12 +2,13 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_ROOT / "data"
+PUBLIC_DATA_DIR = PROJECT_ROOT / "public" / "data"
 GTFS_DIR = DATA_DIR / "GTFSExport"
 
 GROCERIES_PATH = DATA_DIR / "groceries.geojson"
-GROCERIES_POINTS_PATH = DATA_DIR / "groceries-points.geojson"
+GROCERIES_POINTS_PATH = PUBLIC_DATA_DIR / "groceries-points.geojson"
 STOPS_GTFS_PATH = GTFS_DIR / "stops.txt"
-STOPS_GEOJSON_PATH = DATA_DIR / "stops.geojson"
+STOPS_GEOJSON_PATH = PUBLIC_DATA_DIR / "stops.geojson"
 ISOCHRONES_DIR = DATA_DIR / "isochrones"
 SMOKE_ISOCHRONE_PATH = ISOCHRONES_DIR / "smoke.geojson"
 LISTINGS_JSON_PATH = DATA_DIR / "listings.json"

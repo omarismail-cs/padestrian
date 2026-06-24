@@ -148,6 +148,8 @@
 .padestrian-listing-popup.mapboxgl-popup,
 .padestrian-grocery-popup.mapboxgl-popup {
   pointer-events: auto !important;
+  max-width: none !important;
+  width: max-content !important;
 }
 
 .padestrian-listing-popup .mapboxgl-popup-content,
@@ -172,7 +174,8 @@
 
 .padestrian-listing-popup .mapboxgl-popup-content {
   padding: 24px !important;
-  width: 280px !important;
+  width: max-content !important;
+  max-width: min(320px, calc(100vw - 32px)) !important;
   box-sizing: border-box !important;
 }
 

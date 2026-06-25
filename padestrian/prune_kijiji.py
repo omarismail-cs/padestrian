@@ -11,10 +11,13 @@ from typing import Any
 
 import httpx
 
+from urllib.parse import parse_qs, urlsplit
+
 from padestrian.paths import LISTINGS_JSON_PATH
 
 # Kijiji __NEXT_DATA__ listing statuses that mean the ad is still live.
 _ACTIVE_STATUSES = frozenset({"ACTIVE", "LIVE"})
+_REMOVED_STATUSES = frozenset({"REMOVED", "DELETED", "EXPIRED", "INACTIVE", "SOLD"})
 
 _NEXT_DATA_RE = re.compile(
     r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>',
@@ -81,6 +84,38 @@ def _listing_status_from_html(html: str) -> str | None:
     return None
 
 
+def _detail_listing_id(url: str) -> str | None:
+    path = urlsplit(url).path
+    m = re.search(r"/(\d+)/?$", path)
+    return m.group(1) if m else None
+
+
+def redirected_after_removal(original_url: str, response: httpx.Response) -> bool:
+    """
+    Kijiji often 302s removed ads to the category search page with ?adRemoved=<id>
+    instead of returning 404.
+    """
+    final = str(response.url)
+    final_lower = final.lower()
+    if "adremoved=" in final_lower:
+        return True
+
+    qs = parse_qs(urlsplit(final).query)
+    if qs.get("adRemoved") or qs.get("adremoved"):
+        return True
+
+    listing_id = _detail_listing_id(original_url)
+    if not listing_id:
+        return False
+
+    orig_path = urlsplit(original_url).path
+    final_path = urlsplit(final).path
+    if "/v-" in orig_path and listing_id not in final_path:
+        if "/b-" in final_path or "c37l" in final_path:
+            return True
+    return False
+
+
 def is_listing_expired(url: str, client: httpx.Client) -> bool | None:
     """
     Return True if the ad appears gone, False if still live, None if unknown (keep).
@@ -99,11 +134,16 @@ def is_listing_expired(url: str, client: httpx.Client) -> bool | None:
     if "/deleted" in final_url:
         return True
 
+    if redirected_after_removal(url, response):
+        return True
+
     if response.status_code >= 400:
         return None
 
     status = _listing_status_from_html(response.text)
     if status is not None:
+        if status in _REMOVED_STATUSES:
+            return True
         return status not in _ACTIVE_STATUSES
 
     return None

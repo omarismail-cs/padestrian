@@ -79,7 +79,7 @@ export async function POST(request: Request) {
 
           send({ step: "Pruning dead listings…", progress: 45 })
           const pruneOut = await runCmd("python -m padestrian prune-kijiji")
-          pruned = parseCount(pruneOut, /Removed\s+(\d+)/) ?? parseCount(pruneOut, /(\d+)\s+removed/)
+          pruned = parseCount(pruneOut, /Deactivated\s+(\d+)/) ?? parseCount(pruneOut, /Removed\s+(\d+)/) ?? parseCount(pruneOut, /(\d+)\s+removed/)
           send({ step: "Pruning dead listings…", progress: 65, pruned })
 
           send({ step: "Filling bathroom data…", progress: 65 })
@@ -97,7 +97,7 @@ export async function POST(request: Request) {
         } else {
           send({ step: "Pruning dead listings…", progress: 0 })
           const pruneOut = await runCmd("python -m padestrian prune-kijiji")
-          pruned = parseCount(pruneOut, /Removed\s+(\d+)/) ?? parseCount(pruneOut, /(\d+)\s+removed/)
+          pruned = parseCount(pruneOut, /Deactivated\s+(\d+)/) ?? parseCount(pruneOut, /Removed\s+(\d+)/) ?? parseCount(pruneOut, /(\d+)\s+removed/)
           send({ step: "Pruning dead listings…", progress: 35, pruned })
 
           send({ step: "Filling bathroom data…", progress: 35 })

@@ -10,7 +10,7 @@ from urllib.parse import urlsplit, urlunsplit
 import httpx
 
 from padestrian.geocode import _in_bbox
-from padestrian.prune_kijiji import _DEFAULT_HEADERS, _NEXT_DATA_RE
+from padestrian.prune_kijiji import _DEFAULT_HEADERS, _NEXT_DATA_RE, redirected_after_removal
 from padestrian.scraper import (
     _clean_text,
     _kijiji_attribute_lines_from_html,
@@ -280,6 +280,21 @@ def fetch_listing_raw(
             client.close()
 
     if response.status_code in (404, 410):
+        return {
+            "url": canonical,
+            "title": None,
+            "price_text": None,
+            "bedrooms_text": None,
+            "bathrooms_text": None,
+            "address": None,
+            "description": None,
+            "lat": None,
+            "lon": None,
+            "source": "kijiji",
+            "error": "listing_not_found",
+        }
+
+    if redirected_after_removal(canonical, response):
         return {
             "url": canonical,
             "title": None,

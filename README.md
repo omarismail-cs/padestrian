@@ -19,6 +19,10 @@
 
 ## Screenshots
 
+**Demo** — sidebar + map together: walk-time filter, color-coded pins (walkable / grocery / transit), and live listing counts.
+
+<img src="public/images/screenshot-demo.png" alt="padestrian demo — Ottawa walkable rentals map with sidebar and color-coded pins" width="100%" />
+
 **Map** — color-coded rentals, groceries, transit stops, and listing cards with walkability badges.
 
 <img src="public/images/screenshot-map.png" alt="padestrian map with walkable listing popup" width="100%" />

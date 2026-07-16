@@ -655,6 +655,8 @@ def cmd_prune_kijiji(args: argparse.Namespace) -> int:
         run_prune_kijiji(
             dry_run=args.dry_run,
             delay=max(0.0, args.delay),
+            max_attempts=max(1, args.retries),
+            retry_pause=max(0.0, args.retry_pause),
         )
     except ListingValidationError as exc:
         print(exc, file=sys.stderr)
@@ -936,8 +938,20 @@ def main(argv: list[str] | None = None) -> int:
     prune_parser.add_argument(
         "--delay",
         type=float,
-        default=0.8,
-        help="Seconds between HTTP checks (default: 0.8)",
+        default=1.2,
+        help="Seconds between HTTP checks (default: 1.2)",
+    )
+    prune_parser.add_argument(
+        "--retries",
+        type=int,
+        default=3,
+        help="Attempts per listing when Kijiji response is inconclusive (default: 3)",
+    )
+    prune_parser.add_argument(
+        "--retry-pause",
+        type=float,
+        default=3.0,
+        help="Base seconds between retry attempts; multiplied by attempt number (default: 3)",
     )
     prune_parser.set_defaults(func=cmd_prune_kijiji)
 

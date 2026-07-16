@@ -3,9 +3,8 @@
 .env.local
 .env.*.local
 
-# Local interview / personal notes (not for repo)
-INTERVIEW_NOTES.local.md
-HOW_IT_WORKS.local.md
+# Local project reference (not for repo)
+PROJECT_REFERENCE.local.md
 
 # Python
 .venv/

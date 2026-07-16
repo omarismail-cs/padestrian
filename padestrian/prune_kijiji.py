@@ -149,11 +149,39 @@ def is_listing_expired(url: str, client: httpx.Client) -> bool | None:
     return None
 
 
+def check_listing_expired(
+    url: str,
+    client: httpx.Client,
+    *,
+    max_attempts: int = 3,
+    retry_pause: float = 3.0,
+    listing_id: str | None = None,
+) -> bool | None:
+    """
+    Call is_listing_expired with retries when the result is inconclusive (None).
+
+    Definite True/False returns immediately; only None triggers a wait and retry.
+    """
+    attempts = max(1, max_attempts)
+    for attempt in range(1, attempts + 1):
+        result = is_listing_expired(url, client)
+        if result is not None:
+            return result
+        if attempt < attempts:
+            pause = retry_pause * attempt
+            label = listing_id or url
+            print(f"  retry   {label}  ({attempt}/{attempts}, wait {pause:.0f}s)")
+            time.sleep(pause)
+    return None
+
+
 def prune_kijiji_listings(
     listings: list[dict[str, Any]],
     *,
     dry_run: bool = False,
-    delay: float = 0.8,
+    delay: float = 1.2,
+    max_attempts: int = 3,
+    retry_pause: float = 3.0,
 ) -> tuple[list[dict[str, Any]], PruneStats, list[str]]:
     """
     Return (updated listings, stats, ids removed).
@@ -178,7 +206,13 @@ def prune_kijiji_listings(
                 kept_rows.append(row)
                 continue
 
-            expired = is_listing_expired(url, client)
+            expired = check_listing_expired(
+                url,
+                client,
+                max_attempts=max_attempts,
+                retry_pause=retry_pause,
+                listing_id=listing_id,
+            )
             if expired is True:
                 stats.removed += 1
                 removed_ids.append(listing_id)
@@ -209,7 +243,9 @@ def run_prune_kijiji(
     path: Path = LISTINGS_JSON_PATH,
     *,
     dry_run: bool = False,
-    delay: float = 0.8,
+    delay: float = 1.2,
+    max_attempts: int = 3,
+    retry_pause: float = 3.0,
 ) -> PruneStats:
     from padestrian.config import listings_backend
     from padestrian.listings import load_catalog, save_catalog
@@ -225,6 +261,8 @@ def run_prune_kijiji(
         listings,
         dry_run=dry_run,
         delay=delay,
+        max_attempts=max_attempts,
+        retry_pause=retry_pause,
     )
 
     if dry_run:

@@ -1,6 +1,6 @@
 # Data
 
-Datasets that power **Padestrian**’s walking zones: transit stops from GTFS and grocery locations from OSM. The GTFS export is gitignored (~270 MB); `groceries.geojson` is small enough to commit. See `manifest.json` for sources and snapshot metadata.
+Datasets that power **Padestrian**’s walking zones: transit stops from GTFS and grocery locations from OSM. The GTFS export is gitignored (~270 MB); `groceries.geojson` is small enough to commit.
 
 ## groceries.geojson
 

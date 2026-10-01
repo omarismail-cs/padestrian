@@ -373,14 +373,25 @@ export function FilterPanel({
       {/* Theme toggle - always visible top right */}
       <button
         onClick={onThemeToggle}
-        className="absolute top-4 right-4 z-20 flex size-10 shrink-0 items-center justify-center rounded-xl bg-card/95 backdrop-blur-xl border border-border shadow-lg hover:bg-card transition-colors"
+        className="absolute top-4 right-4 z-20 flex size-10 shrink-0 items-center justify-center rounded-xl bg-card/95 backdrop-blur-xl border border-border shadow-lg hover:bg-card transition-[background-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95"
         aria-label="Toggle theme"
       >
-        {theme === "dark" ? (
-          <Sun className="w-5 h-5 text-foreground" />
-        ) : (
-          <Moon className="w-5 h-5 text-foreground" />
-        )}
+        <Sun
+          className={cn(
+            "absolute size-5 text-foreground transition-[opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+            theme === "dark"
+              ? "rotate-0 scale-100 opacity-100"
+              : "rotate-90 scale-50 opacity-0",
+          )}
+        />
+        <Moon
+          className={cn(
+            "absolute size-5 text-foreground transition-[opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+            theme === "dark"
+              ? "-rotate-90 scale-50 opacity-0"
+              : "rotate-0 scale-100 opacity-100",
+          )}
+        />
       </button>
 
       {/* Expanded sidebar */}

@@ -153,8 +153,11 @@ export default function Page() {
   }, [theme])
 
   const handleThemeToggle = useCallback(() => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"))
-  }, [])
+    const next = theme === "dark" ? "light" : "dark"
+    document.querySelector(".mapboxgl-map")?.classList.add("map-theme-veiled")
+    document.documentElement.classList.toggle("dark", next === "dark")
+    setTheme(next)
+  }, [theme])
 
   const handleStatsUpdate = useCallback((total: number, walkable: number) => {
     setStats({ total, walkable })

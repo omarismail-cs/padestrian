@@ -104,6 +104,7 @@ export function MapView({
 }: MapViewProps) {
   const mapRef = useRef<MapRef>(null)
   const mapInteractingRef = useRef(false)
+  const skipThemeFadeRef = useRef(true)
   const [popupInfo, setPopupInfo]   = useState<PopupInfo | null>(null)
   const [cursor,    setCursor]      = useState<string>("auto")
   const popupHoverRef = useRef(false)
@@ -174,6 +175,25 @@ export function MapView({
       map.off("style.load", syncIcons)
     }
   }, [theme, loadMapIcons])
+
+  // Soften the basemap hard-cut when the Mapbox style URL swaps
+  useEffect(() => {
+    if (skipThemeFadeRef.current) {
+      skipThemeFadeRef.current = false
+      return
+    }
+    const map = mapRef.current?.getMap()
+    if (!map) return
+    const el = map.getContainer()
+    el.classList.add("map-theme-veiled")
+    const clearVeil = () => el.classList.remove("map-theme-veiled")
+    map.once("idle", clearVeil)
+    const timeout = window.setTimeout(clearVeil, 1400)
+    return () => {
+      map.off("idle", clearVeil)
+      window.clearTimeout(timeout)
+    }
+  }, [theme])
 
   // Load core data on mount
   useEffect(() => {

@@ -33,7 +33,7 @@ function walkabilityDotClass(item: {
   near_transit: boolean
 }): string {
   if (item.eligible) return "bg-brand"
-  if (item.near_grocery) return "bg-lime-500"
+  if (item.near_grocery) return "bg-amber-400"
   if (item.near_transit) return "bg-violet-500"
   return "bg-slate-500"
 }

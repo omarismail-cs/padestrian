@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils"
 
 const LEGEND_ITEMS = [
   { src: "/images/house-walkable.png", label: "Walkable", hint: "Grocery and transit" },
-  { src: "/images/house-grocery.png", label: "Grocery", hint: "Grocery only" },
-  { src: "/images/house-transit.png", label: "Transit", hint: "Transit only" },
+  { src: "/images/house-grocery.png?v=amber", label: "Grocery only", hint: "Grocery, but not transit" },
+  { src: "/images/house-transit.png", label: "Transit only", hint: "Transit, but not grocery" },
   { src: "/images/house-neither.png", label: "Neither", hint: "Neither grocery nor transit" },
 ] as const
 

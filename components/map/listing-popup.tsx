@@ -8,7 +8,7 @@ const BADGE_CLASS: Record<WalkabilityBadge, string> = {
   walkable:
     "bg-brand/15 text-brand-muted dark:bg-brand-surface dark:text-brand",
   grocery:
-    "bg-lime-500/15 text-lime-700 dark:bg-[#1a2112] dark:text-[#a3e635]",
+    "bg-amber-500/15 text-amber-800 dark:bg-[#2a1f0e] dark:text-[#FBBF24]",
   transit:
     "bg-violet-500/15 text-violet-700 dark:bg-[#221430] dark:text-[#D8B4FE]",
   neither:

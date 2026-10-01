@@ -38,7 +38,7 @@ const LAYER_SMOKE_GROCERY = "#84cc16"  // lime   — grocery walk zone fill
 // Pre-tinted house PNGs (same approach as teal grocery-icon.png)
 const HOUSE_ICONS = [
   { id: "house-walkable", url: "/images/house-walkable.png" },
-  { id: "house-grocery", url: "/images/house-grocery.png" },
+  { id: "house-grocery", url: "/images/house-grocery.png?v=amber" },
   { id: "house-transit", url: "/images/house-transit.png" },
   { id: "house-neither", url: "/images/house-neither.png" },
   { id: "house-default", url: "/images/house-default.png" },

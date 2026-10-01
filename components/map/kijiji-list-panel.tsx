@@ -1,16 +1,25 @@
 "use client"
 
-import type { ReactNode } from "react"
+import { useMemo, useState, type ReactNode } from "react"
 import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
   formatListAddress,
   kijijiListSummary,
+  sortKijijiListItems,
   type KijijiListItem,
+  type KijijiListSort,
 } from "@/lib/kijiji-listings"
 import { KijijiImportForm } from "@/components/map/kijiji-import-form"
 import type { Feature, Point } from "geojson"
 import { savedKijijiToListItem } from "@/lib/saved-kijiji-imports"
+
+const SORT_OPTIONS: { value: KijijiListSort; label: string }[] = [
+  { value: "walkable", label: "Walkable first" },
+  { value: "rent-asc", label: "Rent: low to high" },
+  { value: "rent-desc", label: "Rent: high to low" },
+  { value: "newest", label: "Newest" },
+]
 
 function formatRentLabel(item: KijijiListItem): string | null {
   if (item.rent_cad > 0) return `$${item.rent_cad.toLocaleString()}/mo`
@@ -157,7 +166,9 @@ export function KijijiListPanel({
   onRemoveSaved,
   onImported,
 }: KijijiListPanelProps) {
+  const [sort, setSort] = useState<KijijiListSort>("walkable")
   const { total, walkable } = kijijiListSummary(items)
+  const sortedItems = useMemo(() => sortKijijiListItems(items, sort), [items, sort])
 
   return (
     <div className="mt-2">
@@ -174,11 +185,28 @@ export function KijijiListPanel({
         </div>
       ) : (
         <div className="overflow-hidden rounded-lg border border-border/80 bg-secondary/30">
+          <div className="flex items-center justify-between gap-2 border-b border-border/60 px-3 py-1.5">
+            <label className="sr-only" htmlFor="kijiji-list-sort">
+              Sort Kijiji listings
+            </label>
+            <select
+              id="kijiji-list-sort"
+              value={sort}
+              onChange={(e) => setSort(e.target.value as KijijiListSort)}
+              className="w-full cursor-pointer bg-transparent text-[11px] text-muted-foreground outline-none"
+            >
+              {SORT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
           <ul
             className="max-h-52 overflow-y-auto overscroll-contain py-1"
             aria-label="Kijiji listings"
           >
-            {items.map((item) => (
+            {sortedItems.map((item) => (
               <KijijiListRow
                 key={item.id}
                 item={item}

@@ -84,15 +84,42 @@ export function buildKijijiListItems(
     })
   }
 
-  items.sort((a, b) => {
+  return items
+}
+
+export type KijijiListSort = "walkable" | "rent-asc" | "rent-desc" | "newest"
+
+function kijijiIdRank(id: string): number {
+  const match = id.match(/(\d+)$/)
+  return match ? Number(match[1]) : 0
+}
+
+function compareAddress(a: KijijiListItem, b: KijijiListItem): number {
+  return formatListAddress(a.address).localeCompare(formatListAddress(b.address))
+}
+
+export function sortKijijiListItems(
+  items: KijijiListItem[],
+  sort: KijijiListSort,
+): KijijiListItem[] {
+  const copy = [...items]
+  copy.sort((a, b) => {
+    if (sort === "rent-asc") {
+      if (a.rent_cad !== b.rent_cad) return a.rent_cad - b.rent_cad
+      return compareAddress(a, b)
+    }
+    if (sort === "rent-desc") {
+      if (a.rent_cad !== b.rent_cad) return b.rent_cad - a.rent_cad
+      return compareAddress(a, b)
+    }
+    if (sort === "newest") {
+      return kijijiIdRank(b.id) - kijijiIdRank(a.id)
+    }
     if (a.eligible !== b.eligible) return a.eligible ? -1 : 1
     if (a.rent_cad !== b.rent_cad) return a.rent_cad - b.rent_cad
-    return formatListAddress(a.address).localeCompare(
-      formatListAddress(b.address),
-    )
+    return compareAddress(a, b)
   })
-
-  return items
+  return copy
 }
 
 export function kijijiListSummary(items: KijijiListItem[]): {

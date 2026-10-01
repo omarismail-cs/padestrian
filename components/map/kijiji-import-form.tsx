@@ -117,7 +117,7 @@ export function KijijiImportForm({ onImported, disabled }: KijijiImportFormProps
         <p
           className={cn(
             "mt-1 text-[11px]",
-            state === "error" ? "text-red-400" : "text-brand",
+            state === "error" ? "text-red-400" : "text-brand-muted dark:text-brand",
           )}
         >
           {message}

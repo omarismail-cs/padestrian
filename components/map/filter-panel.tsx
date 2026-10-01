@@ -7,6 +7,7 @@ import { Slider } from "@/components/ui/slider"
 import { PedestrianToggle } from "@/components/ui/pedestrian-toggle"
 import { AddressSearch } from "@/components/map/address-search"
 import { KijijiListPanel } from "@/components/map/kijiji-list-panel"
+import { MapLegend } from "@/components/map/map-legend"
 import { buildKijijiListItems, type KijijiListItem } from "@/lib/kijiji-listings"
 import type { WalkMinutes } from "@/lib/score-point"
 import { cn } from "@/lib/utils"
@@ -51,6 +52,7 @@ interface Filters {
   walkMinutes: WalkMinutes
   maxRent: number
   beds: string[]
+  baths: string[]
 }
 
 interface LayerVisibility {
@@ -91,6 +93,13 @@ const bedOptions = [
   { value: "3", label: "3+" },
 ]
 
+const bathOptions = [
+  { value: "any", label: "Any" },
+  { value: "1", label: "1" },
+  { value: "2", label: "2" },
+  { value: "3", label: "3+" },
+]
+
 const MIN_RENT = 1000
 const MAX_RENT = 3500
 const RENT_STEP = 50
@@ -98,6 +107,27 @@ const RENT_HISTOGRAM_BINS = 25
 const MIN_WALK_MINUTES = 10
 const MAX_WALK_MINUTES = 20
 const WALK_MINUTES_STEP = 5
+
+function toggleChipOption(
+  current: string[],
+  value: string,
+  options: { value: string }[],
+): string[] {
+  if (value === "any") return ["any"]
+
+  const selected = new Set(current)
+  selected.delete("any")
+
+  if (selected.has(value)) selected.delete(value)
+  else selected.add(value)
+
+  const ordered = options
+    .map((opt) => opt.value)
+    .filter((opt) => opt !== "any" && selected.has(opt))
+
+  const allSpecificSelected = ordered.length === options.length - 1
+  return allSpecificSelected || ordered.length === 0 ? ["any"] : ordered
+}
 
 function clampWalkMinutes(value: number): WalkMinutes {
   if (value <= 10) return 10
@@ -313,30 +343,11 @@ export function FilterPanel({
   }
 
   const toggleBedOption = (value: string) => {
-    if (value === "any") {
-      onFiltersChange({ ...filters, beds: ["any"] })
-      return
-    }
+    onFiltersChange({ ...filters, beds: toggleChipOption(filters.beds, value, bedOptions) })
+  }
 
-    const current = new Set(filters.beds)
-    current.delete("any")
-
-    if (current.has(value)) {
-      current.delete(value)
-    } else {
-      current.add(value)
-    }
-
-    const ordered = bedOptions
-      .map((opt) => opt.value)
-      .filter((opt) => opt !== "any" && current.has(opt))
-
-    const allSpecificSelected = ordered.length === bedOptions.length - 1
-
-    onFiltersChange({
-      ...filters,
-      beds: allSpecificSelected || ordered.length === 0 ? ["any"] : ordered,
-    })
+  const toggleBathOption = (value: string) => {
+    onFiltersChange({ ...filters, baths: toggleChipOption(filters.baths, value, bathOptions) })
   }
 
   return (
@@ -365,7 +376,7 @@ export function FilterPanel({
           height={28}
           className="shrink-0"
         />
-        <div className="ml-1 px-2 py-0.5 rounded-full bg-brand/20 text-brand text-xs font-medium">
+        <div className="ml-1 px-2 py-0.5 rounded-full bg-brand/20 text-brand-muted dark:text-brand text-xs font-medium">
           {stats.walkable}
         </div>
       </button>
@@ -432,7 +443,7 @@ export function FilterPanel({
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-foreground">{stats.total} listings</span>
               <span className="text-muted-foreground">·</span>
-              <span className="text-sm text-brand font-medium">{stats.walkable} walkable</span>
+              <span className="text-sm text-brand-muted dark:text-brand font-medium">{stats.walkable} walkable</span>
             </div>
           </div>
           {listingsUpdatedAt && (
@@ -552,7 +563,7 @@ export function FilterPanel({
                     {rentHistogram.map((count, i) => (
                       <div
                         key={i}
-                        className="flex-1 rounded-t-[2px] bg-brand/25 dark:bg-brand/20"
+                        className="flex-1 rounded-t-[2px] bg-brand/50 dark:bg-brand/20"
                         style={{
                           height: `${(count / rentHistogramMax) * 100}%`,
                           minHeight: count > 0 ? 2 : 0,
@@ -597,34 +608,26 @@ export function FilterPanel({
                   ))}
                 </div>
               </div>
-            </div>
 
-            {/* Legend */}
-            <div className="pt-4 border-t border-border" style={section(215)}>
-              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground dark:text-zinc-300 mb-3">
-                Legend
-              </div>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
-                {[
-                  { src: "/images/house-walkable.png", label: "Walkable" },
-                  { src: "/images/house-grocery.png", label: "Grocery only" },
-                  { src: "/images/house-transit.png", label: "Transit only" },
-                  { src: "/images/house-neither.png", label: "Neither" },
-                ].map((item) => (
-                  <div key={item.label} className="flex items-center gap-2 min-w-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.src}
-                      alt=""
-                      width={14}
-                      height={14}
-                      className="h-3.5 w-3.5 shrink-0 object-contain"
-                    />
-                    <span className="text-xs text-muted-foreground dark:text-zinc-300 truncate">
-                      {item.label}
-                    </span>
-                  </div>
-                ))}
+              {/* Bathrooms */}
+              <div className="py-2 space-y-3">
+                <span className="text-sm text-muted-foreground dark:text-zinc-300">Bathrooms</span>
+                <div className="flex gap-1.5">
+                  {bathOptions.map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => toggleBathOption(opt.value)}
+                      className={cn(
+                        "flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150",
+                        filters.baths.includes(opt.value)
+                          ? "bg-foreground text-background"
+                          : "bg-secondary text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
+                      )}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -866,7 +869,7 @@ export function FilterPanel({
                   {(refreshState === "done" || refreshState === "error") && refreshMessage && (
                     <p className={cn(
                       "text-[11px] mt-1 mb-0.5",
-                      refreshState === "done" ? "text-brand" : "text-red-400"
+                      refreshState === "done" ? "text-brand-muted dark:text-brand" : "text-red-400"
                     )}>
                       {refreshMessage}
                     </p>
@@ -908,6 +911,8 @@ export function FilterPanel({
           </div>
         </div>
       </aside>
+
+      <MapLegend sidebarOpen={isOpen} />
 
       {/* Backdrop overlay when open */}
       {isOpen && (

@@ -44,6 +44,7 @@ export default function Page() {
     walkMinutes: 10 as const,
     maxRent: 3500,
     beds: ["any"],
+    baths: ["any"],
   })
 
   const [layers, setLayers] = useState({

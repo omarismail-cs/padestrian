@@ -49,6 +49,7 @@ interface Filters {
   walkMinutes: WalkMinutes
   maxRent: number
   beds: string[]
+  baths: string[]
 }
 
 interface LayerVisibility {

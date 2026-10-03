@@ -17,7 +17,8 @@ const MIN_QUERY_LEN = 3
 
 interface AddressSearchProps {
   walkMinutes: number
-  hasCustomListing: boolean
+  /** Label of the restored/checked address pin, if any */
+  checkedAddress: string | null
   isChecking: boolean
   error: string | null
   onCheckQuery: (query: string) => void
@@ -26,7 +27,7 @@ interface AddressSearchProps {
 
 export function AddressSearch({
   walkMinutes,
-  hasCustomListing,
+  checkedAddress,
   isChecking,
   error,
   onCheckQuery,
@@ -246,7 +247,7 @@ export function AddressSearch({
         ) : null}
       </form>
 
-      {hasCustomListing ? (
+      {checkedAddress ? (
         <button
           type="button"
           onClick={() => {
@@ -255,10 +256,11 @@ export function AddressSearch({
             closeDropdown()
             onClear()
           }}
-          className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+          className="flex min-w-0 max-w-full items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+          title={`Clear ${checkedAddress}`}
         >
-          <X className="h-3.5 w-3.5" aria-hidden />
-          Clear checked address
+          <X className="h-3.5 w-3.5 shrink-0" aria-hidden />
+          <span className="truncate">Clear {checkedAddress.split(",")[0]}</span>
         </button>
       ) : null}
 

@@ -51,6 +51,8 @@ function WalkIcon({ className }: { className?: string }) {
   )
 }
 
+const EASE = 'ease-[cubic-bezier(0.22,1,0.36,1)]'
+
 function PedestrianToggle({
   checked,
   onCheckedChange,
@@ -65,33 +67,43 @@ function PedestrianToggle({
       aria-label={ariaLabel ?? 'Toggle'}
       onClick={() => onCheckedChange(!checked)}
       className={cn(
-        'relative inline-flex h-7 w-12 cursor-pointer items-center justify-center rounded-full border transition-all duration-300 ease-out',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        'relative inline-flex h-7 w-12 cursor-pointer items-center justify-center rounded-full border',
+        'transition-[background-color,border-color,box-shadow,scale] duration-[420ms] active:scale-95',
+        EASE,
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none',
         checked
           ? 'border-brand/60 bg-brand/15 shadow-[0_0_14px_color-mix(in_srgb,var(--brand)_35%,transparent)]'
-          : 'border-[#d88758]/45 bg-[#d88758]/10',
+          : 'border-[#d88758]/45 bg-[#d88758]/10 shadow-[0_0_14px_transparent]',
         className,
       )}
     >
       <span
         className={cn(
-          'absolute inset-0 rounded-full transition-opacity duration-300',
-          checked
-            ? 'opacity-100 shadow-[inset_0_0_10px_color-mix(in_srgb,var(--brand)_45%,transparent)]'
-            : 'opacity-0',
+          'absolute inset-0 rounded-full shadow-[inset_0_0_10px_color-mix(in_srgb,var(--brand)_45%,transparent)] transition-opacity duration-[420ms] motion-reduce:transition-none',
+          EASE,
+          checked ? 'opacity-100' : 'opacity-0',
         )}
       />
-      <span
-        className={cn(
-          'relative z-10 flex h-5 w-5 flex-shrink-0 items-center justify-center transition-all duration-300',
-          checked ? 'text-brand' : 'text-[#d88758]',
-        )}
-      >
-        {checked ? (
+      {/* Both icons stay mounted so they crossfade instead of swapping */}
+      <span className="relative z-10 h-5 w-5 flex-shrink-0">
+        <span
+          className={cn(
+            'absolute inset-0 flex items-center justify-center text-brand transition-[opacity,scale,rotate] duration-[420ms] motion-reduce:transition-none',
+            EASE,
+            checked ? 'scale-100 rotate-0 opacity-100' : 'scale-50 -rotate-12 opacity-0',
+          )}
+        >
           <WalkIcon className="h-5 w-5 flex-shrink-0" />
-        ) : (
+        </span>
+        <span
+          className={cn(
+            'absolute inset-0 flex items-center justify-center text-[#d88758] transition-[opacity,scale,rotate] duration-[420ms] motion-reduce:transition-none',
+            EASE,
+            checked ? 'scale-50 rotate-12 opacity-0' : 'scale-100 rotate-0 opacity-100',
+          )}
+        >
           <HandIcon className="h-5 w-5 flex-shrink-0" />
-        )}
+        </span>
       </span>
     </button>
   )

@@ -155,7 +155,6 @@ export default function Page() {
 
   const handleThemeToggle = useCallback(() => {
     const next = theme === "dark" ? "light" : "dark"
-    document.querySelector(".mapboxgl-map")?.classList.add("map-theme-veiled")
     document.documentElement.classList.toggle("dark", next === "dark")
     setTheme(next)
   }, [theme])
@@ -278,7 +277,9 @@ export default function Page() {
         stats={stats}
         theme={theme}
         onThemeToggle={handleThemeToggle}
-        hasCustomListing={customListing != null}
+        checkedAddress={
+          customListing ? String(customListing.properties?.address || "Your location") : null
+        }
         isCheckingAddress={isCheckingAddress}
         addressError={addressError}
         onCheckAddressQuery={handleCheckAddressQuery}

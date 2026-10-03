@@ -105,7 +105,12 @@ export function MapView({
 }: MapViewProps) {
   const mapRef = useRef<MapRef>(null)
   const mapInteractingRef = useRef(false)
-  const skipThemeFadeRef = useRef(true)
+  // Theme the basemap is actually showing; lags `theme` until the old frame is snapshotted
+  const [mapTheme, setMapTheme] = useState(theme)
+  const themeSwapRef = useRef<{
+    overlay: HTMLCanvasElement
+    stage: "style" | "icons" | "revealing"
+  } | null>(null)
   const [popupInfo, setPopupInfo]   = useState<PopupInfo | null>(null)
   const [cursor,    setCursor]      = useState<string>("auto")
   const popupHoverRef = useRef(false)
@@ -175,26 +180,89 @@ export function MapView({
     return () => {
       map.off("style.load", syncIcons)
     }
-  }, [theme, loadMapIcons])
+  }, [mapTheme, loadMapIcons])
 
-  // Soften the basemap hard-cut when the Mapbox style URL swaps
+  // Crossfade the basemap on theme change: freeze the current frame on a canvas
+  // overlay, swap the style underneath, then fade the overlay out once the new
+  // style has rendered with its icons and sources.
   useEffect(() => {
-    if (skipThemeFadeRef.current) {
-      skipThemeFadeRef.current = false
+    if (theme === mapTheme) return
+    const map = mapRef.current?.getMap()
+    if (!map) {
+      setMapTheme(theme)
       return
     }
+
+    themeSwapRef.current?.overlay.remove()
+    themeSwapRef.current = null
+
+    let swapped = false
+    const swap = (snapshot: HTMLCanvasElement | null) => {
+      if (swapped) return
+      swapped = true
+      if (snapshot) {
+        map.getCanvasContainer().after(snapshot)
+        themeSwapRef.current = { overlay: snapshot, stage: "style" }
+      }
+      setMapTheme(theme)
+    }
+
+    // A WebGL canvas can only be copied inside the frame that drew it
+    const capture = () => {
+      const src = map.getCanvas()
+      const overlay = document.createElement("canvas")
+      overlay.className = "map-theme-snapshot"
+      overlay.width = src.width
+      overlay.height = src.height
+      overlay.getContext("2d")?.drawImage(src, 0, 0)
+      swap(overlay)
+    }
+    map.once("render", capture)
+    map.triggerRepaint()
+    const fallback = window.setTimeout(() => swap(null), 150)
+
+    return () => {
+      map.off("render", capture)
+      window.clearTimeout(fallback)
+    }
+  }, [theme, mapTheme])
+
+  useEffect(() => {
     const map = mapRef.current?.getMap()
     if (!map) return
-    const el = map.getContainer()
-    el.classList.add("map-theme-veiled")
-    const clearVeil = () => el.classList.remove("map-theme-veiled")
-    map.once("idle", clearVeil)
-    const timeout = window.setTimeout(clearVeil, 1400)
-    return () => {
-      map.off("idle", clearVeil)
-      window.clearTimeout(timeout)
+    const onStyleLoad = () => {
+      if (themeSwapRef.current?.stage === "style") themeSwapRef.current.stage = "icons"
     }
-  }, [theme])
+    map.on("style.load", onStyleLoad)
+    return () => {
+      map.off("style.load", onStyleLoad)
+    }
+  }, [mapTheme])
+
+  useEffect(() => {
+    const swap = themeSwapRef.current
+    const map = mapRef.current?.getMap()
+    if (!swap || swap.stage !== "icons" || !map) return
+    if (!groceryIconReady || !houseIconReady) return
+    swap.stage = "revealing"
+
+    const { overlay } = swap
+    const finish = () => {
+      overlay.remove()
+      if (themeSwapRef.current?.overlay === overlay) themeSwapRef.current = null
+    }
+    const reveal = () => {
+      overlay.addEventListener("transitionend", finish, { once: true })
+      overlay.classList.add("is-fading")
+      window.setTimeout(finish, 900)
+    }
+    map.once("idle", reveal)
+    const fallback = window.setTimeout(reveal, 1800)
+    return () => {
+      map.off("idle", reveal)
+      window.clearTimeout(fallback)
+    }
+  }, [groceryIconReady, houseIconReady, mapTheme])
 
   // Load core data on mount
   useEffect(() => {
@@ -474,7 +542,7 @@ export function MapView({
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
       initialViewState={{ ...CENTER, zoom: ZOOM }}
       style={{ width: "100%", height: "100%" }}
-      mapStyle={MAP_STYLE[theme]}
+      mapStyle={MAP_STYLE[mapTheme]}
       styleDiffing={false}
       interactiveLayerIds={[
         "listings-symbol",
@@ -502,7 +570,7 @@ export function MapView({
 
       {/* ── Listings (pre-colored house icons, same pattern as groceries) ── */}
       {listings && houseIconReady && (
-        <Source key={`listings-${theme}`} id="listings" type="geojson" data={listings}>
+        <Source key={`listings-${mapTheme}`} id="listings" type="geojson" data={listings}>
           <Layer
             id="listings-symbol"
             type="symbol"
@@ -525,7 +593,7 @@ export function MapView({
 
       {/* ── Groceries (custom store icon) ─────────────────────────── */}
       {groceries && layers.groceries && groceryIconReady && (
-        <Source key={`groceries-${theme}`} id="groceries" type="geojson" data={groceries}>
+        <Source key={`groceries-${mapTheme}`} id="groceries" type="geojson" data={groceries}>
           <Layer
             id="groceries-symbol"
             type="symbol"
@@ -547,7 +615,7 @@ export function MapView({
 
       {/* ── Transit stops — individual dots, visible only when zoomed in ── */}
       {stops && layers.transit && (
-        <Source key={`stops-${theme}`} id="stops" type="geojson" data={stops}>
+        <Source key={`stops-${mapTheme}`} id="stops" type="geojson" data={stops}>
           <Layer
             id="stops-circle"
             type="circle"
@@ -569,7 +637,7 @@ export function MapView({
 
       {/* ── Smoke / walk zones ───────────────────────────────────── */}
       {smokeData && layers.smoke && (
-        <Source key={`smoke-${filters.walkMinutes}-${theme}`} id="smoke" type="geojson" data={smokeData}>
+        <Source key={`smoke-${filters.walkMinutes}-${mapTheme}`} id="smoke" type="geojson" data={smokeData}>
           <Layer
             id="smoke-zones-fill"
             type="fill"

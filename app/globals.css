@@ -142,8 +142,7 @@
 @media (prefers-reduced-motion: reduce) {
   html,
   body,
-  .mapboxgl-map,
-  .mapboxgl-map::after {
+  .map-theme-snapshot {
     transition: none !important;
   }
 }
@@ -153,19 +152,18 @@
   font-family: inherit;
   position: relative;
 }
-.mapboxgl-map::after {
-  content: "";
+/* Frozen frame of the old basemap, faded out once the new style has rendered */
+.map-theme-snapshot {
   position: absolute;
   inset: 0;
-  z-index: 5;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  /* Stay dark during the style swap so light tiles never blow out the screen. */
-  background: #0f110f;
-  opacity: 0;
-  transition: opacity 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 1;
+  transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.mapboxgl-map.map-theme-veiled::after {
-  opacity: 0.92;
+.map-theme-snapshot.is-fading {
+  opacity: 0;
 }
 
 .mapboxgl-ctrl-group {

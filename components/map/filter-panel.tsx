@@ -71,7 +71,7 @@ interface FilterPanelProps {
   stats: { total: number; walkable: number }
   theme: "light" | "dark"
   onThemeToggle: () => void
-  hasCustomListing: boolean
+  checkedAddress: string | null
   isCheckingAddress: boolean
   addressError: string | null
   onCheckAddressQuery: (query: string) => void
@@ -175,7 +175,7 @@ export function FilterPanel({
   stats,
   theme,
   onThemeToggle,
-  hasCustomListing,
+  checkedAddress,
   isCheckingAddress,
   addressError,
   onCheckAddressQuery,
@@ -462,7 +462,7 @@ export function FilterPanel({
               </div>
               <AddressSearch
                 walkMinutes={filters.walkMinutes}
-                hasCustomListing={hasCustomListing}
+                checkedAddress={checkedAddress}
                 isChecking={isCheckingAddress}
                 error={addressError}
                 onCheckQuery={onCheckAddressQuery}

@@ -26,28 +26,17 @@ import {
 const CENTER = { longitude: -75.6972, latitude: 45.4215 }
 const ZOOM   = 12.5
 
-// Classic swaps between two style URLs (full reload, crossfaded via snapshot).
-// Standard/Vivid use Mapbox Standard, whose light/dark preset changes in place.
-type StyleKey = "classic-dark" | "classic-light" | "standard" | "vivid"
+// Mapbox Standard: light/dark and the basemap look are config on one loaded
+// style, so switching is instant with no reload
+const MAP_STYLE = "mapbox://styles/mapbox/standard"
 
-const STYLE_URL: Record<StyleKey, string> = {
-  "classic-dark": "mapbox://styles/mapbox/dark-v11",
-  "classic-light": "mapbox://styles/mapbox/light-v11",
-  standard: "mapbox://styles/mapbox/standard",
-  vivid: "mapbox://styles/mapbox/standard",
-}
-
-const STANDARD_CONFIG: Record<"standard" | "vivid", Record<string, string | boolean>> = {
+const BASEMAP_CONFIG: Record<Basemap, Record<string, string | boolean>> = {
   standard: { theme: "monochrome", show3dObjects: false },
   vivid: { theme: "default", show3dObjects: false },
 }
 
-function styleKeyFor(basemap: Basemap, theme: "light" | "dark"): StyleKey {
-  return basemap === "classic" ? `classic-${theme}` : basemap
-}
-
-function standardConfig(key: "standard" | "vivid", theme: "light" | "dark") {
-  return { ...STANDARD_CONFIG[key], lightPreset: theme === "dark" ? "night" : "day" }
+function basemapConfig(basemap: Basemap, theme: "light" | "dark") {
+  return { ...BASEMAP_CONFIG[basemap], lightPreset: theme === "dark" ? "night" : "day" }
 }
 
 // Map layer colours — distinct from listing house icons
@@ -99,8 +88,6 @@ interface MapViewProps {
   onStatsUpdate: (total: number, walkable: number) => void
   theme: "light" | "dark"
   basemap: Basemap
-  /** Fired when the basemap starts showing `theme`, so the UI can fade in step */
-  onThemeApplied?: (theme: "light" | "dark") => void
   customListing: Feature<Point> | null
   savedKijijiImports: Feature<Point>[]
   flyToCustomKey: number
@@ -119,7 +106,6 @@ export function MapView({
   onStatsUpdate,
   theme,
   basemap,
-  onThemeApplied,
   customListing,
   savedKijijiImports,
   flyToCustomKey,
@@ -130,18 +116,6 @@ export function MapView({
 }: MapViewProps) {
   const mapRef = useRef<MapRef>(null)
   const mapInteractingRef = useRef(false)
-  // Style the map is actually showing; lags the requested one until the old frame is snapshotted
-  const desiredStyleKey = styleKeyFor(basemap, theme)
-  const [mapStyleKey, setMapStyleKey] = useState(desiredStyleKey)
-  // Custom images and sources only reset when the style URL itself changes
-  const styleUrl = STYLE_URL[mapStyleKey]
-  const themeSwapRef = useRef<{
-    overlay: HTMLCanvasElement
-    stage: "style" | "icons" | "revealing"
-    theme: "light" | "dark"
-  } | null>(null)
-  const onThemeAppliedRef = useRef(onThemeApplied)
-  onThemeAppliedRef.current = onThemeApplied
   const [popupInfo, setPopupInfo]   = useState<PopupInfo | null>(null)
   const [cursor,    setCursor]      = useState<string>("auto")
   const popupHoverRef = useRef(false)
@@ -191,7 +165,7 @@ export function MapView({
     }
   }, [])
 
-  // mapStyle changes wipe custom images; reload icons then let keyed Sources re-mount
+  // A style (re)load wipes custom images; reload icons then let Sources mount
   useEffect(() => {
     const map = mapRef.current?.getMap()
     if (!map) return
@@ -211,16 +185,15 @@ export function MapView({
     return () => {
       map.off("style.load", syncIcons)
     }
-  }, [styleUrl, loadMapIcons])
+  }, [loadMapIcons])
 
-  // Standard/Vivid: light/dark is a config change on the loaded style
+  // Apply light/dark preset and basemap look to the loaded style
   useEffect(() => {
-    if (mapStyleKey !== "standard" && mapStyleKey !== "vivid") return
     const map = mapRef.current?.getMap()
     if (!map) return
     const apply = () => {
       try {
-        for (const [name, value] of Object.entries(standardConfig(mapStyleKey, theme))) {
+        for (const [name, value] of Object.entries(basemapConfig(basemap, theme))) {
           map.setConfigProperty("basemap", name, value)
         }
       } catch {
@@ -232,111 +205,7 @@ export function MapView({
     return () => {
       map.off("style.load", apply)
     }
-  }, [mapStyleKey, theme])
-
-  // Crossfade the basemap when the style URL changes: freeze the current frame on a canvas
-  // overlay, swap the style underneath, then fade the overlay out once the new
-  // style has rendered with its icons and sources.
-  useEffect(() => {
-    if (desiredStyleKey === mapStyleKey) {
-      // Toggled back before a pending swap began
-      if (!themeSwapRef.current) onThemeAppliedRef.current?.(theme)
-      return
-    }
-    const map = mapRef.current?.getMap()
-    // Standard <-> Vivid share a style URL: no reload, just new config
-    if (!map || STYLE_URL[desiredStyleKey] === STYLE_URL[mapStyleKey]) {
-      setMapStyleKey(desiredStyleKey)
-      onThemeAppliedRef.current?.(theme)
-      return
-    }
-
-    themeSwapRef.current?.overlay.remove()
-    themeSwapRef.current = null
-
-    let swapped = false
-    const swap = (snapshot: HTMLCanvasElement | null) => {
-      if (swapped) return
-      swapped = true
-      if (snapshot) {
-        map.getCanvasContainer().after(snapshot)
-        themeSwapRef.current = { overlay: snapshot, stage: "style", theme }
-        // If the new style never settles, don't leave the UI stuck on the old theme
-        window.setTimeout(() => {
-          const pending = themeSwapRef.current
-          if (pending?.overlay !== snapshot || pending.stage === "revealing") return
-          themeSwapRef.current = null
-          onThemeAppliedRef.current?.(theme)
-          snapshot.classList.add("is-fading")
-          window.setTimeout(() => snapshot.remove(), 600)
-        }, 3000)
-      } else {
-        onThemeAppliedRef.current?.(theme)
-      }
-      setMapStyleKey(desiredStyleKey)
-    }
-
-    // A WebGL canvas can only be copied inside the frame that drew it
-    const capture = () => {
-      const src = map.getCanvas()
-      const overlay = document.createElement("canvas")
-      overlay.className = "map-theme-snapshot"
-      overlay.width = src.width
-      overlay.height = src.height
-      overlay.getContext("2d")?.drawImage(src, 0, 0)
-      swap(overlay)
-    }
-    map.once("render", capture)
-    map.triggerRepaint()
-    const fallback = window.setTimeout(() => swap(null), 150)
-
-    return () => {
-      map.off("render", capture)
-      window.clearTimeout(fallback)
-    }
-  }, [desiredStyleKey, mapStyleKey, theme])
-
-  useEffect(() => {
-    const map = mapRef.current?.getMap()
-    if (!map) return
-    const onStyleLoad = () => {
-      if (themeSwapRef.current?.stage === "style") themeSwapRef.current.stage = "icons"
-    }
-    map.on("style.load", onStyleLoad)
-    return () => {
-      map.off("style.load", onStyleLoad)
-    }
-  }, [mapStyleKey])
-
-  useEffect(() => {
-    const swap = themeSwapRef.current
-    const map = mapRef.current?.getMap()
-    if (!swap || swap.stage !== "icons" || !map) return
-    if (!groceryIconReady || !houseIconReady) return
-    swap.stage = "revealing"
-
-    const { overlay } = swap
-    const finish = () => {
-      overlay.remove()
-      if (themeSwapRef.current?.overlay === overlay) themeSwapRef.current = null
-    }
-    let revealed = false
-    const reveal = () => {
-      if (revealed) return
-      revealed = true
-      // Same frame as the UI colour transition so both fades run together
-      onThemeAppliedRef.current?.(swap.theme)
-      overlay.addEventListener("transitionend", finish, { once: true })
-      overlay.classList.add("is-fading")
-      window.setTimeout(finish, 900)
-    }
-    map.once("idle", reveal)
-    const fallback = window.setTimeout(reveal, 1800)
-    return () => {
-      map.off("idle", reveal)
-      window.clearTimeout(fallback)
-    }
-  }, [groceryIconReady, houseIconReady, mapStyleKey])
+  }, [basemap, theme])
 
   // Load core data on mount
   useEffect(() => {
@@ -616,13 +485,9 @@ export function MapView({
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
       initialViewState={{ ...CENTER, zoom: ZOOM }}
       style={{ width: "100%", height: "100%" }}
-      mapStyle={styleUrl}
-      // Constructor-only: start Standard in the right preset (later changes go through setConfigProperty)
-      config={
-        mapStyleKey === "standard" || mapStyleKey === "vivid"
-          ? { basemap: standardConfig(mapStyleKey, theme) }
-          : undefined
-      }
+      mapStyle={MAP_STYLE}
+      // Constructor-only: start in the right preset (later changes go through setConfigProperty)
+      config={{ basemap: basemapConfig(basemap, theme) }}
       styleDiffing={false}
       interactiveLayerIds={[
         "listings-symbol",
@@ -650,7 +515,7 @@ export function MapView({
 
       {/* ── Listings (pre-colored house icons, same pattern as groceries) ── */}
       {listings && houseIconReady && (
-        <Source key={`listings-${styleUrl}`} id="listings" type="geojson" data={listings}>
+        <Source id="listings" type="geojson" data={listings}>
           <Layer
             id="listings-symbol"
             type="symbol"
@@ -673,7 +538,7 @@ export function MapView({
 
       {/* ── Groceries (custom store icon) ─────────────────────────── */}
       {groceries && layers.groceries && groceryIconReady && (
-        <Source key={`groceries-${styleUrl}`} id="groceries" type="geojson" data={groceries}>
+        <Source id="groceries" type="geojson" data={groceries}>
           <Layer
             id="groceries-symbol"
             type="symbol"
@@ -695,7 +560,7 @@ export function MapView({
 
       {/* ── Transit stops — individual dots, visible only when zoomed in ── */}
       {stops && layers.transit && (
-        <Source key={`stops-${styleUrl}`} id="stops" type="geojson" data={stops}>
+        <Source id="stops" type="geojson" data={stops}>
           <Layer
             id="stops-circle"
             type="circle"
@@ -717,7 +582,7 @@ export function MapView({
 
       {/* ── Smoke / walk zones ───────────────────────────────────── */}
       {smokeData && layers.smoke && (
-        <Source key={`smoke-${filters.walkMinutes}-${styleUrl}`} id="smoke" type="geojson" data={smokeData}>
+        <Source key={`smoke-${filters.walkMinutes}`} id="smoke" type="geojson" data={smokeData}>
           <Layer
             id="smoke-zones-fill"
             type="fill"

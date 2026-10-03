@@ -71,8 +71,6 @@ interface FilterPanelProps {
   onLayersChange: (layers: LayerVisibility) => void
   stats: { total: number; walkable: number }
   theme: "light" | "dark"
-  /** Theme the user just picked — drives the toggle icon before the UI catches up */
-  pendingTheme: "light" | "dark"
   onThemeToggle: () => void
   basemap: Basemap
   onBasemapChange: (basemap: Basemap) => void
@@ -179,7 +177,6 @@ export function FilterPanel({
   onLayersChange,
   stats,
   theme,
-  pendingTheme,
   onThemeToggle,
   basemap,
   onBasemapChange,
@@ -398,7 +395,7 @@ export function FilterPanel({
         <Sun
           className={cn(
             "absolute size-5 text-foreground transition-[opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-            pendingTheme === "dark"
+            theme === "dark"
               ? "rotate-0 scale-100 opacity-100"
               : "rotate-90 scale-50 opacity-0",
           )}
@@ -406,7 +403,7 @@ export function FilterPanel({
         <Moon
           className={cn(
             "absolute size-5 text-foreground transition-[opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-            pendingTheme === "dark"
+            theme === "dark"
               ? "-rotate-90 scale-50 opacity-0"
               : "rotate-0 scale-100 opacity-100",
           )}
@@ -907,7 +904,7 @@ export function FilterPanel({
               <div
                 role="radiogroup"
                 aria-label="Map style"
-                className="relative grid grid-cols-3 rounded-lg bg-secondary p-1"
+                className="relative grid grid-cols-2 rounded-lg bg-secondary p-1"
               >
                 {/* Sliding highlight behind the selected option */}
                 <span
@@ -936,11 +933,6 @@ export function FilterPanel({
                   </button>
                 ))}
               </div>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground dark:text-zinc-400">
-                {basemap === "classic"
-                  ? "The original map. Light/dark takes a moment to switch."
-                  : "Light/dark switches instantly."}
-              </p>
             </div>
           </div>
         </div>

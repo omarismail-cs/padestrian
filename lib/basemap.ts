@@ -1,9 +1,8 @@
-export type Basemap = "classic" | "standard" | "vivid"
+export type Basemap = "standard" | "vivid"
 
 export const BASEMAP_OPTIONS: { value: Basemap; label: string }[] = [
   { value: "standard", label: "Standard" },
   { value: "vivid", label: "Vivid" },
-  { value: "classic", label: "Classic" },
 ]
 
 export const DEFAULT_BASEMAP: Basemap = "standard"
@@ -11,7 +10,7 @@ export const DEFAULT_BASEMAP: Basemap = "standard"
 const BASEMAP_STORAGE_KEY = "padestrian:basemap"
 
 function isBasemap(value: unknown): value is Basemap {
-  return value === "classic" || value === "standard" || value === "vivid"
+  return value === "standard" || value === "vivid"
 }
 
 export function loadBasemapFromStorage(): Basemap {

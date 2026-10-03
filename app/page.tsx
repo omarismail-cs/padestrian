@@ -44,10 +44,7 @@ const MapView = dynamic(
 )
 
 export default function Page() {
-  // `theme` is what the user picked; `uiTheme` follows once the map is ready to
-  // crossfade, so the sidebar and basemap change together
   const [theme, setTheme] = useState<"light" | "dark">("dark")
-  const [uiTheme, setUiTheme] = useState<"light" | "dark">("dark")
   // null until read from storage, so the map is created with the saved style
   const [basemap, setBasemap] = useState<Basemap | null>(null)
   const [filters, setFilters] = useState({
@@ -161,15 +158,8 @@ export default function Page() {
   }, [filters.walkMinutes, savedKijijiImports])
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", uiTheme === "dark")
-  }, [uiTheme])
-
-  const handleThemeApplied = useCallback((next: "light" | "dark") => {
-    // Toggle the class right away (not in an effect) so it lands on the same
-    // frame the map overlay starts fading
-    document.documentElement.classList.toggle("dark", next === "dark")
-    setUiTheme(next)
-  }, [])
+    document.documentElement.classList.toggle("dark", theme === "dark")
+  }, [theme])
 
   const handleBasemapChange = useCallback((next: Basemap) => {
     setBasemap(next)
@@ -284,7 +274,6 @@ export default function Page() {
           onStatsUpdate={handleStatsUpdate}
           theme={theme}
           basemap={basemap}
-          onThemeApplied={handleThemeApplied}
           customListing={customListing}
           savedKijijiImports={savedKijijiImports}
           flyToCustomKey={flyToCustomKey}
@@ -300,8 +289,7 @@ export default function Page() {
         layers={layers}
         onLayersChange={setLayers}
         stats={stats}
-        theme={uiTheme}
-        pendingTheme={theme}
+        theme={theme}
         onThemeToggle={handleThemeToggle}
         basemap={basemap ?? DEFAULT_BASEMAP}
         onBasemapChange={handleBasemapChange}

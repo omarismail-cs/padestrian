@@ -12,6 +12,9 @@ const LEGEND_ITEMS = [
 
 const CORNERS = ["tl", "tr", "bl", "br"] as const
 type Corner = (typeof CORNERS)[number]
+// Phones: the legend is nearly full width, so it only snaps to top or bottom
+const MOBILE_SLOTS = ["tl", "bl"] as const satisfies readonly Corner[]
+const MOBILE_QUERY = "(max-width: 767px)"
 
 const STORAGE_KEY = "padestrian-legend-corner"
 const DRAG_THRESHOLD_PX = 4
@@ -24,7 +27,17 @@ function isCorner(value: string | null): value is Corner {
   return CORNERS.includes(value as Corner)
 }
 
-function cornerStyle(corner: Corner, sidebarOpen: boolean): CSSProperties {
+function mobileSlot(corner: Corner): Corner {
+  return corner === "tl" || corner === "tr" ? "tl" : "bl"
+}
+
+function cornerStyle(corner: Corner, sidebarOpen: boolean, isMobile: boolean): CSSProperties {
+  if (isMobile) {
+    // Below the logo chip, or above the locate button and attribution
+    return mobileSlot(corner) === "tl"
+      ? { top: "4.5rem", left: "1rem", right: "auto", bottom: "auto" }
+      : { bottom: "6rem", left: "1rem", right: "auto", top: "auto" }
+  }
   const mapLeft = sidebarOpen ? "calc(20rem + 1rem)" : "1rem"
   // Sit under the collapsed logo / beside the remaining map, not on chrome.
   const topLeftTop = sidebarOpen ? "1rem" : "4.5rem"
@@ -56,6 +69,16 @@ export function MapLegend({ sidebarOpen }: MapLegendProps) {
   const pointerStart = useRef({ x: 0, y: 0 })
   const didDrag = useRef(false)
   const [padSize, setPadSize] = useState({ w: 268, h: 36 })
+  const [isMobile, setIsMobile] = useState(false)
+  const slots: readonly Corner[] = isMobile ? MOBILE_SLOTS : CORNERS
+
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY)
+    const sync = () => setIsMobile(mq.matches)
+    sync()
+    mq.addEventListener("change", sync)
+    return () => mq.removeEventListener("change", sync)
+  }, [])
 
   useEffect(() => {
     try {
@@ -88,7 +111,7 @@ export function MapLegend({ sidebarOpen }: MapLegendProps) {
   const nearestCorner = useCallback((cx: number, cy: number): Corner => {
     let best: Corner = corner
     let bestDist = Number.POSITIVE_INFINITY
-    for (const slot of CORNERS) {
+    for (const slot of slots) {
       const el = padRefs.current[slot]
       if (!el) continue
       const r = el.getBoundingClientRect()
@@ -101,7 +124,7 @@ export function MapLegend({ sidebarOpen }: MapLegendProps) {
       }
     }
     return best
-  }, [corner])
+  }, [corner, slots])
 
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (event.button !== 0) return
@@ -138,7 +161,8 @@ export function MapLegend({ sidebarOpen }: MapLegendProps) {
     didDrag.current = true
     setDragging(true)
     const pos = layerPoint(event.clientX, event.clientY)
-    setDragPos(pos)
+    // Phones only move it vertically between the two slots
+    setDragPos(isMobile ? { x: cardRef.current?.offsetLeft ?? pos.x, y: pos.y } : pos)
     const card = cardRef.current
     const w = card?.offsetWidth ?? 0
     const h = card?.offsetHeight ?? 0
@@ -166,7 +190,7 @@ export function MapLegend({ sidebarOpen }: MapLegendProps) {
 
   return (
     <div ref={layerRef} className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
-      {CORNERS.map((slot) => (
+      {slots.map((slot) => (
         <div
           key={slot}
           ref={(el) => {
@@ -181,7 +205,7 @@ export function MapLegend({ sidebarOpen }: MapLegendProps) {
               : "border-transparent",
           )}
           style={{
-            ...cornerStyle(slot, sidebarOpen),
+            ...cornerStyle(slot, sidebarOpen, isMobile),
             width: padSize.w,
             height: padSize.h,
           }}
@@ -192,7 +216,7 @@ export function MapLegend({ sidebarOpen }: MapLegendProps) {
       <div
         ref={cardRef}
         role="list"
-        aria-label="Listing colours. Drag to snap to a corner."
+        aria-label={`Listing colours. Drag to snap to ${isMobile ? "the top or bottom" : "a corner"}.`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -207,7 +231,7 @@ export function MapLegend({ sidebarOpen }: MapLegendProps) {
         style={
           dragging && dragPos
             ? { top: dragPos.y, left: dragPos.x, right: "auto", bottom: "auto" }
-            : cornerStyle(corner, sidebarOpen)
+            : cornerStyle(corner, sidebarOpen, isMobile)
         }
       >
         <span

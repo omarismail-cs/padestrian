@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { Check, ChevronDown, ChevronLeft, ChevronRight, Github, Moon, RefreshCw, Sun, X } from "lucide-react"
 import type { FeatureCollection, Feature, Point } from "geojson"
 import { Slider } from "@/components/ui/slider"
@@ -194,6 +194,13 @@ export function FilterPanel({
   onRemoveSavedKijiji,
 }: FilterPanelProps) {
   const [isOpen, setIsOpen] = useState(true)
+  // Phones start with the sidebar closed so the map is the first thing you see.
+  // Until this runs, CSS keeps the server-rendered open sidebar hidden on phones.
+  const [ready, setReady] = useState(false)
+  useLayoutEffect(() => {
+    if (window.matchMedia("(max-width: 767px)").matches) setIsOpen(false)
+    setReady(true)
+  }, [])
   const [pressed, setPressed] = useState(false)
   const [kijijiListOpen, setKijijiListOpen] = useState(false)
   const logoIcon =
@@ -412,7 +419,9 @@ export function FilterPanel({
 
       {/* Expanded sidebar */}
       <aside
-        className="absolute top-0 left-0 z-30 flex h-full w-80 flex-col bg-card/95 backdrop-blur-xl border-r border-border shadow-2xl overflow-hidden"
+        data-mobile-sidebar
+        data-ready={ready || undefined}
+        className="absolute top-0 left-0 z-30 flex h-full w-80 max-w-[calc(100vw-3rem)] flex-col bg-card/95 backdrop-blur-xl border-r border-border shadow-2xl overflow-hidden"
         style={{
           transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
           transition: isOpen
@@ -435,7 +444,14 @@ export function FilterPanel({
             />
             <p className="mt-1 text-xs text-muted-foreground">Ottawa walkable rentals</p>
           </div>
-          <div className="w-8" aria-hidden />
+          <button
+            type="button"
+            onClick={() => setIsOpen(false)}
+            className="flex size-10 shrink-0 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground md:hidden"
+            aria-label="Close panel"
+          >
+            <X className="size-5" aria-hidden />
+          </button>
         </div>
 
         {/* Stats banner */}
@@ -961,6 +977,8 @@ export function FilterPanel({
       {/* Backdrop overlay when open */}
       {isOpen && (
         <div
+          data-mobile-sidebar
+          data-ready={ready || undefined}
           className="absolute inset-0 z-20 bg-black/20 backdrop-blur-sm md:hidden"
           onClick={() => setIsOpen(false)}
         />

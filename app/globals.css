@@ -146,6 +146,18 @@
   }
 }
 
+@media (max-width: 767px) {
+  /* Sidebar is server-rendered open; keep it out of sight on phones until the
+     client has closed it, so it never flashes over the map */
+  [data-mobile-sidebar]:not([data-ready]) {
+    display: none;
+  }
+  /* Pinch and rotate gestures replace the zoom/compass buttons */
+  .mapboxgl-ctrl-group:has(.mapboxgl-ctrl-zoom-in) {
+    display: none;
+  }
+}
+
 /* Mapbox overrides - theme-aware */
 .mapboxgl-map {
   font-family: inherit;

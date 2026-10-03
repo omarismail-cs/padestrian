@@ -266,7 +266,7 @@ export default function Page() {
   }, [selectedKijijiId])
 
   return (
-    <main className="relative w-full h-screen overflow-hidden bg-background">
+    <main className="relative w-full h-dvh overflow-hidden bg-background">
       {basemap && (
         <MapView
           filters={filters}

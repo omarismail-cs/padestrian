@@ -3,7 +3,6 @@ import { point } from "@turf/helpers"
 import type {
   Feature,
   FeatureCollection,
-  Geometry,
   Polygon,
   MultiPolygon,
 } from "geojson"
@@ -119,7 +118,7 @@ function polygonsFromCollection(
 function pointInAny(lon: number, lat: number, polygons: PolyFeature[]): boolean {
   if (polygons.length === 0) return false
   const pt = point([lon, lat])
-  return polygons.some((poly) => booleanPointInPolygon(pt, poly as Feature<Geometry>))
+  return polygons.some((poly) => booleanPointInPolygon(pt, poly))
 }
 
 async function resolveZonePolygons(

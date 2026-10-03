@@ -1,6 +1,7 @@
 import type { Feature, Point } from "geojson"
 import { geocodeAddress } from "@/lib/geocode"
 import { inOttawaBbox } from "@/lib/ottawa-bbox"
+import { SAVED_KIJIJI_SOURCE } from "@/lib/saved-kijiji-imports"
 import type { PointScore } from "@/lib/score-point"
 
 const NEXT_DATA_RE = /<script id="__NEXT_DATA__"[^>]*>(.*?)<\/script>/s
@@ -30,6 +31,22 @@ export interface KijijiRawListing {
 export interface ImportFailure {
   url: string
   reason: string
+}
+
+function emptyRaw(url: string, error?: string): KijijiRawListing {
+  const raw: KijijiRawListing = {
+    url,
+    title: null,
+    price_text: null,
+    bedrooms_text: null,
+    bathrooms_text: null,
+    address: null,
+    description: null,
+    lat: null,
+    lon: null,
+  }
+  if (error) raw.error = error
+  return raw
 }
 
 function cleanText(value: unknown): string | null {
@@ -188,17 +205,7 @@ function pickBedBath(lines: string[]): { beds: string | null; baths: string | nu
 }
 
 export function parseListingRawFromHtml(html: string, url: string): KijijiRawListing {
-  const base: KijijiRawListing = {
-    url,
-    title: null,
-    price_text: null,
-    bedrooms_text: null,
-    bathrooms_text: null,
-    address: null,
-    description: null,
-    lat: null,
-    lon: null,
-  }
+  const base = emptyRaw(url)
 
   const match = NEXT_DATA_RE.exec(html)
   if (match) {
@@ -394,7 +401,7 @@ export async function normalizeKijijiListing(
     lon,
     rent_cad: contactPrice ? 0 : parsedPrice,
     bedrooms: beds,
-    source: "kijiji-saved",
+    source: SAVED_KIJIJI_SOURCE,
     url: raw.url,
     saved: true,
   }
@@ -418,7 +425,7 @@ export function buildSavedKijijiFeature(
     walk_minutes: score.walk_minutes,
     transit_via: score.transit_via,
     nearest_stop_m: score.nearest_stop_m,
-    source: "kijiji-saved",
+    source: SAVED_KIJIJI_SOURCE,
     saved: true,
   }
   return {
@@ -438,18 +445,7 @@ const FETCH_HEADERS = {
 export async function fetchKijijiListingRaw(url: string): Promise<KijijiRawListing> {
   const canonical = validateKijijiListingUrl(url)
   if (!canonical) {
-    return {
-      url,
-      title: null,
-      price_text: null,
-      bedrooms_text: null,
-      bathrooms_text: null,
-      address: null,
-      description: null,
-      lat: null,
-      lon: null,
-      error: "invalid_url",
-    }
+    return emptyRaw(url, "invalid_url")
   }
 
   let response: Response
@@ -460,64 +456,20 @@ export async function fetchKijijiListingRaw(url: string): Promise<KijijiRawListi
       cache: "no-store",
     })
   } catch {
-    return {
-      url: canonical,
-      title: null,
-      price_text: null,
-      bedrooms_text: null,
-      bathrooms_text: null,
-      address: null,
-      description: null,
-      lat: null,
-      lon: null,
-      error: "fetch_failed",
-    }
+    return emptyRaw(canonical, "fetch_failed")
   }
 
   if (response.status === 404 || response.status === 410) {
-    return {
-      url: canonical,
-      title: null,
-      price_text: null,
-      bedrooms_text: null,
-      bathrooms_text: null,
-      address: null,
-      description: null,
-      lat: null,
-      lon: null,
-      error: "listing_not_found",
-    }
+    return emptyRaw(canonical, "listing_not_found")
   }
 
   const finalUrl = response.url.toLowerCase()
   if (finalUrl.includes("/deleted")) {
-    return {
-      url: canonical,
-      title: null,
-      price_text: null,
-      bedrooms_text: null,
-      bathrooms_text: null,
-      address: null,
-      description: null,
-      lat: null,
-      lon: null,
-      error: "listing_deleted",
-    }
+    return emptyRaw(canonical, "listing_deleted")
   }
 
   if (!response.ok) {
-    return {
-      url: canonical,
-      title: null,
-      price_text: null,
-      bedrooms_text: null,
-      bathrooms_text: null,
-      address: null,
-      description: null,
-      lat: null,
-      lon: null,
-      error: `http_${response.status}`,
-    }
+    return emptyRaw(canonical, `http_${response.status}`)
   }
 
   const html = await response.text()
@@ -526,15 +478,12 @@ export async function fetchKijijiListingRaw(url: string): Promise<KijijiRawListi
   return raw
 }
 
-export function parseImportUrls(text: string, max = 3): string[] {
-  const lines = text
-    .split(/[\n,]+/)
-    .map((s) => s.trim())
-    .filter(Boolean)
+/** Validate, canonicalize, and de-duplicate (by listing id) up to `max` URLs. */
+export function uniqueKijijiUrls(candidates: string[], max = 3): string[] {
   const out: string[] = []
   const seen = new Set<string>()
-  for (const line of lines) {
-    const canonical = validateKijijiListingUrl(line)
+  for (const candidate of candidates) {
+    const canonical = validateKijijiListingUrl(candidate)
     if (!canonical) continue
     const id = extractKijijiId(canonical)
     if (!id || seen.has(id)) continue
@@ -543,4 +492,12 @@ export function parseImportUrls(text: string, max = 3): string[] {
     if (out.length >= max) break
   }
   return out
+}
+
+export function parseImportUrls(text: string, max = 3): string[] {
+  const lines = text
+    .split(/[\n,]+/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+  return uniqueKijijiUrls(lines, max)
 }

@@ -2,7 +2,7 @@
 
 import { useRef, useCallback, useState, useEffect, useMemo } from "react"
 import Map, { NavigationControl, GeolocateControl, Popup, Source, Layer, type MapRef } from "react-map-gl/mapbox"
-import type { MapLayerMouseEvent } from "react-map-gl/mapbox"
+import type { MapMouseEvent } from "react-map-gl/mapbox"
 import type { GeoJSON, Feature, Point } from "geojson"
 import "mapbox-gl/dist/mapbox-gl.css"
 import { GroceryPopupCard } from "@/components/map/grocery-popup"
@@ -374,7 +374,7 @@ export function MapView({
     setCursor("auto")
   }, [])
 
-  const handleMouseMove = useCallback((event: MapLayerMouseEvent) => {
+  const handleMouseMove = useCallback((event: MapMouseEvent) => {
     if (mapInteractingRef.current) return
 
     const feature =
@@ -446,7 +446,7 @@ export function MapView({
         <div>
           <p className="font-semibold text-foreground">{String(p.label || "")}</p>
           {p.walk_minutes != null && (
-            <p className="text-muted-foreground text-xs">{p.walk_minutes} min walk</p>
+            <p className="text-muted-foreground text-xs">{String(p.walk_minutes)} min walk</p>
           )}
         </div>
       )
@@ -456,7 +456,7 @@ export function MapView({
       return (
         <div>
           <p className="font-semibold text-foreground">{String(p.stop_name)}</p>
-          {p.stop_id && <p className="text-muted-foreground text-xs">Stop {String(p.stop_id)}</p>}
+          {Boolean(p.stop_id) && <p className="text-muted-foreground text-xs">Stop {String(p.stop_id)}</p>}
         </div>
       )
     }

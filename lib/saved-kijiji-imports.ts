@@ -1,4 +1,5 @@
 import type { Feature, Point } from "geojson"
+import type { KijijiListItem } from "@/lib/kijiji-listings"
 import type { PointScore } from "@/lib/score-point"
 
 export const SAVED_KIJIJI_STORAGE_KEY = "padestrian:saved-kijiji-imports"
@@ -59,7 +60,7 @@ function featureToStored(feature: Feature<Point>): StoredSavedKijiji | null {
     near_transit: Boolean(p.near_transit),
     eligible: Boolean(p.eligible),
     walk_minutes: Number(p.walk_minutes) || 10,
-    imported_at: new Date().toISOString(),
+    imported_at: typeof p.imported_at === "string" ? p.imported_at : new Date().toISOString(),
   }
   if (p.bathrooms != null) stored.bathrooms = Number(p.bathrooms)
   if (p.price_contact) stored.price_contact = true
@@ -127,7 +128,7 @@ export function saveSavedKijijiImportsToStorage(features: Feature<Point>[]): voi
   const rows = features
     .map(featureToStored)
     .filter((row): row is StoredSavedKijiji => row != null)
-    .slice(0, MAX_SAVED_KIJIJI_IMPORTS)
+    .slice(-MAX_SAVED_KIJIJI_IMPORTS)
   writeStored(rows)
 }
 
@@ -144,9 +145,11 @@ export function upsertSavedKijijiImports(features: Feature<Point>[]): Feature<Po
   for (const feature of features) {
     const stored = featureToStored(feature)
     if (!stored) continue
+    // Re-insert so re-imported links count as newest when trimming
+    byId.delete(stored.id)
     byId.set(stored.id, storedToFeature(stored))
   }
-  const merged = Array.from(byId.values()).slice(0, MAX_SAVED_KIJIJI_IMPORTS)
+  const merged = Array.from(byId.values()).slice(-MAX_SAVED_KIJIJI_IMPORTS)
   saveSavedKijijiImportsToStorage(merged)
   return merged
 }
@@ -184,7 +187,9 @@ export function applyScoreToSavedFeature(
   }
 }
 
-export function savedKijijiToListItem(feature: Feature<Point>) {
+export function savedKijijiToListItem(
+  feature: Feature<Point>,
+): KijijiListItem & { isSaved: true } {
   const p = feature.properties ?? {}
   const coords = feature.geometry?.coordinates ?? []
   return {
@@ -199,7 +204,7 @@ export function savedKijijiToListItem(feature: Feature<Point>) {
     lat: Number(coords[1]),
     properties: { ...p },
     visibleOnMap: true,
-    hiddenReason: null as const,
-    isSaved: true as const,
+    hiddenReason: null,
+    isSaved: true,
   }
 }

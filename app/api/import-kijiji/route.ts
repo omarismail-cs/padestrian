@@ -5,7 +5,7 @@ import {
   describeNormalizeFailure,
   fetchKijijiListingRaw,
   normalizeKijijiListing,
-  validateKijijiListingUrl,
+  uniqueKijijiUrls,
 } from "@/lib/kijiji-import"
 import { scorePoint, ScoringDataError } from "@/lib/score-point"
 
@@ -74,26 +74,15 @@ async function handleImport(request: Request) {
     )
   }
 
-  let urls: string[] = []
+  let unique: string[] = []
   try {
     const body = (await request.json()) as { urls?: unknown }
     if (Array.isArray(body.urls)) {
-      urls = body.urls
-        .map((u) => (typeof u === "string" ? validateKijijiListingUrl(u) : null))
-        .filter((u): u is string => Boolean(u))
+      const candidates = body.urls.filter((u): u is string => typeof u === "string")
+      unique = uniqueKijijiUrls(candidates, MAX_URLS)
     }
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 })
-  }
-
-  const unique: string[] = []
-  const seen = new Set<string>()
-  for (const url of urls) {
-    const id = url.match(/\/(\d+)(?:\?|$)/)?.[1]
-    if (!id || seen.has(id)) continue
-    seen.add(id)
-    unique.push(url)
-    if (unique.length >= MAX_URLS) break
   }
 
   if (!unique.length) {

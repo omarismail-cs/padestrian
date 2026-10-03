@@ -35,7 +35,76 @@ function parseCount(output: string, pattern: RegExp): number | null {
   return m ? parseInt(m[1], 10) : null
 }
 
+function parsePruned(output: string): number | null {
+  return (
+    parseCount(output, /Deactivated\s+(\d+)/) ??
+    parseCount(output, /Removed\s+(\d+)/) ??
+    parseCount(output, /(\d+)\s+removed/)
+  )
+}
+
+function doneResponse(message: string, status: number): Response {
+  return new Response(JSON.stringify({ done: true, ok: false, message }) + "\n", {
+    status,
+    headers: { "Content-Type": "application/x-ndjson" },
+  })
+}
+
+type Counts = { pruned: number | null; scraped: number | null; bathrooms: number | null }
+
+interface Step {
+  label: string
+  cmd: string
+  /** Progress reached when this step finishes, per mode */
+  end: Record<Mode, number>
+  record?: (output: string, counts: Counts) => void
+  scrapeOnly?: boolean
+}
+
+const STEPS: Step[] = [
+  {
+    label: "Scraping new listings…",
+    cmd: "python -m padestrian scrape-listings --pages 5 --append",
+    end: { scrape: 45, prune: 0 },
+    scrapeOnly: true,
+    record: (out, c) => {
+      c.scraped = parseCount(out, /Scraped \+ normalized new listings:\s*(\d+)/)
+    },
+  },
+  {
+    label: "Pruning dead listings…",
+    cmd: "python -m padestrian prune-kijiji",
+    end: { scrape: 65, prune: 35 },
+    record: (out, c) => {
+      c.pruned = parsePruned(out)
+    },
+  },
+  {
+    label: "Filling bathroom data…",
+    cmd: "python -m padestrian backfill-bathrooms --fetch",
+    end: { scrape: 80, prune: 60 },
+    record: (out, c) => {
+      c.bathrooms = parseCount(out, /Updated\s+(\d+)/)
+    },
+  },
+  {
+    label: "Validating listings…",
+    cmd: "python -m padestrian validate-listings",
+    end: { scrape: 90, prune: 80 },
+  },
+  {
+    label: "Scoring listings…",
+    cmd: "python -m padestrian filter-listings",
+    end: { scrape: 100, prune: 100 },
+  },
+]
+
 export async function POST(request: Request) {
+  // Shells out to the Python pipeline — never expose this on a deployed server
+  if (process.env.NODE_ENV === "production") {
+    return doneResponse("Refresh is only available when running locally", 403)
+  }
+
   let mode: Mode = "prune"
   try {
     const body = await request.json()
@@ -48,12 +117,10 @@ export async function POST(request: Request) {
   try {
     await execAsync("python --version", { timeout: 5_000 })
   } catch {
-    return new Response(
-      JSON.stringify({ done: true, ok: false, message: "Python not found — run locally" }) + "\n",
-      { status: 501, headers: { "Content-Type": "application/x-ndjson" } }
-    )
+    return doneResponse("Python not found — run locally", 501)
   }
 
+  const steps = STEPS.filter((step) => mode === "scrape" || !step.scrapeOnly)
   const encoder = new TextEncoder()
 
   const stream = new ReadableStream({
@@ -62,79 +129,32 @@ export async function POST(request: Request) {
         controller.enqueue(encoder.encode(JSON.stringify(event) + "\n"))
       }
 
-      let pruned: number | null = null
-      let scraped: number | null = null
-      let bathrooms: number | null = null
-
-      // Progress weights per step
-      // prune mode:  prune=35, backfill=25, validate=20, filter=20
-      // scrape mode: scrape=45, prune=20, backfill=15, validate=10, filter=10
+      const counts: Counts = { pruned: null, scraped: null, bathrooms: null }
 
       try {
-        if (mode === "scrape") {
-          send({ step: "Scraping new listings…", progress: 0 })
-          const out = await runCmd("python -m padestrian scrape-listings --pages 5 --append")
-          scraped = parseCount(out, /Scraped \+ normalized new listings:\s*(\d+)/)
-          send({ step: "Scraping new listings…", progress: 45, scraped })
-
-          send({ step: "Pruning dead listings…", progress: 45 })
-          const pruneOut = await runCmd("python -m padestrian prune-kijiji")
-          pruned = parseCount(pruneOut, /Deactivated\s+(\d+)/) ?? parseCount(pruneOut, /Removed\s+(\d+)/) ?? parseCount(pruneOut, /(\d+)\s+removed/)
-          send({ step: "Pruning dead listings…", progress: 65, pruned })
-
-          send({ step: "Filling bathroom data…", progress: 65 })
-          const backfillOut = await runCmd("python -m padestrian backfill-bathrooms --fetch")
-          bathrooms = parseCount(backfillOut, /Updated\s+(\d+)/)
-          send({ step: "Filling bathroom data…", progress: 80, bathrooms })
-
-          send({ step: "Validating listings…", progress: 80 })
-          await runCmd("python -m padestrian validate-listings")
-          send({ step: "Validating listings…", progress: 90 })
-
-          send({ step: "Scoring listings…", progress: 90 })
-          await runCmd("python -m padestrian filter-listings")
-          send({ step: "Scoring listings…", progress: 100 })
-        } else {
-          send({ step: "Pruning dead listings…", progress: 0 })
-          const pruneOut = await runCmd("python -m padestrian prune-kijiji")
-          pruned = parseCount(pruneOut, /Deactivated\s+(\d+)/) ?? parseCount(pruneOut, /Removed\s+(\d+)/) ?? parseCount(pruneOut, /(\d+)\s+removed/)
-          send({ step: "Pruning dead listings…", progress: 35, pruned })
-
-          send({ step: "Filling bathroom data…", progress: 35 })
-          const backfillOut = await runCmd("python -m padestrian backfill-bathrooms --fetch")
-          bathrooms = parseCount(backfillOut, /Updated\s+(\d+)/)
-          send({ step: "Filling bathroom data…", progress: 60, bathrooms })
-
-          send({ step: "Validating listings…", progress: 60 })
-          await runCmd("python -m padestrian validate-listings")
-          send({ step: "Validating listings…", progress: 80 })
-
-          send({ step: "Scoring listings…", progress: 80 })
-          await runCmd("python -m padestrian filter-listings")
-          send({ step: "Scoring listings…", progress: 100 })
+        let progress = 0
+        for (const step of steps) {
+          send({ step: step.label, progress })
+          const out = await runCmd(step.cmd)
+          step.record?.(out, counts)
+          progress = step.end[mode]
+          send({ step: step.label, progress, ...counts })
         }
 
         const parts: string[] = []
-        if (mode === "scrape") parts.push(`${scraped ?? 0} new`)
-        parts.push(`${pruned ?? 0} pruned`)
-        if (bathrooms != null && bathrooms > 0) parts.push(`${bathrooms} baths filled`)
-
-        const done: DoneEvent = {
-          done: true,
-          ok: true,
-          message: parts.join(", "),
-          pruned,
-          scraped,
-          bathrooms,
+        if (mode === "scrape") parts.push(`${counts.scraped ?? 0} new`)
+        parts.push(`${counts.pruned ?? 0} pruned`)
+        if (counts.bathrooms != null && counts.bathrooms > 0) {
+          parts.push(`${counts.bathrooms} baths filled`)
         }
-        send(done)
+
+        send({ done: true, ok: true, message: parts.join(", "), ...counts })
       } catch (err) {
-        const done: DoneEvent = {
+        send({
           done: true,
           ok: false,
           message: err instanceof Error ? err.message.slice(0, 500) : String(err),
-        }
-        send(done)
+        })
       } finally {
         controller.close()
       }

@@ -20,7 +20,7 @@ import {
   saveSavedKijijiImportsToStorage,
   upsertSavedKijijiImports,
 } from "@/lib/saved-kijiji-imports"
-import { scorePoint, ScoringDataError } from "@/lib/score-point"
+import { scorePoint, ScoringDataError, type WalkMinutes } from "@/lib/score-point"
 
 const MapView = dynamic(
   () => import("@/components/map/map-view").then((mod) => mod.MapView),
@@ -41,7 +41,7 @@ export default function Page() {
   const [theme, setTheme] = useState<"light" | "dark">("dark")
   const [filters, setFilters] = useState({
     walkableOnly: false,
-    walkMinutes: 10 as const,
+    walkMinutes: 10 as WalkMinutes,
     maxRent: 3500,
     beds: ["any"],
     baths: ["any"],

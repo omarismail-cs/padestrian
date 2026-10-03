@@ -12,6 +12,12 @@ import {
   loadCustomAddressFromStorage,
   saveCustomAddressToStorage,
 } from "@/lib/custom-listing"
+import {
+  DEFAULT_BASEMAP,
+  loadBasemapFromStorage,
+  saveBasemapToStorage,
+  type Basemap,
+} from "@/lib/basemap"
 import type { KijijiListItem } from "@/lib/kijiji-listings"
 import {
   applyScoreToSavedFeature,
@@ -38,7 +44,12 @@ const MapView = dynamic(
 )
 
 export default function Page() {
+  // `theme` is what the user picked; `uiTheme` follows once the map is ready to
+  // crossfade, so the sidebar and basemap change together
   const [theme, setTheme] = useState<"light" | "dark">("dark")
+  const [uiTheme, setUiTheme] = useState<"light" | "dark">("dark")
+  // null until read from storage, so the map is created with the saved style
+  const [basemap, setBasemap] = useState<Basemap | null>(null)
   const [filters, setFilters] = useState({
     walkableOnly: false,
     walkMinutes: 10 as WalkMinutes,
@@ -70,6 +81,10 @@ export default function Page() {
   const [focusListing, setFocusListing] = useState<MapFocusListing | null>(null)
   const [focusListingKey, setFocusListingKey] = useState(0)
   const [selectedKijijiId, setSelectedKijijiId] = useState<string | null>(null)
+
+  useEffect(() => {
+    setBasemap(loadBasemapFromStorage())
+  }, [])
 
   useEffect(() => {
     const stored = loadCustomAddressFromStorage()
@@ -146,18 +161,24 @@ export default function Page() {
   }, [filters.walkMinutes, savedKijijiImports])
 
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-  }, [theme])
+    document.documentElement.classList.toggle("dark", uiTheme === "dark")
+  }, [uiTheme])
+
+  const handleThemeApplied = useCallback((next: "light" | "dark") => {
+    // Toggle the class right away (not in an effect) so it lands on the same
+    // frame the map overlay starts fading
+    document.documentElement.classList.toggle("dark", next === "dark")
+    setUiTheme(next)
+  }, [])
+
+  const handleBasemapChange = useCallback((next: Basemap) => {
+    setBasemap(next)
+    saveBasemapToStorage(next)
+  }, [])
 
   const handleThemeToggle = useCallback(() => {
-    const next = theme === "dark" ? "light" : "dark"
-    document.documentElement.classList.toggle("dark", next === "dark")
-    setTheme(next)
-  }, [theme])
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"))
+  }, [])
 
   const handleStatsUpdate = useCallback((total: number, walkable: number) => {
     setStats({ total, walkable })
@@ -256,27 +277,34 @@ export default function Page() {
 
   return (
     <main className="relative w-full h-screen overflow-hidden bg-background">
-      <MapView
-        filters={filters}
-        layers={layers}
-        onStatsUpdate={handleStatsUpdate}
-        theme={theme}
-        customListing={customListing}
-        savedKijijiImports={savedKijijiImports}
-        flyToCustomKey={flyToCustomKey}
-        onListingsChange={handleListingsChange}
-        focusListing={focusListing}
-        focusListingKey={focusListingKey}
-        onLocateMe={handleLocateMe}
-      />
+      {basemap && (
+        <MapView
+          filters={filters}
+          layers={layers}
+          onStatsUpdate={handleStatsUpdate}
+          theme={theme}
+          basemap={basemap}
+          onThemeApplied={handleThemeApplied}
+          customListing={customListing}
+          savedKijijiImports={savedKijijiImports}
+          flyToCustomKey={flyToCustomKey}
+          onListingsChange={handleListingsChange}
+          focusListing={focusListing}
+          focusListingKey={focusListingKey}
+          onLocateMe={handleLocateMe}
+        />
+      )}
       <FilterPanel
         filters={filters}
         onFiltersChange={setFilters}
         layers={layers}
         onLayersChange={setLayers}
         stats={stats}
-        theme={theme}
+        theme={uiTheme}
+        pendingTheme={theme}
         onThemeToggle={handleThemeToggle}
+        basemap={basemap ?? DEFAULT_BASEMAP}
+        onBasemapChange={handleBasemapChange}
         checkedAddress={
           customListing ? String(customListing.properties?.address || "Your location") : null
         }

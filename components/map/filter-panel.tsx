@@ -8,6 +8,7 @@ import { PedestrianToggle } from "@/components/ui/pedestrian-toggle"
 import { AddressSearch } from "@/components/map/address-search"
 import { KijijiListPanel } from "@/components/map/kijiji-list-panel"
 import { MapLegend } from "@/components/map/map-legend"
+import { BASEMAP_OPTIONS, type Basemap } from "@/lib/basemap"
 import { buildKijijiListItems, type KijijiListItem } from "@/lib/kijiji-listings"
 import type { WalkMinutes } from "@/lib/score-point"
 import { cn } from "@/lib/utils"
@@ -70,7 +71,11 @@ interface FilterPanelProps {
   onLayersChange: (layers: LayerVisibility) => void
   stats: { total: number; walkable: number }
   theme: "light" | "dark"
+  /** Theme the user just picked — drives the toggle icon before the UI catches up */
+  pendingTheme: "light" | "dark"
   onThemeToggle: () => void
+  basemap: Basemap
+  onBasemapChange: (basemap: Basemap) => void
   checkedAddress: string | null
   isCheckingAddress: boolean
   addressError: string | null
@@ -174,7 +179,10 @@ export function FilterPanel({
   onLayersChange,
   stats,
   theme,
+  pendingTheme,
   onThemeToggle,
+  basemap,
+  onBasemapChange,
   checkedAddress,
   isCheckingAddress,
   addressError,
@@ -390,7 +398,7 @@ export function FilterPanel({
         <Sun
           className={cn(
             "absolute size-5 text-foreground transition-[opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-            theme === "dark"
+            pendingTheme === "dark"
               ? "rotate-0 scale-100 opacity-100"
               : "rotate-90 scale-50 opacity-0",
           )}
@@ -398,7 +406,7 @@ export function FilterPanel({
         <Moon
           className={cn(
             "absolute size-5 text-foreground transition-[opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-            theme === "dark"
+            pendingTheme === "dark"
               ? "-rotate-90 scale-50 opacity-0"
               : "rotate-0 scale-100 opacity-100",
           )}
@@ -889,6 +897,50 @@ export function FilterPanel({
                   ) : null}
                 </div>
               </div>
+            </div>
+
+            {/* Map style */}
+            <div className="pt-3 border-t border-border" style={section(280)}>
+              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground dark:text-zinc-300 mb-3">
+                Map style
+              </div>
+              <div
+                role="radiogroup"
+                aria-label="Map style"
+                className="relative grid grid-cols-3 rounded-lg bg-secondary p-1"
+              >
+                {/* Sliding highlight behind the selected option */}
+                <span
+                  aria-hidden
+                  className="absolute inset-y-1 left-1 rounded-md bg-foreground transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+                  style={{
+                    width: `calc((100% - 0.5rem) / ${BASEMAP_OPTIONS.length})`,
+                    transform: `translateX(${Math.max(0, BASEMAP_OPTIONS.findIndex((opt) => opt.value === basemap)) * 100}%)`,
+                  }}
+                />
+                {BASEMAP_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    role="radio"
+                    aria-checked={basemap === opt.value}
+                    onClick={() => onBasemapChange(opt.value)}
+                    className={cn(
+                      "relative z-10 py-1.5 text-sm font-medium transition-colors duration-300",
+                      basemap === opt.value
+                        ? "text-background"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground dark:text-zinc-400">
+                {basemap === "classic"
+                  ? "The original map. Light/dark takes a moment to switch."
+                  : "Light/dark switches instantly."}
+              </p>
             </div>
           </div>
         </div>
